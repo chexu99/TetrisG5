@@ -1,4 +1,4 @@
-package com.procesos.tetrisandroid;
+package com.tetris;
 
 import org.junit.Test;
 
