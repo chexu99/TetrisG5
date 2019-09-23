@@ -1,26 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ff72abff"
+    android:configChanges="orientation|screenSize"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/new_game_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/nameEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
+        android:text="ejemplo1"
+        android:textSize="20dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/high_scores_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="256dp" />
+        android:layout_below="@+id/new_game_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="ejemplo2"
+        android:textSize="20dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/high_scores_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="ejemplo3"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/about_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_button"
+        android:layout_centerHorizontal="true"
+        android:text="ejemplo4"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="209dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/new_game_button"
+        android:layout_alignLeft="@+id/new_game_button"
+        android:layout_marginStart="-64dp"
+        android:layout_marginLeft="-64dp"
+        android:text="Welcome niño"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:id="@+id/test"
+        android:layout_width="56dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/lengua" />
+
+
+</RelativeLayout>
