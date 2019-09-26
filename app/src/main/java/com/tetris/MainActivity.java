@@ -15,7 +15,7 @@ import com.tetris.model.Board;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements S{
     private ImageView spriteTest;
 
     private CopyOnWriteArrayList<ImageView> gameViews;
@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         spriteTest = findViewById(R.id.test);
 
         gameViews.add(spriteTest);
+
+        GameScreen gameScreen;
         /*
         for (Block block : Board.getInstance().getBlocks()) {
             switch (block.getColor()) {
