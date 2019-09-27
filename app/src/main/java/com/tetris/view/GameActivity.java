@@ -3,13 +3,19 @@ package com.tetris.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +31,15 @@ public class GameActivity extends Activity {
 
     int NUM_ROWS = 26;
     int NUM_COLUMNS = 16;
+    public static int BLOCK_WIDTH = 20;
+    public static int BLOCK_HEIGHT = 20;
+
+    private Rect topRegion;    //Score and next shape
+    private Rect leftRegion;   //empty for now
+    private Rect rightRegion;  //empty for now
+    private Rect gameRegion;   //Tetris grid and blocks
+    private Rect commandRegion;//movement buttons
+
     final int BOARD_HEIGHT = 800;
     final int BOARD_WIDTH = 400;
 
@@ -36,10 +51,11 @@ public class GameActivity extends Activity {
     int score;
     boolean gameInProgress, gamePaused, fastSpeedState, currentShapeAlive;
 
-    final int dx[] = {-1, 0, 1, 0};
-    final int dy[] = {0, 1, 0, -1};
+    final int dx[] = {-1, 0, 1, 0}; //no idea what it is
+    final int dy[] = {0, 1, 0, -1}; //no idea what it is
 
-    //private GestureDetectorCompat gestureDetector;
+
+    private SurfaceHolder ourHolder;
 
 
     Bitmap bitmap;
@@ -48,6 +64,28 @@ public class GameActivity extends Activity {
     LinearLayout linearLayout;
 
     Shape currentShape;
+
+    private void createRegions() {
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int maxWidth = size.x;
+        int maxHeight = size.y;
+
+
+        topRegion = new Rect(0, 0, maxWidth, maxHeight / 10);
+
+        leftRegion = new Rect(0, maxHeight / 10, maxWidth / 10, 9 * maxHeight / 10);
+
+        gameRegion = new Rect(maxWidth / 10, maxHeight / 10, 9 * maxWidth / 10, 9 * maxHeight / 10);
+
+        rightRegion = new Rect(9 * maxWidth / 10, maxHeight / 10, maxWidth, 9 * maxHeight / 10);
+
+        commandRegion = new Rect(0, 9 * maxHeight / 10, maxWidth, maxHeight);
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +96,11 @@ public class GameActivity extends Activity {
         canvas = new Canvas(bitmap);
         paint = new Paint();
         linearLayout = (LinearLayout) findViewById(R.id.game_board);
+
+        //createRegions();
+
+        final int BOARD_HEIGHT = 800;
+        final int BOARD_WIDTH = 400;
 
         gameInit();
     }
@@ -75,8 +118,8 @@ public class GameActivity extends Activity {
     void PaintMatrix() {
 
         // Paint the game board background
-        paint.setColor(Color.BLACK);
-        canvas.drawRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT, paint);
+        //canvas = ourHolder.lockCanvas();
+        canvas.drawColor(Color.argb(255, 0, 0, 0));
 
         // Paint the grid on the game board
         paint.setColor(Color.WHITE);
@@ -89,14 +132,21 @@ public class GameActivity extends Activity {
                     i * (BOARD_WIDTH / (NUM_COLUMNS - 6)), BOARD_HEIGHT, paint);
         }
 
+
         // Paint the tetris blocks j = y    i = x
-        for(Block block : Board.getInstance().getBlocks()){
-                    paint.setColor(Color.BLUE);
-                    canvas.drawRect((block.getY() - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                            (block.getX() - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                            (block.getY() + 1 - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                            (block.getX() + 1 - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                            paint);
+        for (Block block : Board.getInstance().getBlocks()) {
+            paint.setColor(Color.BLUE);
+
+            /*   //En el futuro cambiar por imagen
+            Bitmap bitmapBlock = BitmapFactory.decodeResource(this.getResources(), R.drawable.bloque_test);
+            bitmapBlock = Bitmap.createScaledBitmap(bitmap, block.getWidth() * 20, block.getHeight() * 20, false);
+            canvas.drawBitmap(bitmap, block.getX(), block.getY(), paint);
+             */
+            canvas.drawRect((block.getX()) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
+                    (block.getY()) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
+                    (block.getX() + 1) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
+                    (block.getY() + 1) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
+                    paint);
 
         }
         /* //optional?
