@@ -2,6 +2,7 @@ package com.tetris.model;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -33,33 +34,52 @@ public class Board {
     //Construct next shape randomly
     public void spawnNextShape() {
         Random r = new Random();
-        int index = r.nextInt(7);
+        int index = r.nextInt(7) + 1;
 
-        nextShape = new Shape(index);
+        nextShape = Shape.randomShape(index);
     }
 
     //Next shape falls
     public void makeNextShapeFalling() {
-        if (fallingShape != null) { //If there is a shape falling add to the array
-            for (Block block : fallingShape.getBlocks())
-                blocks.add(block);
+        if (nextShape == null) { //If there is no falling shape, next one is new one
+            spawnNextShape();
+            fallingShape = nextShape;
+            spawnNextShape();
         }
-
-        fallingShape = nextShape;
-        spawnNextShape();
+        if (fallingShape == null) { //If there is no falling shape, next one is new one
+            fallingShape = nextShape;
+            spawnNextShape();
+        }
+        //If there is a shape falling add to the array
+        for (Block block : fallingShape.getBlocks())
+            blocks.add(block);
     }
 
     //Updates the falling shape
     public void update() {
-        if (fallingShape.collide()) { //Checks if the falling shape collided
-            spawnNextShape();
+        if ((fallingShape == null) || fallingShape.collide()) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
             fallingShape.update();
+            //System.out.println("updating");
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
-                makeNextShapeFalling();
+
                 deleteLinesOf(layingShape);
+
+                //tests
+                /*for (Block block : Board.getInstance().getBlocks()) {
+                    System.out.println(
+                            "x:   " +
+                                    block.getX() +
+                                    "    y:  " +
+                                    block.getY()
+
+
+                    );
+                }*/
+                fallingShape = null;
+                makeNextShapeFalling();
             }
         }
     }
@@ -90,11 +110,17 @@ public class Board {
             //Moves block down per deleted line
             block.setY(block.getY() + count);
         }
+        //Set all blocks to fall false
+        for (Block block : Board.getInstance().getBlocks())
+            if (block.isFalling())
+                block.setFalling(false);
     }
 
     //Checks if a line is complete
     private boolean lineComplete(int y) {
         int count = 0;
+        List<Block> lista2 = Board.getInstance().getBlocks();
+        System.out.println("d");
         for (Block block : blocks) {
             if (block.getY() == y)
                 ++count;

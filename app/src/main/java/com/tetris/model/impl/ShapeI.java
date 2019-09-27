@@ -21,6 +21,7 @@ public class ShapeI extends Shape {
         blocks[3].setY(blocks[2].getY() + 1);
 
         for (Block block : blocks) {
+            block.setFalling(true);
             block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
         }
         return blocks;

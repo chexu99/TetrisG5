@@ -31,10 +31,7 @@ public class Pixel {
 
     //Checks if a pixel is contained by another
     public boolean contains(int x, int y) {
-        return ((x >= this.x) &&
-                (x < (this.x + 1)) &&
-                (y >= this.y) &&
-                (y < (this.y + 1)));
+        return ((this.x == x) && (this.y == y));
     }
 
     //Move position relative

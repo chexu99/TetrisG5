@@ -1,6 +1,7 @@
 package com.tetris.model.impl;
 
 import com.tetris.model.Block;
+import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
 public class ShapeZ extends Shape {
@@ -19,7 +20,8 @@ public class ShapeZ extends Shape {
         blocks[3].setY(y + 1);
 
         for (Block block : blocks) {
-            block.setColor(0xffff0000);
+            block.setFalling(true);
+            block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
         }
         return blocks;
     }
