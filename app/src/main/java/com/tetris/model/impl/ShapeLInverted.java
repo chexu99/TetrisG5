@@ -1,6 +1,7 @@
 package com.tetris.model.impl;
 
 import com.tetris.model.Block;
+import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
 public class ShapeLInverted extends Shape {
@@ -20,7 +21,8 @@ public class ShapeLInverted extends Shape {
 
 
         for (Block block : blocks) {
-            block.setColor(0xff0000ff);
+            block.setFalling(true);
+            block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
         }
         return blocks;
     }

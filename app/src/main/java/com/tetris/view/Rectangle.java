@@ -1,4 +1,4 @@
-package com.tetris.model.view;
+package com.tetris.view;
 
 public class Rectangle {
     protected int x, y;

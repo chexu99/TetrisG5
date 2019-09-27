@@ -1,6 +1,8 @@
 package com.tetris.model;
 
 
+import java.util.List;
+
 public class Block extends Pixel {
 
     private boolean falling;
@@ -10,6 +12,7 @@ public class Block extends Pixel {
     //Constructors
     public Block(){
         super(0, 0 ,1, 1);
+        this.falling = false;
         this.color = 0xffffffff;
     }
 
@@ -17,6 +20,9 @@ public class Block extends Pixel {
     public boolean collide(){
         //Collide with any block
         for (Block block : Board.getInstance().getBlocks()){
+            List<Block> lista = Board.getInstance().getBlocks();
+            if(block.isFalling())
+                continue;
             if(collide(block))
                 return true;
         }
@@ -39,7 +45,6 @@ public class Block extends Pixel {
     public void moveRight() {
         moveBy(1, 0);
     }
-
 
 
     //Getters & Setters

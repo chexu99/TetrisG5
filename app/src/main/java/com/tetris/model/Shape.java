@@ -4,6 +4,8 @@ import android.os.SystemClock;
 
 import com.tetris.model.impl.*;
 
+import java.util.List;
+
 public class Shape extends Pixel {
 
     protected Block blocks[];
@@ -27,31 +29,30 @@ public class Shape extends Pixel {
 
     }
 
+    protected Shape (Shape s){
+        this.blocks = s.getBlocks();
+        this.falling = s.isFalling();
+        this.last_fall_update = s.getLast_fall_update();
+    }
+
     //Shape defined by type
-    protected Shape(int type) {
+    public static Shape randomShape(int type) {
         switch (type) {
             case 1:
-                new ShapeCube();
-                break;
+                return new ShapeCube();
             case 2:
-                new ShapeI();
-                break;
+                return new ShapeI();
             case 3:
-                new ShapeL();
-                break;
+                return new ShapeL();
             case 4:
-                new ShapeLInverted();
-                break;
+                return new ShapeLInverted();
             case 5:
-                new ShapeZ();
-                break;
+                return new ShapeZ();
             case 6:
-                new ShapeZInverted();
-                break;
+                return new ShapeZInverted();
             case 7:
             default:
-                new ShapeT();
-                break;
+                return new ShapeT();
         }
     }
 
@@ -61,16 +62,16 @@ public class Shape extends Pixel {
             if (needsFallUpdate()) { //Check if it needs to fall more
                 moveDown();
             }
-            if (collide()) { //Check if it collided with something
+            if (collide()) {    //Check if it collided with something
                 moveUp();
-                falling = false;
+                falling = false;    //Set shape fall to false
             }
         }
     }
 
 
     //SHAPE INTERACTIONS
-    //Checks if our shape collide with any block
+    //Checks if our shape collide with anything
     public boolean collide() {
         for (Block block : getBlocks()) {
             if (block.collide()) {
@@ -141,5 +142,13 @@ public class Shape extends Pixel {
 
     public void setFalling(boolean falling) {
         this.falling = falling;
+    }
+
+    public long getLast_fall_update() {
+        return last_fall_update;
+    }
+
+    public void setLast_fall_update(long last_fall_update) {
+        this.last_fall_update = last_fall_update;
     }
 }
