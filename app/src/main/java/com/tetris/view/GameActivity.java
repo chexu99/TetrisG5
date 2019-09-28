@@ -1,24 +1,17 @@
 package com.tetris.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Display;
-import android.view.SurfaceHolder;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.tetris.R;
@@ -26,21 +19,15 @@ import com.tetris.model.Block;
 import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
-import java.util.List;
-
 public class GameActivity extends Activity {
+
 
     int NUM_ROWS = 26;
     int NUM_COLUMNS = 16;
+    /*
     public static int BLOCK_WIDTH = 20;
     public static int BLOCK_HEIGHT = 20;
-
-    private Rect topRegion;    //Score and next shape
-    private Rect leftRegion;   //empty for now
-    private Rect rightRegion;  //empty for now
-    private Rect gameRegion;   //Tetris grid and blocks
-    private Rect commandRegion;//movement buttons
-
+*/
     final int BOARD_HEIGHT = 800;
     final int BOARD_WIDTH = 400;
 
@@ -48,46 +35,19 @@ public class GameActivity extends Activity {
 
     int speed_test = 500;
     int SPEED_FAST = 50;
-    String difficulty, speed;
     int score;
     boolean gameInProgress, gamePaused, fastSpeedState, currentShapeAlive;
-
-    final int dx[] = {-1, 0, 1, 0}; //no idea what it is
-    final int dy[] = {0, 1, 0, -1}; //no idea what it is
-
-
-    private SurfaceHolder ourHolder;
 
 
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
-    //LinearLayout linearLayout;
     ConstraintLayout constraintLayout;
 
     Shape currentShape;
 
-    private void createRegions() {
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int maxWidth = size.x;
-        int maxHeight = size.y;
-
-
-        topRegion = new Rect(0, 0, maxWidth, maxHeight / 10);
-
-        leftRegion = new Rect(0, maxHeight / 10, maxWidth / 10, 9 * maxHeight / 10);
-
-        gameRegion = new Rect(maxWidth / 10, maxHeight / 10, 9 * maxWidth / 10, 9 * maxHeight / 10);
-
-        rightRegion = new Rect(9 * maxWidth / 10, maxHeight / 10, maxWidth, 9 * maxHeight / 10);
-
-        commandRegion = new Rect(0, 9 * maxHeight / 10, maxWidth, maxHeight);
-
-
-    }
+    public Button despDer;
+    public Button despIzq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +57,6 @@ public class GameActivity extends Activity {
         bitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint = new Paint();
-        //linearLayout = (LinearLayout) findViewById(R.id.game_board);
         constraintLayout = (ConstraintLayout) findViewById(R.id.game_board);
 
         //createRegions();
@@ -105,7 +64,30 @@ public class GameActivity extends Activity {
         final int BOARD_HEIGHT = 800;
         final int BOARD_WIDTH = 400;
 
+        final Board board = Board.getInstance();
+        board.makeNextShapeFalling();
+
+        currentShape = board.getFallingShape();
+        despDer = (Button) findViewById(R.id.mvderecha);
+        despDer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View b) {
+                currentShape = board.getFallingShape();
+                currentShape.moveRight();
+            }
+        });
+        despIzq = (Button) findViewById(R.id.mvizquierda);
+        despIzq.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View b) {
+                currentShape = board.getFallingShape();
+                currentShape.moveLeft();
+            }
+        });
+
         gameInit();
+
+
     }
 
     @Override
@@ -121,7 +103,6 @@ public class GameActivity extends Activity {
     void PaintMatrix() {
 
         // Paint the game board background
-        //canvas = ourHolder.lockCanvas();
         canvas.drawColor(Color.argb(255, 0, 0, 0));
 
         // Paint the grid on the game board

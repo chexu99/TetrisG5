@@ -21,6 +21,7 @@ public class Board {
     private static Board instance = null;
 
     public static final int COLOR_FOR_ALL_FOR_NOW = 0xffffff00;
+    // 0x0bff03 = verde
 
 
     //Board instance for use by other classes
