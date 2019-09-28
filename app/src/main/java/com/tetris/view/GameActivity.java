@@ -1,6 +1,7 @@
 package com.tetris.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,7 +62,8 @@ public class GameActivity extends Activity {
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
-    LinearLayout linearLayout;
+    //LinearLayout linearLayout;
+    ConstraintLayout constraintLayout;
 
     Shape currentShape;
 
@@ -95,7 +97,8 @@ public class GameActivity extends Activity {
         bitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint = new Paint();
-        linearLayout = (LinearLayout) findViewById(R.id.game_board);
+        //linearLayout = (LinearLayout) findViewById(R.id.game_board);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.game_board);
 
         //createRegions();
 
@@ -180,6 +183,7 @@ public class GameActivity extends Activity {
         }
         */
 
+
         if (!gameInProgress) {
             TextView textView = (TextView) findViewById(R.id.game_over_textview);
             textView.setVisibility(View.VISIBLE);
@@ -192,7 +196,7 @@ public class GameActivity extends Activity {
             canvas.drawText("GAME PAUSED", (float) (BOARD_WIDTH / 2.0), (float) (BOARD_HEIGHT / 2.0), paint);
         }
         // Display the current painting
-        linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        constraintLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
 
         // Update the score textview
         TextView textView = (TextView) findViewById(R.id.game_score_textview);

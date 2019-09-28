@@ -21,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MainActivity extends AppCompatActivity{
     private ImageView spriteTest;
+    //prueba y ya esta
 
     private CopyOnWriteArrayList<ImageView> gameViews;
 
