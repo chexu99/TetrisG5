@@ -22,7 +22,7 @@ public class ShapeL extends Shape {
         blocks[3].setX(x + 1);
         blocks[3].setY(blocks[2].getY());
 
-        apply_rotation();
+        rotate();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(Color.MAGENTA);
