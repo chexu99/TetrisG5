@@ -1,12 +1,13 @@
 package com.tetris.model.impl;
 
+import android.graphics.Color;
+
 import com.tetris.model.Block;
-import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
 public class ShapeCube extends Shape {
 
-    public ShapeCube(){
+    public ShapeCube() {
         super(2, 2);
     }
 
@@ -22,7 +23,7 @@ public class ShapeCube extends Shape {
 
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
+            block.setColor(Color.BLUE);
         }
         return blocks;
     }

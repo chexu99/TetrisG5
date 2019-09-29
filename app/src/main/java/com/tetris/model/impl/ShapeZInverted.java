@@ -1,12 +1,15 @@
 package com.tetris.model.impl;
 
+import android.graphics.Color;
+
 import com.tetris.model.Block;
-import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
 public class ShapeZInverted extends Shape {
     public ShapeZInverted() {
         super(3, 2);
+        rotation_block = blocks[1];
+        rotation_cycle = 2;
     }
 
     public Block[] getBlocks() {
@@ -19,10 +22,10 @@ public class ShapeZInverted extends Shape {
         blocks[3].setX(x);
         blocks[3].setY(y + 1);
 
-
+        apply_rotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
+            block.setColor(Color.GREEN);
         }
         return blocks;
     }

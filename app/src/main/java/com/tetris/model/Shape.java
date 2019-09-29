@@ -2,22 +2,34 @@ package com.tetris.model;
 
 import android.os.SystemClock;
 
-import com.tetris.model.impl.*;
-
-import java.util.List;
+import com.tetris.model.impl.ShapeCube;
+import com.tetris.model.impl.ShapeI;
+import com.tetris.model.impl.ShapeL;
+import com.tetris.model.impl.ShapeLInverted;
+import com.tetris.model.impl.ShapeT;
+import com.tetris.model.impl.ShapeZ;
+import com.tetris.model.impl.ShapeZInverted;
 
 public class Shape extends Pixel {
 
-    protected Block blocks[];
+    protected Block[] blocks;
 
     protected boolean falling; //True if the shape is falling
 
     protected long last_fall_update; //Last time the piece felt
 
+    protected long numMoves; //Number of down movements the shape has had
+
+    protected Block rotation_block; //Block which 'rotates'
+    protected int rotation_cycle; //Number of cycles the shape has
+    protected int rotation; //Rotation cycle we are in
+
     //Constructors
     //Shapeless shape
     protected Shape(int width, int height) {
-        super(0, 0, width, height);
+        super(4, -4, width, height);
+
+        numMoves = 0;
 
         blocks = new Block[4];
         blocks[0] = new Block();
@@ -27,9 +39,14 @@ public class Shape extends Pixel {
 
         falling = true;
 
+        //Rotation initiation
+        rotation_block = blocks[1];
+        rotation_cycle = 1;
+        rotation = 0;
+
     }
 
-    protected Shape (Shape s){
+    protected Shape(Shape s) {
         this.blocks = s.getBlocks();
         this.falling = s.isFalling();
         this.last_fall_update = s.getLast_fall_update();
@@ -83,15 +100,14 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        long updateInterval = 400;
+        long updateInterval = 250;
 
-        if (SystemClock.uptimeMillis() - last_fall_update > updateInterval ) {
+        if (SystemClock.uptimeMillis() - last_fall_update > updateInterval) {
             last_fall_update = SystemClock.uptimeMillis();
             return true;
         }
         return false;
     }
-
 
 
     //MOVEMENT
@@ -100,6 +116,7 @@ public class Shape extends Pixel {
         for (Block block : blocks) {
             block.moveDown();
         }
+        numMoves++;
         moveBy(0, 1);
     }
 
@@ -108,6 +125,7 @@ public class Shape extends Pixel {
         for (Block block : blocks) {
             block.moveUp();
         }
+        numMoves--;
         moveBy(0, -1);
     }
 
@@ -127,6 +145,28 @@ public class Shape extends Pixel {
         moveBy(1, 0);
     }
 
+    //Applies rotation to the shape
+    public void apply_rotation() {
+        int old_x, old_y;
+        if (rotation_block != null) {
+            for (int i = 1; i <= (rotation % rotation_cycle); ++i) {
+                for (Block block : blocks) {
+                    old_x = block.getX();
+                    old_y = block.getY();
+                    block.setX(rotation_block.getX() + (rotation_block.getY() - old_y));
+                    block.setY(rotation_block.getY() - (rotation_block.getX() - old_x));
+                }
+            }
+        }
+    }
+
+    public void rotate() {
+        rotation += 1;
+    }
+
+    public void undoRotate() {
+        rotation -= 1;
+    }
 
     public Block[] getBlocks() {
         return blocks;
@@ -150,5 +190,9 @@ public class Shape extends Pixel {
 
     public void setLast_fall_update(long last_fall_update) {
         this.last_fall_update = last_fall_update;
+    }
+
+    public long getNumMoves() {
+        return numMoves;
     }
 }

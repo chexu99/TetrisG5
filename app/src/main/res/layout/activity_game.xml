@@ -52,7 +52,7 @@
             app:layout_constraintVertical_bias="0.996" >
 
             <Button
-                android:id="@+id/mvderecha"
+                android:id="@+id/mvRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Der"
@@ -64,12 +64,12 @@
                 app:layout_constraintVertical_bias="0.466" />
 
             <Button
-                android:id="@+id/mvizquierda"
+                android:id="@+id/mvLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Izq"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/mvderecha"
+                app:layout_constraintEnd_toStartOf="@+id/mvRight"
                 app:layout_constraintHorizontal_bias="0.394"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

@@ -2,7 +2,6 @@ package com.tetris.model;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -12,17 +11,19 @@ public class Board {
     public static final int BOARD_WIDTH = 10;
     public static final int BOARD_HEIGHT = 20;
 
-    private List<Block> blocks = new ArrayList<Block>();
-
-    private Shape fallingShape;
-
-    private Shape nextShape;
-
     private static Board instance = null;
 
-    public static final int COLOR_FOR_ALL_FOR_NOW = 0xffffff00;
-    // 0x0bff03 = verde
+    private List<Block> blocks = new ArrayList<Block>();
+    private Shape fallingShape;
+    private Shape nextShape;
 
+    private GameStatus gameStatus;
+    public enum GameStatus {
+        INITIATING,
+        IN_PROGRESS,
+        PAUSED,
+        GAME_OVER,
+    }
 
     //Board instance for use by other classes
     public static Board getInstance() {
@@ -44,45 +45,36 @@ public class Board {
     public void makeNextShapeFalling() {
         if (nextShape == null) { //If there is no falling shape, next one is new one
             spawnNextShape();
-            fallingShape = nextShape;
-            spawnNextShape();
         }
         if (fallingShape == null) { //If there is no falling shape, next one is new one
             fallingShape = nextShape;
             spawnNextShape();
         }
-        //If there is a shape falling add to the array
+        //Add each block of the falling shape to the array
         for (Block block : fallingShape.getBlocks())
             blocks.add(block);
     }
 
     //Updates the falling shape
     public void update() {
-        if ((fallingShape == null) || fallingShape.collide()) { //Checks if the falling shape collided
+        if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
             fallingShape.update();
-            //System.out.println("updating");
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
-
                 deleteLinesOf(layingShape);
 
-                //tests
-                /*for (Block block : Board.getInstance().getBlocks()) {
-                    System.out.println(
-                            "x:   " +
-                                    block.getX() +
-                                    "    y:  " +
-                                    block.getY()
-
-
-                    );
-                }*/
-                fallingShape = null;
-                makeNextShapeFalling();
+                if (checkGameOver()) {
+                    gameStatus = GameStatus.GAME_OVER;
+                } else {
+                    fallingShape = null;
+                    makeNextShapeFalling();
+                }
             }
         }
+
+
     }
 
     //Deletes the lines that the shape is touching
@@ -120,18 +112,40 @@ public class Board {
     //Checks if a line is complete
     private boolean lineComplete(int y) {
         int count = 0;
-        List<Block> lista2 = Board.getInstance().getBlocks();
-        System.out.println("d");
         for (Block block : blocks) {
             if (block.getY() == y)
                 ++count;
         }
-        if (count == BOARD_WIDTH) {
-            return true;
-        }
-        return false;
+        return count == BOARD_WIDTH;
     }
 
+    public boolean checkMoveLeft() {
+        if (fallingShape == null) //If there is no falling shape cant move
+            return false;
+        fallingShape.moveLeft(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            fallingShape.moveRight(); //If collided move back
+            return false;
+        }
+        fallingShape.moveRight(); //If not move back and tell that it can move
+        return true;
+    }
+
+    public boolean checkMoveRight() {
+        if (fallingShape == null) //If there is no falling shape cant move
+            return false;
+        fallingShape.moveRight(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            fallingShape.moveLeft(); //If collided move back
+            return false;
+        }
+        fallingShape.moveLeft(); //If not move back and tell that it can move
+        return true;
+    }
+
+    private boolean checkGameOver() {
+        return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
+    }
 
     public List<Block> getBlocks() {
         return blocks;
@@ -145,7 +159,11 @@ public class Board {
         return nextShape;
     }
 
-    public static int getColorForAllForNow() {
-        return COLOR_FOR_ALL_FOR_NOW;
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 }
