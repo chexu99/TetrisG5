@@ -22,7 +22,7 @@ public class ShapeT extends Shape {
         blocks[2].setY(y);
         blocks[3].setY(y + 1);
 
-        apply_rotation();
+        rotate();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(Color.YELLOW);

@@ -146,7 +146,7 @@ public class Shape extends Pixel {
     }
 
     //Applies rotation to the shape
-    public void apply_rotation() {
+    public void rotate() {
         int old_x, old_y;
         if (rotation_block != null) {
             for (int i = 1; i <= (rotation % rotation_cycle); ++i) {
@@ -160,11 +160,11 @@ public class Shape extends Pixel {
         }
     }
 
-    public void rotate() {
+    public void rotateRight() {
         rotation += 1;
     }
 
-    public void undoRotate() {
+    public void rotateLeft() {
         rotation -= 1;
     }
 
