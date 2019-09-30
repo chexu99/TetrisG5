@@ -1,6 +1,7 @@
 package com.tetris.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ import com.tetris.model.Block;
 import com.tetris.model.Board;
 
 public class GameActivity extends Activity {
+
+    boolean stopped = false;
 
     final int BOARD_HEIGHT = 800;
     final int BOARD_WIDTH = 400;
@@ -40,7 +44,9 @@ public class GameActivity extends Activity {
     Paint paint;
 
     ConstraintLayout gameLayout;
-    //ConstraintLayout scoreLayout;
+    ConstraintLayout scoreLayout;
+
+    public TextView text;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -48,11 +54,13 @@ public class GameActivity extends Activity {
             /*TODO: ahora mismo si detecta game over no hace nada mas que dejar de actualizar
             habria que hacer una activity de gameover o algo asi con el score
              */
-            Board.getInstance().update();
+            if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
+                Board.getInstance().update();
             if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
                 paintMatrix(); //Paints game board
-            else
+            else {
                 onStop();
+            }
             handler.postDelayed(this, speed_test);
         }
     };
@@ -67,7 +75,10 @@ public class GameActivity extends Activity {
         paint = new Paint();
         gameLayout = findViewById(R.id.game_board);
 
-        //scoreLayout = findViewById(R.id.top_board);
+        scoreLayout = findViewById(R.id.top_board);
+
+        text = (TextView) findViewById(R.id.score_text_view);
+
 
         setUpButtons();
 
@@ -106,6 +117,12 @@ public class GameActivity extends Activity {
 
     void gameInit() {
         // TODO: do more stuff like set score to 0 or prepare controls
+        if(Board.getInstance().getBlocks().size() > 0)
+            Board.getInstance().clear();
+        
+        text.setText(String.valueOf(Board.getInstance().getScore()));
+
+        stopped = false;
         Board.getInstance().setGameStatus(Board.GameStatus.INITIATING);
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, speed_test);
@@ -143,6 +160,9 @@ public class GameActivity extends Activity {
                     i * PIXEL_SIZE, BOARD_HEIGHT, paint);
         }
 
+        //Update score
+        text.setText(String.valueOf(Board.getInstance().getScore()));
+
         // Display the current painting
         gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
     }
@@ -163,5 +183,13 @@ public class GameActivity extends Activity {
     protected void onStop() {
         super.onStop();
         Board.getInstance().setGameStatus(Board.GameStatus.PAUSED);
+
+        //handler.removeCallbacks(runnable);
+
+        if(!stopped) {
+            stopped = true;
+            Intent intent = new Intent(this, FinalScoreActivity.class);
+            startActivity(intent);
+        }
     }
 }

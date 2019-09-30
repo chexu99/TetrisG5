@@ -25,8 +25,8 @@ public class Board extends Activity {
     private Shape fallingShape;
     private Shape nextShape;
 
-    public TextView score_text;
-    public int score = 0;
+    private TextView score_text;
+    private int score = 0;
 
     private GameStatus gameStatus;
     public enum GameStatus {
@@ -57,7 +57,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index);
+        nextShape = Shape.randomShape(2); //TODO: mirar
     }
 
     //Next shape falls
@@ -204,6 +204,14 @@ public class Board extends Activity {
         return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
     }
 
+    public void clear(){
+        blocks.clear();
+        fallingShape = null;
+        nextShape = null;
+        score = 0;
+        gameStatus = GameStatus.INITIATING;
+    }
+
     public List<Block> getBlocks() {
         return blocks;
     }
@@ -222,5 +230,21 @@ public class Board extends Activity {
 
     public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
+    }
+
+    public TextView getScore_text() {
+        return score_text;
+    }
+
+    public void setScore_text(TextView score_text) {
+        this.score_text = score_text;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
