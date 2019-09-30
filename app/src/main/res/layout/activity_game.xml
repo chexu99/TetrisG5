@@ -61,12 +61,12 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.996" >
+            app:layout_constraintVertical_bias="0.996">
 
             <Button
                 android:id="@+id/mvRight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="105dp"
+                android:layout_height="51dp"
                 android:text="@string/derecha"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,22 +75,24 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.466" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/mvRotate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rot"
+                android:layout_width="64dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="170dp"
+                android:layout_marginLeft="170dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/btn_rotate"
+                android:background="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.466" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/mvLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="102dp"
+                android:layout_height="45dp"
                 android:text="@string/izquierda"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/mvRight"

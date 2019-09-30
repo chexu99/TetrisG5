@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,7 +29,7 @@ public class GameActivity extends Activity {
     //Buttons
     public Button despDer;
     public Button despIzq;
-    public Button despRotate;
+    public ImageButton despRotate;
 
     //Board values
     int speed_test = 100;
@@ -37,7 +38,9 @@ public class GameActivity extends Activity {
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
-    ConstraintLayout constraintLayout;
+
+    ConstraintLayout gameLayout;
+    //ConstraintLayout scoreLayout;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -62,7 +65,9 @@ public class GameActivity extends Activity {
         bitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint = new Paint();
-        constraintLayout = findViewById(R.id.game_board);
+        gameLayout = findViewById(R.id.game_board);
+
+        //scoreLayout = findViewById(R.id.top_board);
 
         setUpButtons();
 
@@ -142,7 +147,7 @@ public class GameActivity extends Activity {
         }
 
         // Display the current painting
-        constraintLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
     }
 
     @Override

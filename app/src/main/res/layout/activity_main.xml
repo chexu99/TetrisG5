@@ -58,12 +58,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30dp" />
 
-    <ImageView
-        android:id="@+id/test"
-        android:layout_width="56dp"
-        android:layout_height="44dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/lengua" />
 
 
 </RelativeLayout>
