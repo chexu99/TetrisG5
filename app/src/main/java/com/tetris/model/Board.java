@@ -1,12 +1,20 @@
 package com.tetris.model;
 
 
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import com.tetris.R;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+
+public class Board extends Activity {
 
     public static final int BOARD_COLS = 10;
     public static final int BOARD_ROWS = 20;
@@ -17,12 +25,23 @@ public class Board {
     private Shape fallingShape;
     private Shape nextShape;
 
+    public TextView score_text;
+    public int score = 0;
+
     private GameStatus gameStatus;
     public enum GameStatus {
         INITIATING,
         IN_PROGRESS,
         PAUSED,
         GAME_OVER,
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        score_text = findViewById(R.id.score_text_view);
     }
 
     //Board instance for use by other classes
@@ -80,16 +99,19 @@ public class Board {
     //Deletes the lines that the shape is touching
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
-
         //For each line the shape touches checks if its completed
         for (Block shapeBlock : shape.getBlocks()) {
             if (lineComplete(shapeBlock.getY())) {
+
+                score += 30;
+
                 deletedLines.add(shapeBlock.getY());
                 // Remove from blocks all the block belonging to the same line.
                 for (Iterator<Block> itr = blocks.iterator(); itr.hasNext(); ) {
                     Block block = itr.next();
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
                         itr.remove();
+
                 }
             }
         }
