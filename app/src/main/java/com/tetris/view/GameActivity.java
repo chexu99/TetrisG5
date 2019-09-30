@@ -28,6 +28,7 @@ public class GameActivity extends Activity {
     //Buttons
     public Button despDer;
     public Button despIzq;
+    public Button despRotate;
 
     //Board values
     int speed_test = 100;
@@ -87,7 +88,15 @@ public class GameActivity extends Activity {
                     Board.getInstance().getFallingShape().moveLeft();
             }
         });
-
+        //MoveRotate button
+        despRotate = findViewById(R.id.mvRotate);
+        despRotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View b) {
+                if (Board.getInstance().checkMoveLeft()&& Board.getInstance().checkMoveRight())
+                    Board.getInstance().getFallingShape().rotateRight();
+            }
+        });
     }
 
     void gameInit() {
