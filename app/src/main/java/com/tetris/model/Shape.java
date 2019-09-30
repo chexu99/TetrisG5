@@ -100,7 +100,7 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        long updateInterval = 250;
+        long updateInterval = 300;
 
         if (SystemClock.uptimeMillis() - last_fall_update > updateInterval) {
             last_fall_update = SystemClock.uptimeMillis();
@@ -146,7 +146,7 @@ public class Shape extends Pixel {
     }
 
     //Applies rotation to the shape
-    public void rotate() {
+    public void doRotation() {
         int old_x, old_y;
         if (rotation_block != null) {
             for (int i = 1; i <= (rotation % rotation_cycle); ++i) {
@@ -160,11 +160,11 @@ public class Shape extends Pixel {
         }
     }
 
-    public void rotateRight() {
+    public void rotate() {
         rotation += 1;
     }
 
-    public void rotateLeft() {
+    public void unrotate() {
         rotation -= 1;
     }
 

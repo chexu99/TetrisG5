@@ -143,6 +143,41 @@ public class Board {
         return true;
     }
 
+
+    public boolean checkRotate() {
+        if (fallingShape == null) //If there is no falling shape cant rotate
+            return false;
+        fallingShape.rotate(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            // try to move right
+            fallingShape.moveRight();
+            if (fallingShape.collide())
+                fallingShape.moveLeft();
+            else{
+                fallingShape.moveLeft();
+                fallingShape.unrotate();
+                fallingShape.moveRight();
+                return true;
+            }
+
+            // try to move left
+            fallingShape.moveLeft();
+            if (fallingShape.collide())
+                fallingShape.moveRight();
+            else {
+                fallingShape.moveRight();
+                fallingShape.unrotate();
+                fallingShape.moveLeft();
+                return true;
+            }
+
+            fallingShape.unrotate();
+            return false;
+        }
+        fallingShape.unrotate(); //If not rotated undo and tell that it cant
+        return true;
+    }
+
     private boolean checkGameOver() {
         return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
     }

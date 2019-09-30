@@ -23,7 +23,7 @@ public class ShapeI extends Shape {
         blocks[2].setY(blocks[1].getY() + 1);
         blocks[3].setY(blocks[2].getY() + 1);
 
-        rotate();
+        doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(Color.RED);

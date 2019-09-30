@@ -22,7 +22,7 @@ public class ShapeZ extends Shape {
         blocks[3].setX(x + 2);
         blocks[3].setY(y + 1);
 
-        rotate();
+        doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(Color.CYAN);

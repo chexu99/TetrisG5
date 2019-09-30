@@ -22,7 +22,7 @@ public class ShapeZInverted extends Shape {
         blocks[3].setX(x);
         blocks[3].setY(y + 1);
 
-        rotate();
+        doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(Color.GREEN);

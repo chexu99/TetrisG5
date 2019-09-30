@@ -31,7 +31,7 @@ public class GameActivity extends Activity {
     public Button despRotate;
 
     //Board values
-    int speed_test = 100;
+    int speed_test = 50;
     int score;
 
     Bitmap bitmap;
@@ -93,8 +93,8 @@ public class GameActivity extends Activity {
         despRotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                if (Board.getInstance().checkMoveLeft()&& Board.getInstance().checkMoveRight())
-                    Board.getInstance().getFallingShape().rotateRight();
+                if (Board.getInstance().checkRotate())
+                    Board.getInstance().getFallingShape().rotate();
             }
         });
     }
@@ -109,9 +109,6 @@ public class GameActivity extends Activity {
     void paintMatrix() {
         // Paint the game board background
         canvas.drawColor(Color.BLACK);
-
-
-
 
         // Paint the tetris blocks j = y    i = x
         for (Block block : Board.getInstance().getBlocks()) {

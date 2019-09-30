@@ -18,20 +18,39 @@ public class Block extends Pixel {
 
     //Checks if it collided with something
     public boolean collide() {
-        //Collide with any block
+        // Check if it hasnt collided with a block
+        // or with the walls
         for (Block block : Board.getInstance().getBlocks()) {
-            List<Block> lista = Board.getInstance().getBlocks();
-            if (block.isFalling())
+            if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
                 continue;
             if (collide(block))
                 return true;
         }
-        //Collide with board sides
+
+        return (x > Board.BOARD_COLS - 1) || (y > Board.BOARD_ROWS - 1) || (x < 0);
+
+        //return collideWithAnyBlock() && !collideWithWalls();
+    }
+
+    //Collide with any block
+    private boolean collideWithAnyBlock(){
+        for (Block block : Board.getInstance().getBlocks()) {
+            if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
+                continue;
+            if (collide(block))
+                return true;
+        }
+        return false;
+    }
+
+    //Collide with board sides
+    private boolean collideWithWalls(){
         // y can be negative so shapes can spawn above the board
         return (x > Board.BOARD_COLS - 1) || (y > Board.BOARD_ROWS - 1) || (x < 0);
     }
 
 
+    //Block movement
     public void moveDown() {
         moveBy(0, 1);
     }

@@ -3,9 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff72abff"
+    android:background="#ffffff"
     android:configChanges="orientation|screenSize"
     tools:context=".view.MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/tetris_portada" />
 
     <Button
         android:id="@+id/new_game_button"
@@ -14,56 +21,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
-        android:text="ejemplo1"
+        android:text="Empezar partida"
         android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/high_scores_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/new_game_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="ejemplo2"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/settings_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/high_scores_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="ejemplo3"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/about_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_button"
-        android:layout_centerHorizontal="true"
-        android:text="ejemplo4"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/welcomeTextView"
-        android:layout_width="209dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/new_game_button"
-        android:layout_alignLeft="@+id/new_game_button"
-        android:layout_marginStart="-64dp"
-        android:layout_marginLeft="-64dp"
-        android:text="Welcome niño"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp" />
-
-    <ImageView
-        android:id="@+id/test"
-        android:layout_width="56dp"
-        android:layout_height="44dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/lengua" />
 
 
 </RelativeLayout>
