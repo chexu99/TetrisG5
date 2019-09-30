@@ -1,27 +1,48 @@
 package com.tetris.model;
 
 
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import com.tetris.R;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
 
-    public static final int BOARD_WIDTH = 10;
-    public static final int BOARD_HEIGHT = 20;
+public class Board extends Activity {
 
-    private List<Block> blocks = new ArrayList<Block>();
-
-    private Shape fallingShape;
-
-    private Shape nextShape;
+    public static final int BOARD_COLS = 10;
+    public static final int BOARD_ROWS = 20;
 
     private static Board instance = null;
 
-    public static final int COLOR_FOR_ALL_FOR_NOW = 0xffffff00;
+    private List<Block> blocks = new ArrayList<Block>();
+    private Shape fallingShape;
+    private Shape nextShape;
 
+    private TextView score_text;
+    private int score = 0;
+
+    private GameStatus gameStatus;
+    public enum GameStatus {
+        INITIATING,
+        IN_PROGRESS,
+        PAUSED,
+        GAME_OVER,
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        score_text = findViewById(R.id.score_text_view);
+    }
 
     //Board instance for use by other classes
     public static Board getInstance() {
@@ -36,67 +57,61 @@ public class Board {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index);
+        nextShape = Shape.randomShape(2); //TODO: mirar
     }
 
     //Next shape falls
     public void makeNextShapeFalling() {
         if (nextShape == null) { //If there is no falling shape, next one is new one
             spawnNextShape();
-            fallingShape = nextShape;
-            spawnNextShape();
         }
         if (fallingShape == null) { //If there is no falling shape, next one is new one
             fallingShape = nextShape;
             spawnNextShape();
         }
-        //If there is a shape falling add to the array
+        //Add each block of the falling shape to the array
         for (Block block : fallingShape.getBlocks())
             blocks.add(block);
     }
 
     //Updates the falling shape
     public void update() {
-        if ((fallingShape == null) || fallingShape.collide()) { //Checks if the falling shape collided
+        if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
             fallingShape.update();
-            //System.out.println("updating");
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
-
                 deleteLinesOf(layingShape);
 
-                //tests
-                /*for (Block block : Board.getInstance().getBlocks()) {
-                    System.out.println(
-                            "x:   " +
-                                    block.getX() +
-                                    "    y:  " +
-                                    block.getY()
-
-
-                    );
-                }*/
-                fallingShape = null;
-                makeNextShapeFalling();
+                if (checkGameOver()) {
+                    gameStatus = GameStatus.GAME_OVER;
+                } else {
+                    fallingShape = null;
+                    makeNextShapeFalling();
+                }
             }
         }
+
+
     }
 
     //Deletes the lines that the shape is touching
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
-
         //For each line the shape touches checks if its completed
         for (Block shapeBlock : shape.getBlocks()) {
             if (lineComplete(shapeBlock.getY())) {
+
+                score += 30;
+
                 deletedLines.add(shapeBlock.getY());
                 // Remove from blocks all the block belonging to the same line.
                 for (Iterator<Block> itr = blocks.iterator(); itr.hasNext(); ) {
                     Block block = itr.next();
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
                         itr.remove();
+
                 }
             }
         }
@@ -119,18 +134,83 @@ public class Board {
     //Checks if a line is complete
     private boolean lineComplete(int y) {
         int count = 0;
-        List<Block> lista2 = Board.getInstance().getBlocks();
-        System.out.println("d");
         for (Block block : blocks) {
             if (block.getY() == y)
                 ++count;
         }
-        if (count == BOARD_WIDTH) {
-            return true;
-        }
-        return false;
+        return count == BOARD_COLS;
     }
 
+    public boolean checkMoveLeft() {
+        if (fallingShape == null) //If there is no falling shape cant move
+            return false;
+        fallingShape.moveLeft(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            fallingShape.moveRight(); //If collided move back
+            return false;
+        }
+        fallingShape.moveRight(); //If not move back and tell that it can move
+        return true;
+    }
+
+    public boolean checkMoveRight() {
+        if (fallingShape == null) //If there is no falling shape cant move
+            return false;
+        fallingShape.moveRight(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            fallingShape.moveLeft(); //If collided move back
+            return false;
+        }
+        fallingShape.moveLeft(); //If not move back and tell that it can move
+        return true;
+    }
+
+
+    public boolean checkRotate() {
+        if (fallingShape == null) //If there is no falling shape cant rotate
+            return false;
+        fallingShape.rotate(); //Move shape to check block after movement
+        if (fallingShape.collide()) { //Check if shape collided
+            // try to move right
+            fallingShape.moveRight();
+            if (fallingShape.collide())
+                fallingShape.moveLeft();
+            else{
+                fallingShape.moveLeft();
+                fallingShape.unrotate();
+                fallingShape.moveRight();
+                return true;
+            }
+
+            // try to move left
+            fallingShape.moveLeft();
+            if (fallingShape.collide())
+                fallingShape.moveRight();
+            else {
+                fallingShape.moveRight();
+                fallingShape.unrotate();
+                fallingShape.moveLeft();
+                return true;
+            }
+
+            fallingShape.unrotate();
+            return false;
+        }
+        fallingShape.unrotate(); //If not rotated undo and tell that it cant
+        return true;
+    }
+
+    private boolean checkGameOver() {
+        return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
+    }
+
+    public void clear(){
+        blocks.clear();
+        fallingShape = null;
+        nextShape = null;
+        score = 0;
+        gameStatus = GameStatus.INITIATING;
+    }
 
     public List<Block> getBlocks() {
         return blocks;
@@ -144,7 +224,27 @@ public class Board {
         return nextShape;
     }
 
-    public static int getColorForAllForNow() {
-        return COLOR_FOR_ALL_FOR_NOW;
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
+    public TextView getScore_text() {
+        return score_text;
+    }
+
+    public void setScore_text(TextView score_text) {
+        this.score_text = score_text;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

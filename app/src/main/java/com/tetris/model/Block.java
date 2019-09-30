@@ -10,38 +10,59 @@ public class Block extends Pixel {
     private int color;
 
     //Constructors
-    public Block(){
-        super(0, 0 ,1, 1);
+    public Block() {
+        super(0, 0, 1, 1);
         this.falling = false;
         this.color = 0xffffffff;
     }
 
     //Checks if it collided with something
-    public boolean collide(){
-        //Collide with any block
-        for (Block block : Board.getInstance().getBlocks()){
-            List<Block> lista = Board.getInstance().getBlocks();
-            if(block.isFalling())
+    public boolean collide() {
+        // Check if it hasnt collided with a block
+        // or with the walls
+        for (Block block : Board.getInstance().getBlocks()) {
+            if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
                 continue;
-            if(collide(block))
+            if (collide(block))
                 return true;
         }
-        //Collide with board sides
-        if ((x > Board.BOARD_WIDTH-1) || (y > Board.BOARD_HEIGHT-1) || (x < 0) || (y < 0))
-            return true;
+
+        return (x > Board.BOARD_COLS - 1) || (y > Board.BOARD_ROWS - 1) || (x < 0);
+
+        //return collideWithAnyBlock() && !collideWithWalls();
+    }
+
+    //Collide with any block
+    private boolean collideWithAnyBlock(){
+        for (Block block : Board.getInstance().getBlocks()) {
+            if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
+                continue;
+            if (collide(block))
+                return true;
+        }
         return false;
     }
 
+    //Collide with board sides
+    private boolean collideWithWalls(){
+        // y can be negative so shapes can spawn above the board
+        return (x > Board.BOARD_COLS - 1) || (y > Board.BOARD_ROWS - 1) || (x < 0);
+    }
 
+
+    //Block movement
     public void moveDown() {
         moveBy(0, 1);
     }
+
     public void moveUp() {
         moveBy(0, -1);
     }
+
     public void moveLeft() {
         moveBy(-1, 0);
     }
+
     public void moveRight() {
         moveBy(1, 0);
     }
@@ -52,12 +73,12 @@ public class Block extends Pixel {
         return falling;
     }
 
-    public int getColor() {
-        return color;
-    }
-
     public void setFalling(boolean falling) {
         this.falling = falling;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public void setColor(int color) {

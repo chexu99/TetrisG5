@@ -1,12 +1,15 @@
 package com.tetris.model.impl;
 
+import android.graphics.Color;
+
 import com.tetris.model.Block;
-import com.tetris.model.Board;
 import com.tetris.model.Shape;
 
 public class ShapeT extends Shape {
     public ShapeT() {
         super(3, 2);
+        rotation_block = blocks[1];
+        rotation_cycle = 4;
     }
 
     public Block[] getBlocks() {
@@ -19,9 +22,10 @@ public class ShapeT extends Shape {
         blocks[2].setY(y);
         blocks[3].setY(y + 1);
 
+        doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Board.COLOR_FOR_ALL_FOR_NOW);
+            block.setColor(Color.YELLOW);
         }
         return blocks;
     }

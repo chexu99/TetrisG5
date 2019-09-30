@@ -12,11 +12,6 @@ public class Pixel {
     public Pixel() {
     }
 
-    public Pixel(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public Pixel(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -55,21 +50,5 @@ public class Pixel {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 }

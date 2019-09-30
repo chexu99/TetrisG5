@@ -1,12 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:configChanges="orientation|screenSize"
-    tools:context=".view.MainActivity">
-
+    tools:context=".view.FinalScoreActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,14 +13,13 @@
         app:srcCompat="@drawable/tetris_portada" />
 
     <Button
-        android:id="@+id/new_game_button"
+        android:id="@+id/restart_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="20dp"
-        android:text="Empezar partida"
+        android:text="Volver"
         android:textSize="20dp" />
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
