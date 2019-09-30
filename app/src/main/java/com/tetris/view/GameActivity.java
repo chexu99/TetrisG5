@@ -22,6 +22,7 @@ public class GameActivity extends Activity {
 
     final int BOARD_HEIGHT = 800;
     final int BOARD_WIDTH = 400;
+    final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
     //Buttons
@@ -29,8 +30,6 @@ public class GameActivity extends Activity {
     public Button despIzq;
 
     //Board values
-    int NUM_ROWS = 26;
-    int NUM_COLUMNS = 16;
     int speed_test = 100;
     int score;
 
@@ -102,16 +101,7 @@ public class GameActivity extends Activity {
         // Paint the game board background
         canvas.drawColor(Color.BLACK);
 
-        // Paint the grid on the game board
-        paint.setColor(Color.WHITE);
-        for (int i = 0; i <= (NUM_ROWS - 6); ++i) {
-            canvas.drawLine(0, i * (BOARD_HEIGHT / (NUM_ROWS - 6)), BOARD_WIDTH,
-                    i * (BOARD_HEIGHT / (NUM_ROWS - 6)), paint);
-        }
-        for (int i = 0; i <= (NUM_COLUMNS - 6); ++i) {
-            canvas.drawLine(i * (BOARD_WIDTH / (NUM_COLUMNS - 6)), 0,
-                    i * (BOARD_WIDTH / (NUM_COLUMNS - 6)), BOARD_HEIGHT, paint);
-        }
+
 
 
         // Paint the tetris blocks j = y    i = x
@@ -123,39 +113,23 @@ public class GameActivity extends Activity {
             bitmapBlock = Bitmap.createScaledBitmap(bitmap, block.getWidth() * 20, block.getHeight() * 20, false);
             canvas.drawBitmap(bitmap, block.getX(), block.getY(), paint);
              */
-            canvas.drawRect((block.getX()) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                    (block.getY()) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                    (block.getX() + 1) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                    (block.getY() + 1) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
+            canvas.drawRect((block.getX()) * PIXEL_SIZE,
+                    (block.getY()) * PIXEL_SIZE,
+                    (block.getX() + 1) * PIXEL_SIZE,
+                    (block.getY() + 1) * PIXEL_SIZE,
                     paint);
 
         }
-        // Paint borders to the tetris blocks
-        for (int i = 3; i < NUM_ROWS - 3; ++i) {
-            for (int j = 3; j < NUM_COLUMNS - 3; ++j) {
-                paint.setColor(Color.BLACK);
-                canvas.drawLine((j - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        (j - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i + 1 - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        paint);
-                canvas.drawLine((j - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        (j + 1 - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        paint);
-                canvas.drawLine((j + 1 - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        (j + 1 - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i + 1 - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        paint);
-                canvas.drawLine((j - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i + 1 - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        (j + 1 - 3) * (BOARD_WIDTH / (NUM_COLUMNS - 6)),
-                        (i + 1 - 3) * (BOARD_HEIGHT / (NUM_ROWS - 6)),
-                        paint);
 
-            }
+        // Paint the grid on the game board
+        paint.setColor(Color.GRAY);
+        for (int i = 0; i <= (Board.BOARD_ROWS); ++i) {
+            canvas.drawLine(0, i * PIXEL_SIZE, BOARD_WIDTH,
+                    i * PIXEL_SIZE, paint);
+        }
+        for (int i = 0; i <= (Board.BOARD_COLS); ++i) {
+            canvas.drawLine(i * PIXEL_SIZE, 0,
+                    i * PIXEL_SIZE, BOARD_HEIGHT, paint);
         }
 
         // Display the current painting

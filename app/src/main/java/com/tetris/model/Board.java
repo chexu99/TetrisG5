@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Board {
 
-    public static final int BOARD_WIDTH = 10;
-    public static final int BOARD_HEIGHT = 20;
+    public static final int BOARD_COLS = 10;
+    public static final int BOARD_ROWS = 20;
 
     private static Board instance = null;
 
@@ -116,7 +116,7 @@ public class Board {
             if (block.getY() == y)
                 ++count;
         }
-        return count == BOARD_WIDTH;
+        return count == BOARD_COLS;
     }
 
     public boolean checkMoveLeft() {

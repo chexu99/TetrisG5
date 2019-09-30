@@ -28,7 +28,7 @@ public class Block extends Pixel {
         }
         //Collide with board sides
         // y can be negative so shapes can spawn above the board
-        return (x > Board.BOARD_WIDTH - 1) || (y > Board.BOARD_HEIGHT - 1) || (x < 0);
+        return (x > Board.BOARD_COLS - 1) || (y > Board.BOARD_ROWS - 1) || (x < 0);
     }
 
 

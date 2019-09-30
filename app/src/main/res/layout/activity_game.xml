@@ -55,10 +55,22 @@
                 android:id="@+id/mvRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Der"
+                android:text="@String/Der"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.755"
+                app:layout_constraintHorizontal_bias="0.839"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.466" />
+
+            <Button
+                android:id="@+id/mvRight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@String/Der2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.454"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.466" />
@@ -67,10 +79,10 @@
                 android:id="@+id/mvLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Izq"
+                android:text="@String/Izq"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/mvRight"
-                app:layout_constraintHorizontal_bias="0.394"
+                app:layout_constraintHorizontal_bias="0.12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.466" />
