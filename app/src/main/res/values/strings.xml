@@ -4,4 +4,6 @@
     <string name="izquierda"><![CDATA[<---]]></string>
     <string name="rot">Rot</string>
     <string name="derecha"><![CDATA[--->]]></string>
+    <string name="textview">TextView</string>
+    <string name="adios">Adios</string>
 </resources>

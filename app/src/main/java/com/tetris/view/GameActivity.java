@@ -143,12 +143,6 @@ public class GameActivity extends Activity {
 
         // Display the current painting
         constraintLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
-
-        // Update the score textview
-        TextView textView = findViewById(R.id.game_score_textview);
-        textView.setText("Score: " + score);
-
-
     }
 
     @Override
