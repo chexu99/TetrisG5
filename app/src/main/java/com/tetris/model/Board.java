@@ -221,6 +221,7 @@ public class Board extends Activity {
     }
 
     public Shape getNextShape() {
+
         return nextShape;
     }
 
@@ -232,19 +233,8 @@ public class Board extends Activity {
         this.gameStatus = gameStatus;
     }
 
-    public TextView getScore_text() {
-        return score_text;
-    }
-
-    public void setScore_text(TextView score_text) {
-        this.score_text = score_text;
-    }
-
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
 }

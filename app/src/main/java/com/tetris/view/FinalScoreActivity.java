@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.tetris.R;
+import com.tetris.model.Board;
 
 public class FinalScoreActivity extends AppCompatActivity {
 
     private Button button;
+    public TextView score_gameover_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class FinalScoreActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
+        score_gameover_text = (TextView) findViewById(R.id.score_gameover);
+        score_gameover_text.setText(String.valueOf(Board.getInstance().getScore()));
     }
 
     public void openMainActivity() {
