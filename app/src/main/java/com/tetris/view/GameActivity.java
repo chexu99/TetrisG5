@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -31,8 +33,8 @@ public class GameActivity extends Activity {
     final Handler handler = new Handler();
 
     //Buttons
-    public Button despDer;
-    public Button despIzq;
+    public ImageButton despDer;
+    public ImageButton despIzq;
     public ImageButton despRotate;
 
     //Board values
@@ -48,7 +50,7 @@ public class GameActivity extends Activity {
 
     ConstraintLayout gameLayout;
     ConstraintLayout scoreLayout;
-    ConstraintLayout leftLayout;
+    ImageView leftLayout;
 
 
     public TextView text;
@@ -137,23 +139,26 @@ public class GameActivity extends Activity {
         handler.postDelayed(runnable, speed_test);
     }
 
-    public void PaintNextShape(){
+    public void paintNextShape(){
         for (Block block: Board.getInstance().getNextShape().getBlocks()) {
-            paint.setColor(Color.RED);
-        /*
-            leftcanvas.drawRect((int) ((block.getX()) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY()) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getX() + 1) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY() + 1) * PIXEL_SIZE * 0.5),
+            paint.setColor(block.getColor());
+
+
+            //We do -4 on x and +4 on y cause the shape spawns on the middle of the board and
+            // 4 blocks on top
+            leftcanvas.drawRect((int) ((block.getX()-4) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY()+4) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getX()-4 + 1) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY()+4 + 1) * PIXEL_SIZE * 0.5),
                     paint);
-        */
-            leftcanvas.drawRect(0,0,1,1,paint);
+
         }
     }
 
     void paintMatrix() {
         // Paint the game board background
         canvas.drawColor(Color.BLACK);
+        leftcanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Paint the tetris blocks j = y    i = x
         for (Block block : Board.getInstance().getBlocks()) {
@@ -186,12 +191,11 @@ public class GameActivity extends Activity {
         //Update score
         text.setText(String.valueOf(Board.getInstance().getScore()));
 
-
+        //Paint next shape on left side
+        paintNextShape();
 
         // Display the current painting
         gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
-        //leftcanvas.drawColor(Color.BLACK);
-        PaintNextShape();
         leftLayout.setBackgroundDrawable(new BitmapDrawable(leftbitmap));
     }
 

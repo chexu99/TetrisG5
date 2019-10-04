@@ -21,7 +21,7 @@ public class Board extends Activity {
 
     private static Board instance = null;
 
-    private List<Block> blocks = new ArrayList<Block>();
+    private List<Block> blocks = new ArrayList<>();
     private Shape fallingShape;
     private Shape nextShape;
 
@@ -57,7 +57,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(2); //TODO: mirar
+        nextShape = Shape.randomShape(index); //TODO: mirar
     }
 
     //Next shape falls
