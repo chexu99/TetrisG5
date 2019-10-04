@@ -43,8 +43,13 @@ public class GameActivity extends Activity {
     Canvas canvas;
     Paint paint;
 
+    Bitmap leftbitmap; // To show next shape
+    Canvas leftcanvas;
+
     ConstraintLayout gameLayout;
     ConstraintLayout scoreLayout;
+    ConstraintLayout leftLayout;
+
 
     public TextView text;
 
@@ -78,6 +83,10 @@ public class GameActivity extends Activity {
         scoreLayout = findViewById(R.id.top_board);
 
         text = (TextView) findViewById(R.id.score_text_view);
+
+        leftLayout = findViewById(R.id.next_shape);
+        leftbitmap = Bitmap.createBitmap((int) (3 * PIXEL_SIZE * 0.5), (int) (4 * PIXEL_SIZE * 0.5), Bitmap.Config.ARGB_8888);
+        leftcanvas = new Canvas(leftbitmap);
 
 
         setUpButtons();
@@ -128,6 +137,20 @@ public class GameActivity extends Activity {
         handler.postDelayed(runnable, speed_test);
     }
 
+    public void PaintNextShape(){
+        for (Block block: Board.getInstance().getNextShape().getBlocks()) {
+            paint.setColor(Color.RED);
+        /*
+            leftcanvas.drawRect((int) ((block.getX()) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY()) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getX() + 1) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY() + 1) * PIXEL_SIZE * 0.5),
+                    paint);
+        */
+            leftcanvas.drawRect(0,0,1,1,paint);
+        }
+    }
+
     void paintMatrix() {
         // Paint the game board background
         canvas.drawColor(Color.BLACK);
@@ -163,8 +186,13 @@ public class GameActivity extends Activity {
         //Update score
         text.setText(String.valueOf(Board.getInstance().getScore()));
 
+
+
         // Display the current painting
         gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        //leftcanvas.drawColor(Color.BLACK);
+        PaintNextShape();
+        leftLayout.setBackgroundDrawable(new BitmapDrawable(leftbitmap));
     }
 
     @Override
