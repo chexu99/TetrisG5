@@ -37,7 +37,7 @@ public class GameActivity extends Activity {
     public ImageButton despRotate;
 
     //Board values
-    int speed = 50;
+    int speed = 20;
 
     Paint paint;
 
