@@ -25,7 +25,6 @@ public class Board extends Activity {
     private Shape fallingShape;
     private Shape nextShape;
 
-    private TextView score_text;
     private int score = 0;
 
     private GameStatus gameStatus;
@@ -36,19 +35,13 @@ public class Board extends Activity {
         GAME_OVER,
     }
 
-    private List<GameActions> actions = new ArrayList<>();
-    public enum GameActions {
-        DELETED_LINE,
-        FALL_UPDATE,
-        COLLIDED
-    }
+    private boolean needsUpdate = true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        score_text = findViewById(R.id.score_text_view);
     }
 
     //Board instance for use by other classes
@@ -97,9 +90,8 @@ public class Board extends Activity {
                     fallingShape = null;
                     makeNextShapeFalling();
                 }
-                actions.add(GameActions.COLLIDED);
-            }else
-                actions.add(GameActions.FALL_UPDATE);
+                needsUpdate = true;
+            }
         }
 
 
@@ -146,9 +138,6 @@ public class Board extends Activity {
         for (Block block : blocks) {
             if (block.getY() == y)
                 ++count;
-        }
-        if (count > 0){
-            actions.add(GameActions.DELETED_LINE);
         }
         return count == BOARD_COLS;
     }
@@ -249,12 +238,12 @@ public class Board extends Activity {
         return score;
     }
 
-    public List<GameActions> getActions() {
-        return actions;
+    public boolean isNeedsUpdate() {
+        return needsUpdate;
     }
 
-    public void setActions(List<GameActions> actions) {
-        this.actions = actions;
+    public void setNeedsUpdate(boolean needsUpdate) {
+        this.needsUpdate = needsUpdate;
     }
 
 }
