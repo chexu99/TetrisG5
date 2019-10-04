@@ -3,16 +3,16 @@ package com.tetris.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,8 +27,8 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 800;
-    final int BOARD_WIDTH = 400;
+    final int BOARD_HEIGHT = 3200;
+    final int BOARD_WIDTH = 1600;
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
@@ -48,7 +48,7 @@ public class GameActivity extends Activity {
     Bitmap leftbitmap; // To show next shape
     Canvas leftcanvas;
 
-    ConstraintLayout gameLayout;
+    ImageView gameLayout;
     ConstraintLayout scoreLayout;
     ImageView leftLayout;
 
@@ -128,9 +128,9 @@ public class GameActivity extends Activity {
 
     void gameInit() {
         // TODO: do more stuff like set score to 0 or prepare controls
-        if(Board.getInstance().getBlocks().size() > 0)
+        if (Board.getInstance().getBlocks().size() > 0)
             Board.getInstance().clear();
-        
+
         text.setText(String.valueOf(Board.getInstance().getScore()));
 
         stopped = false;
@@ -139,53 +139,36 @@ public class GameActivity extends Activity {
         handler.postDelayed(runnable, speed_test);
     }
 
-    public void paintNextShape(){
-        for (Block block: Board.getInstance().getNextShape().getBlocks()) {
-            paint.setColor(block.getColor());
+    public void paintNextShape() {
+        for (Block block : Board.getInstance().getNextShape().getBlocks()) {
+            //paint.setColor(block.getColor());
 
 
             //We do -4 on x and +4 on y cause the shape spawns on the middle of the board and
             // 4 blocks on top
-            leftcanvas.drawRect((int) ((block.getX()-4) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY()+4) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getX()-4 + 1) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY()+4 + 1) * PIXEL_SIZE * 0.5),
-                    paint);
+            /*leftcanvas.drawRect((int) ((block.getX() - 4) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY() + 4) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getX() - 4 + 1) * PIXEL_SIZE * 0.5),
+                    (int) ((block.getY() + 4 + 1) * PIXEL_SIZE * 0.5),
+                    paint);*/
+
+            Bitmap bitmapBlock =  bitmapTextureSelector(block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int)(PIXEL_SIZE*0.5), (int)(PIXEL_SIZE*0.5), false);
+            canvas.drawBitmap(bitmapBlock, (int) ((block.getX()-4)*PIXEL_SIZE*0.5), (int) ((block.getY()-4)*PIXEL_SIZE*0.5), paint);
 
         }
     }
 
     void paintMatrix() {
         // Paint the game board background
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         leftcanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         // Paint the tetris blocks j = y    i = x
         for (Block block : Board.getInstance().getBlocks()) {
-            paint.setColor(block.getColor());
-
-            /*   //En el futuro cambiar por imagen
-            Bitmap bitmapBlock = BitmapFactory.decodeResource(this.getResources(), R.drawable.bloque_test);
-            bitmapBlock = Bitmap.createScaledBitmap(bitmap, block.getWidth() * 20, block.getHeight() * 20, false);
-            canvas.drawBitmap(bitmap, block.getX(), block.getY(), paint);
-             */
-            canvas.drawRect((block.getX()) * PIXEL_SIZE,
-                    (block.getY()) * PIXEL_SIZE,
-                    (block.getX() + 1) * PIXEL_SIZE,
-                    (block.getY() + 1) * PIXEL_SIZE,
-                    paint);
-
-        }
-
-        // Paint the grid on the game board
-        paint.setColor(Color.GRAY);
-        for (int i = 0; i <= (Board.BOARD_ROWS); ++i) {
-            canvas.drawLine(0, i * PIXEL_SIZE, BOARD_WIDTH,
-                    i * PIXEL_SIZE, paint);
-        }
-        for (int i = 0; i <= (Board.BOARD_COLS); ++i) {
-            canvas.drawLine(i * PIXEL_SIZE, 0,
-                    i * PIXEL_SIZE, BOARD_HEIGHT, paint);
+            Bitmap bitmapBlock =  bitmapTextureSelector(block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+            canvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
 
         //Update score
@@ -197,6 +180,26 @@ public class GameActivity extends Activity {
         // Display the current painting
         gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
         leftLayout.setBackgroundDrawable(new BitmapDrawable(leftbitmap));
+    }
+
+    private Bitmap bitmapTextureSelector(int color) {
+        switch (color) {
+            case Color.YELLOW:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_yellow);
+            case Color.BLUE:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_blue);
+            case Color.WHITE:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_white);
+            case Color.CYAN:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_cyan);
+            case Color.GREEN:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_lime);
+            case Color.RED:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_red);
+            case Color.MAGENTA:
+            default:
+                return BitmapFactory.decodeResource(this.getResources(), R.drawable.block_purple);
+        }
     }
 
     @Override
@@ -218,7 +221,7 @@ public class GameActivity extends Activity {
 
         //handler.removeCallbacks(runnable);
 
-        if(!stopped) {
+        if (!stopped) {
             stopped = true;
             Intent intent = new Intent(this, FinalScoreActivity.class);
             startActivity(intent);
