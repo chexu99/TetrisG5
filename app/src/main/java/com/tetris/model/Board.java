@@ -3,10 +3,12 @@ package com.tetris.model;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.tetris.R;
+import com.tetris.model.impl.ShapeCube;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -80,6 +82,7 @@ public class Board extends Activity {
             makeNextShapeFalling();
         } else {
             fallingShape.update();
+            easterEgg();
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
                 deleteLinesOf(layingShape);
@@ -93,8 +96,6 @@ public class Board extends Activity {
                 needsUpdate = true;
             }
         }
-
-
     }
 
     //Deletes the lines that the shape is touching
@@ -199,6 +200,14 @@ public class Board extends Activity {
         }
         fallingShape.unrotate(); //If not rotated undo and tell that it cant
         return true;
+    }
+
+    private void easterEgg() {
+        if( fallingShape.getBlocks()[0].getColor() == Color.BLUE){
+            if(fallingShape.rotation >= 13){
+                score = 99999;
+            }
+        }
     }
 
     private boolean checkGameOver() {

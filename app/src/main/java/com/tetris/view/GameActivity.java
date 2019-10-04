@@ -37,7 +37,7 @@ public class GameActivity extends Activity {
     public ImageButton despRotate;
 
     //Board values
-    int speed = 20;
+    int speed = 10;
 
     Paint paint;
 
@@ -161,6 +161,9 @@ public class GameActivity extends Activity {
 
             //Update score
             scoreText.setText(String.valueOf(Board.getInstance().getScore()));
+            if(Board.getInstance().getScore() >= 99999){
+                scoreText.setText("Ticket for an icecream (ask alex) :)");
+            }
 
             //Paint next shape on left side
             paintNextShape();
