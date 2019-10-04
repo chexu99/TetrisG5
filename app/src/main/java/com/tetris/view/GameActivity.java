@@ -6,13 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,48 +20,54 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.tetris.R;
 import com.tetris.model.Block;
 import com.tetris.model.Board;
+import com.tetris.utils.Colors;
 
 public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 800;
-    final int BOARD_WIDTH = 400;
+    final int BOARD_HEIGHT = 3200;
+    final int BOARD_WIDTH = 1600;
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
     //Buttons
-    public Button despDer;
-    public Button despIzq;
+    public ImageButton despDer;
+    public ImageButton despIzq;
     public ImageButton despRotate;
 
     //Board values
-    int speed_test = 50;
-    int score;
+    int speed = 10;
 
-    Bitmap bitmap;
-    Canvas canvas;
     Paint paint;
 
-    ConstraintLayout gameLayout;
-    ConstraintLayout scoreLayout;
+    Bitmap boardBitmap;
+    Canvas boardCanvas;
 
-    public TextView text;
+    Bitmap nextShapeBitmap;
+    Canvas nextShapeCanvas;
+
+    Bitmap fallingShapeBitmap;
+    Canvas fallingShapeCanvas;
+
+    ImageView boardLayout;
+    ImageView fallingShapeLayout;
+    ConstraintLayout scoreLayout;
+    ImageView nextShapeLayout;
+
+    TextView scoreText;
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            /*TODO: ahora mismo si detecta game over no hace nada mas que dejar de actualizar
-            habria que hacer una activity de gameover o algo asi con el score
-             */
             if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
-                Board.getInstance().update();
+                Board.getInstance().update(); //Updates the board
             if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
-                paintMatrix(); //Paints game board
+                paintGame(); //Paints game board
             else {
                 onStop();
             }
-            handler.postDelayed(this, speed_test);
+            handler.postDelayed(this, speed);
         }
     };
 
@@ -70,19 +76,38 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        bitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        paint = new Paint();
-        gameLayout = findViewById(R.id.game_board);
-
-        scoreLayout = findViewById(R.id.top_board);
-
-        text = (TextView) findViewById(R.id.score_text_view);
-
+        setUpLayouts();
 
         setUpButtons();
 
         gameInit();
+    }
+
+    private void setUpLayouts(){
+        // Game board
+        boardBitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
+        boardCanvas = new Canvas(boardBitmap);
+        boardCanvas.drawColor(Color.BLACK);
+        boardLayout = findViewById(R.id.game_board);
+        boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
+
+        //Falling shape
+        fallingShapeBitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
+        fallingShapeCanvas = new Canvas(fallingShapeBitmap);
+        fallingShapeLayout = findViewById(R.id.falling_shape);
+        fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
+
+        //Score
+        scoreLayout = findViewById(R.id.top_board);
+        scoreText = (TextView) findViewById(R.id.score_text_view);
+
+        //Next shape
+        nextShapeBitmap = Bitmap.createBitmap((int) (3 * PIXEL_SIZE * 0.5), (int) (4 * PIXEL_SIZE * 0.5), Bitmap.Config.ARGB_8888);
+        nextShapeCanvas = new Canvas(nextShapeBitmap);
+        nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        nextShapeLayout = findViewById(R.id.next_shape);
+
+
     }
 
     private void setUpButtons() {
@@ -115,57 +140,76 @@ public class GameActivity extends Activity {
         });
     }
 
-    void gameInit() {
+    private void gameInit() {
         // TODO: do more stuff like set score to 0 or prepare controls
-        if(Board.getInstance().getBlocks().size() > 0)
+        if (Board.getInstance().getBlocks().size() > 0)
             Board.getInstance().clear();
-        
-        text.setText(String.valueOf(Board.getInstance().getScore()));
+
+        scoreText.setText(String.valueOf(Board.getInstance().getScore()));
 
         stopped = false;
         Board.getInstance().setGameStatus(Board.GameStatus.INITIATING);
         handler.removeCallbacks(runnable);
-        handler.postDelayed(runnable, speed_test);
+        handler.postDelayed(runnable, speed);
     }
 
-    void paintMatrix() {
-        // Paint the game board background
-        canvas.drawColor(Color.BLACK);
+    //Painting methods
+    private void paintGame() {
+        if(Board.getInstance().isNeedsUpdate()) {
+            //Update board layout
+            paintBlockArray();
 
-        // Paint the tetris blocks j = y    i = x
+            //Update score
+            scoreText.setText(String.valueOf(Board.getInstance().getScore()));
+            if(Board.getInstance().getScore() >= 99999){
+                scoreText.setText("Ticket for an icecream (ask alex) :)");
+            }
+
+            //Paint next shape on left side
+            paintNextShape();
+        }
+        //Paint fallingShape Layout
+        paintFallingShape();
+    }
+
+    private void paintNextShape() {
+        nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+        for (Block block : Board.getInstance().getNextShape().getBlocks()) {
+            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int)(PIXEL_SIZE*0.5), (int)(PIXEL_SIZE*0.5), false);
+            nextShapeCanvas.drawBitmap(bitmapBlock, (int) ((block.getX()-4)*PIXEL_SIZE*0.5), (int) ((block.getY()+4)*PIXEL_SIZE*0.5), paint);
+        }
+
+        nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
+    }
+
+    private void paintBlockArray(){
+        boardCanvas.drawColor(Color.BLACK);
+
         for (Block block : Board.getInstance().getBlocks()) {
-            paint.setColor(block.getColor());
-
-            /*   //En el futuro cambiar por imagen
-            Bitmap bitmapBlock = BitmapFactory.decodeResource(this.getResources(), R.drawable.bloque_test);
-            bitmapBlock = Bitmap.createScaledBitmap(bitmap, block.getWidth() * 20, block.getHeight() * 20, false);
-            canvas.drawBitmap(bitmap, block.getX(), block.getY(), paint);
-             */
-            canvas.drawRect((block.getX()) * PIXEL_SIZE,
-                    (block.getY()) * PIXEL_SIZE,
-                    (block.getX() + 1) * PIXEL_SIZE,
-                    (block.getY() + 1) * PIXEL_SIZE,
-                    paint);
-
+            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+            boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
 
-        // Paint the grid on the game board
-        paint.setColor(Color.GRAY);
-        for (int i = 0; i <= (Board.BOARD_ROWS); ++i) {
-            canvas.drawLine(0, i * PIXEL_SIZE, BOARD_WIDTH,
-                    i * PIXEL_SIZE, paint);
-        }
-        for (int i = 0; i <= (Board.BOARD_COLS); ++i) {
-            canvas.drawLine(i * PIXEL_SIZE, 0,
-                    i * PIXEL_SIZE, BOARD_HEIGHT, paint);
-        }
-
-        //Update score
-        text.setText(String.valueOf(Board.getInstance().getScore()));
-
-        // Display the current painting
-        gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        Board.getInstance().setNeedsUpdate(false);
+        boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
     }
+
+    private void paintFallingShape(){
+        fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+        for(Block block : Board.getInstance().getFallingShape().getBlocks()){
+            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+            fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
+        }
+
+        fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
+    }
+
+
 
     @Override
     protected void onPause() {
@@ -186,7 +230,7 @@ public class GameActivity extends Activity {
 
         //handler.removeCallbacks(runnable);
 
-        if(!stopped) {
+        if (!stopped) {
             stopped = true;
             Intent intent = new Intent(this, FinalScoreActivity.class);
             startActivity(intent);

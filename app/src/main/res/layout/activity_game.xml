@@ -52,7 +52,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_board"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:orientation="vertical"
@@ -61,39 +61,43 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.996">
-
-            <Button
-                android:id="@+id/mvRight"
-                android:layout_width="105dp"
-                android:layout_height="51dp"
-                android:text="@string/derecha"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.823"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.466" />
+            app:layout_constraintVertical_bias="0.993">
 
             <ImageButton
-                android:id="@+id/mvRotate"
-                android:layout_width="64dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="170dp"
-                android:layout_marginLeft="170dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:id="@+id/mvRight"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
                 android:background="@null"
-                android:src="@drawable/btn_rotate"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_right"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.901"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <ImageButton
+                android:id="@+id/mvRotate"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_rotate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/mvRight"
+                app:layout_constraintHorizontal_bias="0.532"
+                app:layout_constraintStart_toEndOf="@+id/mvLeft"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
                 android:id="@+id/mvLeft"
-                android:layout_width="102dp"
-                android:layout_height="45dp"
-                android:text="@string/izquierda"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/btn_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/mvRight"
                 app:layout_constraintHorizontal_bias="0.306"
@@ -117,7 +121,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/left_board"
-                android:layout_width="60dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
@@ -125,9 +129,23 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0" >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+                <ImageView
+                    android:id="@+id/next_shape"
+                    android:layout_width="60dp"
+                    android:layout_height="80dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.097">
+
+                </ImageView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
                 android:id="@+id/game_board"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -141,11 +159,27 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/falling_shape"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/right_board"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/left_board"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            </ImageView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/right_board"
-                android:layout_width="60dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"

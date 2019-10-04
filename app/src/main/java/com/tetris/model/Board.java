@@ -3,10 +3,12 @@ package com.tetris.model;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.tetris.R;
+import com.tetris.model.impl.ShapeCube;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,11 +23,10 @@ public class Board extends Activity {
 
     private static Board instance = null;
 
-    private List<Block> blocks = new ArrayList<Block>();
+    private List<Block> blocks = new ArrayList<>();
     private Shape fallingShape;
     private Shape nextShape;
 
-    private TextView score_text;
     private int score = 0;
 
     private GameStatus gameStatus;
@@ -36,12 +37,13 @@ public class Board extends Activity {
         GAME_OVER,
     }
 
+    private boolean needsUpdate = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        score_text = findViewById(R.id.score_text_view);
     }
 
     //Board instance for use by other classes
@@ -57,7 +59,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(2); //TODO: mirar
+        nextShape = Shape.randomShape(index); //TODO: mirar
     }
 
     //Next shape falls
@@ -80,6 +82,7 @@ public class Board extends Activity {
             makeNextShapeFalling();
         } else {
             fallingShape.update();
+            easterEgg();
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
                 deleteLinesOf(layingShape);
@@ -90,10 +93,9 @@ public class Board extends Activity {
                     fallingShape = null;
                     makeNextShapeFalling();
                 }
+                needsUpdate = true;
             }
         }
-
-
     }
 
     //Deletes the lines that the shape is touching
@@ -200,6 +202,14 @@ public class Board extends Activity {
         return true;
     }
 
+    private void easterEgg() {
+        if( fallingShape.getBlocks()[0].getColor() == Color.BLUE){
+            if(fallingShape.rotation >= 13){
+                score = 99999;
+            }
+        }
+    }
+
     private boolean checkGameOver() {
         return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
     }
@@ -235,6 +245,14 @@ public class Board extends Activity {
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isNeedsUpdate() {
+        return needsUpdate;
+    }
+
+    public void setNeedsUpdate(boolean needsUpdate) {
+        this.needsUpdate = needsUpdate;
     }
 
 }
