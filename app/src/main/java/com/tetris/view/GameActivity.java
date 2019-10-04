@@ -23,6 +23,9 @@ import com.tetris.R;
 import com.tetris.model.Block;
 import com.tetris.model.Board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends Activity {
 
     boolean stopped = false;
@@ -39,7 +42,6 @@ public class GameActivity extends Activity {
 
     //Board values
     int speed_test = 50;
-    int score;
 
     Bitmap bitmap;
     Canvas canvas;
@@ -48,7 +50,11 @@ public class GameActivity extends Activity {
     Bitmap leftbitmap; // To show next shape
     Canvas leftcanvas;
 
+    Bitmap fallingbitmap;
+    Canvas fallingcanvas;
+
     ImageView gameLayout;
+    ImageView fallingShapeLayout;
     ConstraintLayout scoreLayout;
     ImageView leftLayout;
 
@@ -77,19 +83,24 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Static board
         bitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        paint = new Paint();
         gameLayout = findViewById(R.id.game_board);
 
-        scoreLayout = findViewById(R.id.top_board);
+        //Falling shape
+        fallingbitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
+        fallingcanvas = new Canvas(fallingbitmap);
+        fallingShapeLayout = findViewById(R.id.falling_shape);
 
+        //Score
+        scoreLayout = findViewById(R.id.top_board);
         text = (TextView) findViewById(R.id.score_text_view);
 
-        leftLayout = findViewById(R.id.next_shape);
+        //Next shape
         leftbitmap = Bitmap.createBitmap((int) (3 * PIXEL_SIZE * 0.5), (int) (4 * PIXEL_SIZE * 0.5), Bitmap.Config.ARGB_8888);
         leftcanvas = new Canvas(leftbitmap);
-
+        leftLayout = findViewById(R.id.next_shape);
 
         setUpButtons();
 
@@ -141,35 +152,45 @@ public class GameActivity extends Activity {
 
     public void paintNextShape() {
         for (Block block : Board.getInstance().getNextShape().getBlocks()) {
-            //paint.setColor(block.getColor());
-
-
-            //We do -4 on x and +4 on y cause the shape spawns on the middle of the board and
-            // 4 blocks on top
-            /*leftcanvas.drawRect((int) ((block.getX() - 4) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY() + 4) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getX() - 4 + 1) * PIXEL_SIZE * 0.5),
-                    (int) ((block.getY() + 4 + 1) * PIXEL_SIZE * 0.5),
-                    paint);*/
-
             Bitmap bitmapBlock =  bitmapTextureSelector(block.getColor());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int)(PIXEL_SIZE*0.5), (int)(PIXEL_SIZE*0.5), false);
             canvas.drawBitmap(bitmapBlock, (int) ((block.getX()-4)*PIXEL_SIZE*0.5), (int) ((block.getY()-4)*PIXEL_SIZE*0.5), paint);
-
         }
     }
 
-    void paintMatrix() {
-        // Paint the game board background
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        leftcanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-        // Paint the tetris blocks j = y    i = x
+    void paintBlockArray(){
         for (Block block : Board.getInstance().getBlocks()) {
             Bitmap bitmapBlock =  bitmapTextureSelector(block.getColor());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             canvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
+    }
+
+    void paintFallingShape(){
+        for(Block block : Board.getInstance().getFallingShape().getBlocks()){
+            Bitmap bitmapBlock =  bitmapTextureSelector(block.getColor());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+            fallingcanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
+        }
+    }
+
+    void paintMatrix() {
+        // Paint the game board background
+        //canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        leftcanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+        // Paint the tetris blocks j = y    i = x
+        if(Board.getInstance().getActions().size() > 0) {
+            if (Board.getInstance().getActions().get(0) == Board.GameActions.DELETED_LINE) {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                paintBlockArray();
+            }
+            Board.getInstance().getActions().clear();
+        }
+
+        //Paint fallingShape Layout
+        fallingcanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        paintFallingShape();
 
         //Update score
         text.setText(String.valueOf(Board.getInstance().getScore()));
@@ -179,6 +200,7 @@ public class GameActivity extends Activity {
 
         // Display the current painting
         gameLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+        fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingbitmap));
         leftLayout.setBackgroundDrawable(new BitmapDrawable(leftbitmap));
     }
 

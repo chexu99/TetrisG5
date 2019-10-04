@@ -36,6 +36,13 @@ public class Board extends Activity {
         GAME_OVER,
     }
 
+    private List<GameActions> actions = new ArrayList<>();
+    public enum GameActions {
+        DELETED_LINE,
+        FALL_UPDATE,
+        COLLIDED
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +97,9 @@ public class Board extends Activity {
                     fallingShape = null;
                     makeNextShapeFalling();
                 }
-            }
+                actions.add(GameActions.COLLIDED);
+            }else
+                actions.add(GameActions.FALL_UPDATE);
         }
 
 
@@ -137,6 +146,9 @@ public class Board extends Activity {
         for (Block block : blocks) {
             if (block.getY() == y)
                 ++count;
+        }
+        if (count > 0){
+            actions.add(GameActions.DELETED_LINE);
         }
         return count == BOARD_COLS;
     }
@@ -235,6 +247,14 @@ public class Board extends Activity {
 
     public int getScore() {
         return score;
+    }
+
+    public List<GameActions> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<GameActions> actions) {
+        this.actions = actions;
     }
 
 }
