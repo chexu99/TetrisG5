@@ -100,7 +100,7 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        long updateInterval = 200;
+        long updateInterval = 250;
 
         if (SystemClock.uptimeMillis() - last_fall_update > updateInterval) {
             last_fall_update = SystemClock.uptimeMillis();
@@ -187,5 +187,9 @@ public class Shape extends Pixel {
 
     public long getNumMoves() {
         return numMoves;
+    }
+
+    public int getRotation() {
+        return rotation;
     }
 }

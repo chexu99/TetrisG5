@@ -82,7 +82,7 @@ public class Board extends Activity {
             makeNextShapeFalling();
         } else {
             fallingShape.update();
-            easterEgg();
+            EasterEggs.easterEgg1();
             if (!fallingShape.isFalling()) { //If it has collided with something
                 Shape layingShape = fallingShape;
                 deleteLinesOf(layingShape);
@@ -202,13 +202,7 @@ public class Board extends Activity {
         return true;
     }
 
-    private void easterEgg() {
-        if( fallingShape.getBlocks()[0].getColor() == Color.BLUE){
-            if(fallingShape.rotation >= 13){
-                score = 99999;
-            }
-        }
-    }
+
 
     private boolean checkGameOver() {
         return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
@@ -246,6 +240,11 @@ public class Board extends Activity {
     public int getScore() {
         return score;
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 
     public boolean isNeedsUpdate() {
         return needsUpdate;
