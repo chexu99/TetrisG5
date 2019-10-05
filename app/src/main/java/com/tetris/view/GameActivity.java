@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.tetris.R;
 import com.tetris.model.Block;
 import com.tetris.model.Board;
+import com.tetris.model.EasterEggs;
 import com.tetris.utils.Colors;
 
 public class GameActivity extends Activity {
@@ -37,7 +38,7 @@ public class GameActivity extends Activity {
     public ImageButton despRotate;
 
     //Board values
-    int speed = 10;
+    int speed = 35;
 
     Paint paint;
 
@@ -161,8 +162,9 @@ public class GameActivity extends Activity {
 
             //Update score
             scoreText.setText(String.valueOf(Board.getInstance().getScore()));
+
             if(Board.getInstance().getScore() >= 99999){
-                scoreText.setText("Ticket for an icecream (ask alex) :)");
+                scoreText.setText(EasterEggs.easterEgg2());
             }
 
             //Paint next shape on left side
