@@ -1,8 +1,6 @@
 package com.tetris.model;
 
 
-import java.util.List;
-
 public class Block extends Pixel {
 
     private boolean falling;
@@ -21,8 +19,8 @@ public class Block extends Pixel {
         // Check if it hasnt collided with a block
         // or with the walls
         for (Block block : Board.getInstance().getBlocks()) {
-            if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
-                continue;
+            //if (block.isFalling()) //Dont check if collided with blocks that are part of the falling shape
+            //    continue;
             if (collide(block))
                 return true;
         }

@@ -20,8 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.tetris.R;
 import com.tetris.model.Block;
 import com.tetris.model.Board;
-import com.tetris.model.EasterEggs;
 import com.tetris.utils.Colors;
+import com.tetris.utils.EasterEggs;
 
 public class GameActivity extends Activity {
 
@@ -38,7 +38,7 @@ public class GameActivity extends Activity {
     public ImageButton despRotate;
 
     //Board values
-    int speed = 35;
+    int speed = 50;
 
     Paint paint;
 
@@ -63,12 +63,15 @@ public class GameActivity extends Activity {
         public void run() {
             if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
                 Board.getInstance().update(); //Updates the board
-            if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
+            if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER)) {
                 paintGame(); //Paints game board
+                handler.removeCallbacks(this);
+                handler.postDelayed(this, speed);
+            }
             else {
                 onStop();
             }
-            handler.postDelayed(this, speed);
+
         }
     };
 
@@ -169,9 +172,10 @@ public class GameActivity extends Activity {
 
             //Paint next shape on left side
             paintNextShape();
+        }else {
+            //Paint fallingShape Layout
+            paintFallingShape();
         }
-        //Paint fallingShape Layout
-        paintFallingShape();
     }
 
     private void paintNextShape() {
@@ -188,6 +192,7 @@ public class GameActivity extends Activity {
 
     private void paintBlockArray(){
         boardCanvas.drawColor(Color.BLACK);
+        fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         for (Block block : Board.getInstance().getBlocks()) {
             Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());

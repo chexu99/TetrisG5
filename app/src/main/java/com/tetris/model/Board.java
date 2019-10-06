@@ -1,19 +1,15 @@
 package com.tetris.model;
 
 
-
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.tetris.R;
-import com.tetris.model.impl.ShapeCube;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Board extends Activity {
@@ -23,7 +19,7 @@ public class Board extends Activity {
 
     private static Board instance = null;
 
-    private List<Block> blocks = new ArrayList<>();
+    private List<Block> blocks = new CopyOnWriteArrayList<>();
     private Shape fallingShape;
     private Shape nextShape;
 
@@ -59,7 +55,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index); //TODO: mirar
+        nextShape = Shape.randomShape(2); //TODO: mirar
     }
 
     //Next shape falls
@@ -71,9 +67,6 @@ public class Board extends Activity {
             fallingShape = nextShape;
             spawnNextShape();
         }
-        //Add each block of the falling shape to the array
-        for (Block block : fallingShape.getBlocks())
-            blocks.add(block);
     }
 
     //Updates the falling shape
@@ -82,8 +75,14 @@ public class Board extends Activity {
             makeNextShapeFalling();
         } else {
             fallingShape.update();
-            EasterEggs.easterEgg1();
+            //EasterEggs.easterEgg1();
             if (!fallingShape.isFalling()) { //If it has collided with something
+                //Add falling shape blocks to board
+                for (Block block : fallingShape.getBlocks()) {
+                    block.setFalling(false);
+                    blocks.add(block);
+                }
+
                 Shape layingShape = fallingShape;
                 deleteLinesOf(layingShape);
 
@@ -94,6 +93,7 @@ public class Board extends Activity {
                     makeNextShapeFalling();
                 }
                 needsUpdate = true;
+
             }
         }
     }
@@ -108,11 +108,11 @@ public class Board extends Activity {
                 score += 30;
 
                 deletedLines.add(shapeBlock.getY());
+
                 // Remove from blocks all the block belonging to the same line.
-                for (Iterator<Block> itr = blocks.iterator(); itr.hasNext(); ) {
-                    Block block = itr.next();
+                for (Block block : blocks) {
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
-                        itr.remove();
+                        blocks.remove(block);
 
                 }
             }
@@ -120,17 +120,15 @@ public class Board extends Activity {
         for (Block block : blocks) {
             int count = 0;
             for (int y : deletedLines) {
-                //Checks if the block its in one of the deleted lines
-                if (y > block.getY())
+                //Checks if the block its above one of the deleted lines
+                if (y >= block.getY())
                     ++count;
             }
             //Moves block down per deleted line
             block.setY(block.getY() + count);
         }
-        //Set all blocks to fall false
-        for (Block block : Board.getInstance().getBlocks())
-            if (block.isFalling())
-                block.setFalling(false);
+
+
     }
 
     //Checks if a line is complete
@@ -167,7 +165,6 @@ public class Board extends Activity {
         return true;
     }
 
-
     public boolean checkRotate() {
         if (fallingShape == null) //If there is no falling shape cant rotate
             return false;
@@ -202,10 +199,11 @@ public class Board extends Activity {
         return true;
     }
 
-
-
     private boolean checkGameOver() {
-        return (fallingShape.getNumMoves() == 0) && fallingShape.collide();
+        for(Block block : blocks)
+            if(block.getY() <= 0) //If any of the blocks Y coordinate is above the board limit
+                return true;
+        return false;
     }
 
     public void clear(){

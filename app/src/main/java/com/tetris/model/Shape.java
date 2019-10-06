@@ -18,8 +18,6 @@ public class Shape extends Pixel {
 
     protected long last_fall_update; //Last time the piece felt
 
-    protected long numMoves; //Number of down movements the shape has had
-
     protected Block rotation_block; //Block which 'rotates'
     protected int rotation_cycle; //Number of cycles the shape has
     protected int rotation; //Rotation cycle we are in
@@ -28,8 +26,6 @@ public class Shape extends Pixel {
     //Shapeless shape
     protected Shape(int width, int height) {
         super(4, -4, width, height);
-
-        numMoves = 0;
 
         blocks = new Block[4];
         blocks[0] = new Block();
@@ -100,7 +96,7 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        long updateInterval = 250;
+        long updateInterval = 230;
 
         if (SystemClock.uptimeMillis() - last_fall_update > updateInterval) {
             last_fall_update = SystemClock.uptimeMillis();
@@ -116,7 +112,6 @@ public class Shape extends Pixel {
         for (Block block : blocks) {
             block.moveDown();
         }
-        numMoves++;
         moveBy(0, 1);
     }
 
@@ -125,7 +120,6 @@ public class Shape extends Pixel {
         for (Block block : blocks) {
             block.moveUp();
         }
-        numMoves--;
         moveBy(0, -1);
     }
 
@@ -172,21 +166,12 @@ public class Shape extends Pixel {
         return blocks;
     }
 
-    public void setBlocks(Block[] blocks) {
-        this.blocks = blocks;
-    }
-
     public boolean isFalling() {
         return falling;
     }
 
     public long getLast_fall_update() {
         return last_fall_update;
-    }
-
-
-    public long getNumMoves() {
-        return numMoves;
     }
 
     public int getRotation() {
