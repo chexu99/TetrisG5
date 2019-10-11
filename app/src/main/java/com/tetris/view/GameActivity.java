@@ -27,8 +27,8 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 3200;
-    final int BOARD_WIDTH = 1600;
+    final int BOARD_HEIGHT = 1600; //Max quality = 6400 -> Laser-mode = 20
+    final int BOARD_WIDTH = 800; //Max quality = 3200 -> Laser-mode = 10
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
@@ -181,21 +181,19 @@ public class GameActivity extends Activity {
     private void paintNextShape() {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-        for (Block block : Board.getInstance().getNextShape().getBlocks()) {
-            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
-            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int)(PIXEL_SIZE*0.5), (int)(PIXEL_SIZE*0.5), false);
-            nextShapeCanvas.drawBitmap(bitmapBlock, (int) ((block.getX()-4)*PIXEL_SIZE*0.5), (int) ((block.getY()+4)*PIXEL_SIZE*0.5), paint);
-        }
+        int color = Board.getInstance().getNextShape().getBlocks()[0].getColor(); //Color of first block
+        Bitmap bitmapBlock =  Colors.nextShapeTextureSelector(this.getResources(), color);
+        nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, paint);
 
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
     private void paintBlockArray(){
-        boardCanvas.drawColor(Color.BLACK);
+        boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         for (Block block : Board.getInstance().getBlocks()) {
-            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
+            Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
@@ -208,7 +206,7 @@ public class GameActivity extends Activity {
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         for(Block block : Board.getInstance().getFallingShape().getBlocks()){
-            Bitmap bitmapBlock =  Colors.bitmapTextureSelector(this.getResources(), block.getColor());
+            Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
