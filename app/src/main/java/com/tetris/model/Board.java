@@ -55,7 +55,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index); //TODO: mirar
+        nextShape = Shape.randomShape(index);
     }
 
     //Next shape falls
