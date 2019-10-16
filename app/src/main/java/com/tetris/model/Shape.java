@@ -24,8 +24,10 @@ public class Shape extends Pixel {
 
     //Constructors
     //Shapeless shape
-    protected Shape(int width, int height) {
-        super(4, -4, width, height);
+
+
+    protected Shape(int width, int height,int spawnY) {
+        super(4, spawnY, width, height);
 
         blocks = new Block[4];
         blocks[0] = new Block();
@@ -49,23 +51,23 @@ public class Shape extends Pixel {
     }
 
     //Shape defined by type
-    public static Shape randomShape(int type) {
+    public static Shape randomShape(int type,int spawnY) {
         switch (type) {
             case 1:
-                return new ShapeCube();
+                return new ShapeCube(spawnY);
             case 2:
-                return new ShapeI();
+                return new ShapeI(spawnY);
             case 3:
-                return new ShapeL();
+                return new ShapeL(spawnY);
             case 4:
-                return new ShapeLInverted();
+                return new ShapeLInverted(spawnY);
             case 5:
-                return new ShapeZ();
+                return new ShapeZ(spawnY);
             case 6:
-                return new ShapeZInverted();
+                return new ShapeZInverted(spawnY);
             case 7:
             default:
-                return new ShapeT();
+                return new ShapeT(spawnY);
         }
     }
 
@@ -102,8 +104,11 @@ public class Shape extends Pixel {
             last_fall_update = SystemClock.uptimeMillis();
             return true;
         }
+
         return false;
     }
+
+
 
 
     //MOVEMENT
@@ -177,4 +182,5 @@ public class Shape extends Pixel {
     public int getRotation() {
         return rotation;
     }
+
 }

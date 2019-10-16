@@ -3,6 +3,7 @@ package com.tetris.model;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.SystemClock;
 
 import com.tetris.R;
 
@@ -35,11 +36,13 @@ public class Board extends Activity {
 
     private boolean needsUpdate = true;
 
+    protected long last_deadLine_update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        last_deadLine_update = SystemClock.uptimeMillis();
     }
 
     //Board instance for use by other classes
@@ -50,12 +53,13 @@ public class Board extends Activity {
         return instance;
     }
 
+    protected int spawnY = -4;
     //Construct next shape randomly
     public void spawnNextShape() {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index);
+        nextShape = Shape.randomShape(index,spawnY);
     }
 
     //Next shape falls
@@ -69,12 +73,22 @@ public class Board extends Activity {
         }
     }
 
+    public void deleteLinesUpdate50(){
+        long deleteLines = 50000;//TODO:MIRAR
+        if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
+            last_deadLine_update = SystemClock.uptimeMillis();
+            spawnY=spawnY+2;
+        }
+    }
+
     //Updates the falling shape
     public void update() {
+        deleteLinesUpdate50();
         if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
             fallingShape.update();
+
             //EasterEggs.easterEgg1();
             if (!fallingShape.isFalling()) { //If it has collided with something
                 //Add falling shape blocks to board
@@ -212,7 +226,7 @@ public class Board extends Activity {
 
     private boolean checkGameOver() {
         for(Block block : blocks)
-            if(block.getY() <= 0) //If any of the blocks Y coordinate is above the board limit
+            if(block.getY() <= spawnY) //If any of the blocks Y coordinate is above the board limit
                 return true;
         return false;
     }

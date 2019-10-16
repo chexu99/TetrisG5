@@ -6,8 +6,8 @@ import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
 public class ShapeL extends Shape {
-    public ShapeL() {
-        super(2, 3);
+    public ShapeL(int spawnY) {
+        super(2, 3,spawnY);
         rotation_block = blocks[1];
         rotation_cycle = 4;
     }
