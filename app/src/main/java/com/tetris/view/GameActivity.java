@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class GameActivity extends Activity {
     public ImageButton despDer;
     public ImageButton despIzq;
     public ImageButton despRotate;
+    public Button despDown;
 
     //Board values
     int speed = 50;
@@ -140,6 +142,14 @@ public class GameActivity extends Activity {
             public void onClick(View b) {
                 if (Board.getInstance().checkRotate())
                     Board.getInstance().getFallingShape().rotate();
+            }
+        });
+        //MoveDown button
+        despDown = findViewById(R.id.mvDown);
+        despDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Board.getInstance().checkMoveDown();
             }
         });
     }

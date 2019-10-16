@@ -165,6 +165,17 @@ public class Board extends Activity {
         return true;
     }
 
+    public void checkMoveDown() {
+        boolean aux = true;
+        while (aux){
+            fallingShape.moveDown();
+            if (fallingShape.collide()) { //Check if shape collided
+                fallingShape.moveUp();
+                aux=false;
+            }
+        }
+    }
+
     public boolean checkRotate() {
         if (fallingShape == null) //If there is no falling shape cant rotate
             return false;

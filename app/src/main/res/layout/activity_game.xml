@@ -155,7 +155,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/button_panel"
-                android:layout_width="321dp"
+                android:layout_width="358dp"
                 android:layout_height="80dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
@@ -164,6 +164,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+
+                <Button
+                    android:id="@+id/mvDown"
+                    android:layout_width="40dp"
+                    android:layout_height="41dp"
+                    android:text="Button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/mvLeft"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/mvRight"
@@ -192,12 +203,15 @@
                     android:id="@+id/mvLeft"
                     android:layout_width="110dp"
                     android:layout_height="0dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp"
                     android:background="@null"
                     android:scaleType="fitXY"
                     android:src="@drawable/btn_left"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

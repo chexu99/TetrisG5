@@ -2,6 +2,7 @@ package com.tetris.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ public class FinalScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_score);
 
-        /*   for sprint 3
+
         button = findViewById(R.id.restart_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,7 +29,7 @@ public class FinalScoreActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
-         */
+
         score_gameover_text = (TextView) findViewById(R.id.score_gameover);
         score_gameover_text.setText(String.valueOf(Board.getInstance().getScore()));
     }
