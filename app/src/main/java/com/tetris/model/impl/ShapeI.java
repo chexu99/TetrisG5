@@ -27,7 +27,7 @@ public class ShapeI extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Color.RED);
+            block.setColor(5);
         }
         return blocks;
     }

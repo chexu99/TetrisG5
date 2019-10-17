@@ -24,7 +24,7 @@ public class ShapeCube extends Shape {
 
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Color.BLUE);
+            block.setColor(1);
         }
         return blocks;
     }

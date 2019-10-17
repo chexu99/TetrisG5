@@ -25,7 +25,7 @@ public class ShapeZ extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Color.CYAN);
+            block.setColor(3);
         }
         return blocks;
     }

@@ -11,19 +11,19 @@ public class Colors {
 
     public static Bitmap blockTextureSelector(Resources res, int color) {
         switch (color) {
-            case Color.YELLOW:
+            case 0:
                 return BitmapFactory.decodeResource(res, R.drawable.block_yellow);
-            case Color.BLUE:
+            case 1:
                 return BitmapFactory.decodeResource(res, R.drawable.block_blue);
-            case Color.WHITE:
+            case 2:
                 return BitmapFactory.decodeResource(res, R.drawable.block_white);
-            case Color.CYAN:
+            case 3:
                 return BitmapFactory.decodeResource(res, R.drawable.block_cyan);
-            case Color.GREEN:
+            case 4:
                 return BitmapFactory.decodeResource(res, R.drawable.block_lime);
-            case Color.RED:
+            case 5:
                 return BitmapFactory.decodeResource(res, R.drawable.block_red);
-            case Color.MAGENTA:
+            case 6:
             default:
                 return BitmapFactory.decodeResource(res, R.drawable.block_purple);
         }
@@ -32,30 +32,30 @@ public class Colors {
     public static Bitmap nextShapeTextureSelector(Resources res, int color) {
         Bitmap texture;
         switch (color) {
-            case Color.YELLOW:
+            case 0:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_yellow_shape);
                 break;
-            case Color.BLUE:
+            case 1:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_blue_shape);
                 break;
-            case Color.WHITE:
+            case 2:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_white_shape);
                 break;
-            case Color.CYAN:
+            case 3:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_cyan_shape);
                 break;
-            case Color.GREEN:
+            case 4:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_lime_shape);
                 break;
-            case Color.RED:
+            case 5:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_red_shape);
                 break;
-            case Color.MAGENTA:
+            case 6:
             default:
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_purple_shape);
                 break;
         }
-        if(color == Color.RED) //If the piece is red (4x1)
+        if(color == 5) //If the piece is red (4x1)
             texture = Bitmap.createScaledBitmap(texture, 110, 64, false);
         else
             texture = Bitmap.createScaledBitmap(texture, 128, 96, false);

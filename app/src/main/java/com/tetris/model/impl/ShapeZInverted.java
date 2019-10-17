@@ -25,7 +25,7 @@ public class ShapeZInverted extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Color.GREEN);
+            block.setColor(4);
         }
         return blocks;
     }

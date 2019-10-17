@@ -25,7 +25,7 @@ public class ShapeL extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(Color.MAGENTA);
+            block.setColor(6);
         }
         return blocks;
     }
