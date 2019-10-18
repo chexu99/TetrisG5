@@ -29,8 +29,8 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 1600; //Max quality = 6400 -> Laser-mode = 20
-    final int BOARD_WIDTH = 800; //Max quality = 3200 -> Laser-mode = 10
+    final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
+    final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
@@ -65,7 +65,7 @@ public class GameActivity extends Activity {
 
     TextView scoreText;
 
-    public int deadBlockY = 0;
+    public int deadBlockY = -2;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -104,7 +104,7 @@ public class GameActivity extends Activity {
         // Game board
         boardBitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         boardCanvas = new Canvas(boardBitmap);
-        boardCanvas.drawColor(Color.BLACK);
+        boardCanvas.drawColor(Color.TRANSPARENT);
         boardLayout = findViewById(R.id.game_board);
         boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
 
@@ -224,6 +224,11 @@ public class GameActivity extends Activity {
 
         int color = Board.getInstance().getNextShape().getBlocks()[0].getColor(); //Color of first block
         Bitmap bitmapBlock =  Colors.nextShapeTextureSelector(this.getResources(), color);
+        if(color == 5) //If the piece is red (4x1)
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int) (PIXEL_SIZE), (int) (PIXEL_SIZE*1.0), false); //110 -> 64 = 1.71875
+        else
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+        bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
         nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, paint);
 
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));

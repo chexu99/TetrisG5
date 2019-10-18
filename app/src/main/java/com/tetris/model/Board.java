@@ -38,7 +38,7 @@ public class Board extends Activity {
 
     private boolean deadBlocksUpdate = false;
 
-    protected long last_deadLine_update;
+    protected long last_deadLine_update = SystemClock.uptimeMillis();
 
     protected int spawnY = -4;
 
@@ -63,7 +63,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index,spawnY);
+        nextShape = Shape.randomShape(index, spawnY);
     }
 
     //Next shape falls
