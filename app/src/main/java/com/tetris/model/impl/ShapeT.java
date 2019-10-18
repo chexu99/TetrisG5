@@ -7,7 +7,7 @@ import com.tetris.model.Shape;
 
 public class ShapeT extends Shape {
     public ShapeT(int spawnY) {
-        super(3, 2,spawnY);
+        super(3, 2,spawnY+2);
         rotation_block = blocks[1];
         rotation_cycle = 4;
     }

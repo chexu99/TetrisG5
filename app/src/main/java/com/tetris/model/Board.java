@@ -38,15 +38,27 @@ public class Board extends Activity {
 
     private boolean deadBlocksUpdate = false;
 
-    protected long last_deadLine_update;
+    protected long last_deadLine_update =SystemClock.uptimeMillis();
 
     protected int spawnY = -4;
+
+
+    public int getSquareGameOver() {
+        return squareGameOver;
+    }
+
+    public void setSquareGameOver(int squareGameOver) {
+        this.squareGameOver = squareGameOver;
+    }
+
+    private int squareGameOver=0;
+
+    public int deadBlockY =-2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        last_deadLine_update = SystemClock.uptimeMillis();
     }
 
     //Board instance for use by other classes
@@ -81,6 +93,7 @@ public class Board extends Activity {
         long deleteLines = 10000;//TODO:MIRAR
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
+            deadBlockY=deadBlockY+2;
             return true;
         }
         return false;
@@ -91,8 +104,6 @@ public class Board extends Activity {
         if (checkDeleteLinesUpdate50()){
             spawnY=spawnY+2;
             setDeadBlocksUpdate(true);
-        } else {
-            setDeadBlocksUpdate(false);
         }
         if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
@@ -236,7 +247,7 @@ public class Board extends Activity {
 
     private boolean checkGameOver() {
         for(Block block : blocks)
-            if(block.getY() <= spawnY+4) //If any of the blocks Y coordinate is above the board limit
+            if(block.getY() <= squareGameOver) //If any of the blocks Y coordinate is above the board limit
                 return true;
         return false;
     }
@@ -247,6 +258,11 @@ public class Board extends Activity {
         nextShape = null;
         score = 0;
         spawnY=-4;
+        setDeadBlockY(-2);
+        setSquareGameOver(0);
+        needsUpdate = true;
+        deadBlocksUpdate = false;
+        last_deadLine_update =SystemClock.uptimeMillis();
         gameStatus = GameStatus.INITIATING;
     }
 
@@ -294,5 +310,13 @@ public class Board extends Activity {
 
     public void setDeadBlocksUpdate(boolean deadBlocksUpdate) {
         this.deadBlocksUpdate = deadBlocksUpdate;
+    }
+
+    public int getDeadBlockY() {
+        return deadBlockY;
+    }
+
+    public void setDeadBlockY(int deadBlockY) {
+        this.deadBlockY = deadBlockY;
     }
 }

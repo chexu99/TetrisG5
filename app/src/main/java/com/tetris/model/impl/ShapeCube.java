@@ -8,7 +8,7 @@ import com.tetris.model.Shape;
 public class ShapeCube extends Shape {
 
     public ShapeCube(int spawnY) {
-        super(2, 2,spawnY);
+        super(2, 2,spawnY+2);
     }
 
     public Block[] getBlocks() {
