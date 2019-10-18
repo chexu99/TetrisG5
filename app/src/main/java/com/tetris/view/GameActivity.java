@@ -225,6 +225,11 @@ public class GameActivity extends Activity {
 
         int color = Board.getInstance().getNextShape().getBlocks()[0].getColor(); //Color of first block
         Bitmap bitmapBlock =  Colors.nextShapeTextureSelector(this.getResources(), color);
+        if(color == 5) //If the piece is red (4x1)
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int) (PIXEL_SIZE), (int) (PIXEL_SIZE*1.0), false); //110 -> 64 = 1.71875
+        else
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+        bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
         nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, paint);
 
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));

@@ -59,13 +59,7 @@ public class Colors {
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_purple_shape);
                 break;
         }
-        if(color == 5) //If the piece is red (4x1)
-            texture = Bitmap.createScaledBitmap(texture, 110, 64, false);
-        else
-            texture = Bitmap.createScaledBitmap(texture, 128, 96, false);
         return texture;
-
-
     }
 
 
