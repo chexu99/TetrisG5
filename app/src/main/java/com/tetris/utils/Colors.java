@@ -29,6 +29,10 @@ public class Colors {
         }
     }
 
+    public static Bitmap blockedTexture(Resources res){
+        return BitmapFactory.decodeResource(res, R.drawable.block_grey);
+    }
+
     public static Bitmap nextShapeTextureSelector(Resources res, int color) {
         Bitmap texture;
         switch (color) {

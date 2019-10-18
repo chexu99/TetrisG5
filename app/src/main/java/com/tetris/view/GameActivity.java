@@ -208,7 +208,7 @@ public class GameActivity extends Activity {
     }
 
     private void paintDeadBlocks(){
-        Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), R.drawable.block_red);
+        Bitmap bitmapBlock =  Colors.blockedTexture(this.getResources());
         for (int i = 0; i<Board.BOARD_COLS;i++){
             for (int j = deadBlockY; j<deadBlockY+2;j++){
                 bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);

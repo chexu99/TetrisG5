@@ -40,7 +40,6 @@ public class Board extends Activity {
 
     protected long last_deadLine_update;
 
-
     protected int spawnY = -4;
 
     @Override
