@@ -36,7 +36,12 @@ public class Board extends Activity {
 
     private boolean needsUpdate = true;
 
+    private boolean deadBlocksUpdate = false;
+
     protected long last_deadLine_update;
+
+
+    protected int spawnY = -4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class Board extends Activity {
         return instance;
     }
 
-    protected int spawnY = -4;
+
     //Construct next shape randomly
     public void spawnNextShape() {
         Random r = new Random();
@@ -73,17 +78,23 @@ public class Board extends Activity {
         }
     }
 
-    public void deleteLinesUpdate50(){
-        long deleteLines = 50000;//TODO:MIRAR
+    public boolean checkDeleteLinesUpdate50(){
+        long deleteLines = 10000;//TODO:MIRAR
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
-            spawnY=spawnY+2;
+            return true;
         }
+        return false;
     }
 
     //Updates the falling shape
     public void update() {
-        deleteLinesUpdate50();
+        if (checkDeleteLinesUpdate50()){
+            spawnY=spawnY+2;
+            setDeadBlocksUpdate(true);
+        } else {
+            setDeadBlocksUpdate(false);
+        }
         if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
@@ -226,7 +237,7 @@ public class Board extends Activity {
 
     private boolean checkGameOver() {
         for(Block block : blocks)
-            if(block.getY() <= spawnY) //If any of the blocks Y coordinate is above the board limit
+            if(block.getY() <= spawnY+4) //If any of the blocks Y coordinate is above the board limit
                 return true;
         return false;
     }
@@ -236,6 +247,7 @@ public class Board extends Activity {
         fallingShape = null;
         nextShape = null;
         score = 0;
+        spawnY=-4;
         gameStatus = GameStatus.INITIATING;
     }
 
@@ -277,4 +289,11 @@ public class Board extends Activity {
         this.needsUpdate = needsUpdate;
     }
 
+    public boolean isDeadBlocksUpdate() {
+        return deadBlocksUpdate;
+    }
+
+    public void setDeadBlocksUpdate(boolean deadBlocksUpdate) {
+        this.deadBlocksUpdate = deadBlocksUpdate;
+    }
 }
