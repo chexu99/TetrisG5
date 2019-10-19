@@ -36,13 +36,29 @@ public class Board extends Activity {
 
     private boolean needsUpdate = true;
 
-    protected long last_deadLine_update;
+    private boolean deadBlocksUpdate = false;
+
+    protected long last_deadLine_update = SystemClock.uptimeMillis();
+
+    protected int spawnY = -4;
+
+
+    public int getSquareGameOver() {
+        return squareGameOver;
+    }
+
+    public void setSquareGameOver(int squareGameOver) {
+        this.squareGameOver = squareGameOver;
+    }
+
+    private int squareGameOver=0;
+
+    public int deadBlockY =-2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        last_deadLine_update = SystemClock.uptimeMillis();
     }
 
     //Board instance for use by other classes
@@ -53,13 +69,13 @@ public class Board extends Activity {
         return instance;
     }
 
-    protected int spawnY = -4;
+
     //Construct next shape randomly
     public void spawnNextShape() {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index,spawnY);
+        nextShape = Shape.randomShape(index, spawnY);
     }
 
     //Next shape falls
@@ -73,17 +89,22 @@ public class Board extends Activity {
         }
     }
 
-    public void deleteLinesUpdate50(){
-        long deleteLines = 50000;//TODO:MIRAR
+    public boolean checkDeleteLinesUpdate50(){
+        long deleteLines = 10000;//TODO:MIRAR
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
-            spawnY=spawnY+2;
+            deadBlockY=deadBlockY+2;
+            return true;
         }
+        return false;
     }
 
     //Updates the falling shape
     public void update() {
-        deleteLinesUpdate50();
+        if (checkDeleteLinesUpdate50()){
+            spawnY=spawnY+2;
+            setDeadBlocksUpdate(true);
+        }
         if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
@@ -226,7 +247,7 @@ public class Board extends Activity {
 
     private boolean checkGameOver() {
         for(Block block : blocks)
-            if(block.getY() <= spawnY) //If any of the blocks Y coordinate is above the board limit
+            if(block.getY() <= squareGameOver) //If any of the blocks Y coordinate is above the board limit
                 return true;
         return false;
     }
@@ -236,6 +257,12 @@ public class Board extends Activity {
         fallingShape = null;
         nextShape = null;
         score = 0;
+        spawnY=-4;
+        setDeadBlockY(-2);
+        setSquareGameOver(0);
+        needsUpdate = true;
+        deadBlocksUpdate = false;
+        last_deadLine_update =SystemClock.uptimeMillis();
         gameStatus = GameStatus.INITIATING;
     }
 
@@ -277,4 +304,19 @@ public class Board extends Activity {
         this.needsUpdate = needsUpdate;
     }
 
+    public boolean isDeadBlocksUpdate() {
+        return deadBlocksUpdate;
+    }
+
+    public void setDeadBlocksUpdate(boolean deadBlocksUpdate) {
+        this.deadBlocksUpdate = deadBlocksUpdate;
+    }
+
+    public int getDeadBlockY() {
+        return deadBlockY;
+    }
+
+    public void setDeadBlockY(int deadBlockY) {
+        this.deadBlockY = deadBlockY;
+    }
 }

@@ -3,6 +3,7 @@ package com.tetris.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,8 +29,8 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 1600; //Max quality = 6400 -> Laser-mode = 20
-    final int BOARD_WIDTH = 800; //Max quality = 3200 -> Laser-mode = 10
+    final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
+    final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
@@ -53,18 +54,23 @@ public class GameActivity extends Activity {
     Bitmap fallingShapeBitmap;
     Canvas fallingShapeCanvas;
 
+    Bitmap deadBlocksBitmap;
+    Canvas deadBlocksCanvas;
+
     ImageView boardLayout;
     ImageView fallingShapeLayout;
     ConstraintLayout scoreLayout;
     ImageView nextShapeLayout;
+    ImageView deadBlocksLayout;
 
     TextView scoreText;
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER))
+            if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER)) {
                 Board.getInstance().update(); //Updates the board
+            }
             if (!Board.getInstance().getGameStatus().equals(Board.GameStatus.GAME_OVER)) {
                 paintGame(); //Paints game board
                 handler.removeCallbacks(this);
@@ -93,7 +99,7 @@ public class GameActivity extends Activity {
         // Game board
         boardBitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
         boardCanvas = new Canvas(boardBitmap);
-        boardCanvas.drawColor(Color.BLACK);
+        boardCanvas.drawColor(Color.TRANSPARENT);
         boardLayout = findViewById(R.id.game_board);
         boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
 
@@ -113,6 +119,11 @@ public class GameActivity extends Activity {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         nextShapeLayout = findViewById(R.id.next_shape);
 
+        //DeadBlocks
+        deadBlocksBitmap = Bitmap.createBitmap(BOARD_WIDTH, BOARD_HEIGHT, Bitmap.Config.ARGB_8888);
+        deadBlocksCanvas = new Canvas(deadBlocksBitmap);
+        deadBlocksLayout = findViewById(R.id.dead_blocks);
+        deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(deadBlocksBitmap));
 
     }
 
@@ -169,6 +180,7 @@ public class GameActivity extends Activity {
 
     //Painting methods
     private void paintGame() {
+
         if(Board.getInstance().isNeedsUpdate()) {
             //Update board layout
             paintBlockArray();
@@ -182,10 +194,30 @@ public class GameActivity extends Activity {
 
             //Paint next shape on left side
             paintNextShape();
+
+            if (Board.getInstance().isDeadBlocksUpdate()){
+                paintDeadBlocks();
+                Board.getInstance().setDeadBlocksUpdate(false);
+                Board.getInstance().setSquareGameOver(Board.getInstance().getSquareGameOver()+2);
+            }
         }else {
             //Paint fallingShape Layout
             paintFallingShape();
+
         }
+
+    }
+
+    private void paintDeadBlocks(){
+        Bitmap bitmapBlock =  Colors.blockedTexture(this.getResources());
+        for (int i = 0; i<Board.BOARD_COLS;i++){
+            for (int j = Board.getInstance().getDeadBlockY(); j<Board.getInstance().getDeadBlockY()+2;j++){
+                bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+                deadBlocksCanvas.drawBitmap(bitmapBlock, i*PIXEL_SIZE, j*PIXEL_SIZE, paint);
+            }
+        }
+        deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(deadBlocksBitmap));
+        //Board.getInstance().setDeadBlockY(Board.getInstance().getDeadBlockY()+2);
     }
 
     private void paintNextShape() {
@@ -193,6 +225,11 @@ public class GameActivity extends Activity {
 
         int color = Board.getInstance().getNextShape().getBlocks()[0].getColor(); //Color of first block
         Bitmap bitmapBlock =  Colors.nextShapeTextureSelector(this.getResources(), color);
+        if(color == 5) //If the piece is red (4x1)
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int) (PIXEL_SIZE), (int) (PIXEL_SIZE*1.0), false); //110 -> 64 = 1.71875
+        else
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+        bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
         nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, paint);
 
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));

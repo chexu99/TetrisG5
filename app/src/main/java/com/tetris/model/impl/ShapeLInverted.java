@@ -7,7 +7,7 @@ import com.tetris.model.Shape;
 
 public class ShapeLInverted extends Shape {
     public ShapeLInverted(int spawnY) {
-        super(2, 3,spawnY);
+        super(2, 3,spawnY+1);
         rotation_block = blocks[1];
         rotation_cycle = 4;
     }

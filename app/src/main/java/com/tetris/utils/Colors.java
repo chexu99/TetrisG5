@@ -29,6 +29,10 @@ public class Colors {
         }
     }
 
+    public static Bitmap blockedTexture(Resources res){
+        return BitmapFactory.decodeResource(res, R.drawable.block_grey);
+    }
+
     public static Bitmap nextShapeTextureSelector(Resources res, int color) {
         Bitmap texture;
         switch (color) {
@@ -55,13 +59,7 @@ public class Colors {
                 texture = BitmapFactory.decodeResource(res, R.drawable.block_purple_shape);
                 break;
         }
-        if(color == 5) //If the piece is red (4x1)
-            texture = Bitmap.createScaledBitmap(texture, 110, 64, false);
-        else
-            texture = Bitmap.createScaledBitmap(texture, 128, 96, false);
         return texture;
-
-
     }
 
 
