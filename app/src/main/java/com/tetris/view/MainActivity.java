@@ -12,11 +12,20 @@ import com.tetris.R;
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
+    private Button graphic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        graphic = findViewById(R.id.graphic_button);
+        graphic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup();
+            }
+        });
 
         button = findViewById(R.id.new_game_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -25,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 openGameActivity();
             }
         });
+    }
+
+    private void showPopup() {
+        Intent intent = new Intent(this, GraphicActivity.class);
+        startActivity(intent);
     }
 
 

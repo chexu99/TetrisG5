@@ -28,9 +28,17 @@ import com.tetris.utils.EasterEggs;
 public class GameActivity extends Activity {
 
     boolean stopped = false;
+/*
+    public void setBOARD_HEIGHT(int BOARD_HEIGHT) {
+        this.BOARD_HEIGHT = BOARD_HEIGHT;
+    }
 
-    final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
-    final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
+    public void setBOARD_WIDTH(int BOARD_WIDTH) {
+        this.BOARD_WIDTH = BOARD_WIDTH;
+    }
+*/
+    final int BOARD_HEIGHT=800; //Max quality = 6400 -> Laser-mode = 20
+    final int BOARD_WIDTH=400; //Max quality = 3200 -> Laser-mode = 10
     final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
@@ -87,7 +95,18 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+/*
+        Bundle data = this.getIntent().getExtras();
+        if (data != null){
+            int height = data.getInt("board_height");
+            int width = data.getInt("board_width");
+            setBOARD_HEIGHT(height);
+            setBOARD_WIDTH(width);
+        }else{
+            setBOARD_HEIGHT(800);
+            setBOARD_WIDTH(400);
+        }
+*/
         setUpLayouts();
 
         setUpButtons();
@@ -217,7 +236,6 @@ public class GameActivity extends Activity {
             }
         }
         deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(deadBlocksBitmap));
-        //Board.getInstance().setDeadBlockY(Board.getInstance().getDeadBlockY()+2);
     }
 
     private void paintNextShape() {
@@ -235,16 +253,30 @@ public class GameActivity extends Activity {
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
+    private void chooseColorBlocks(){
+        if (Board.getInstance().getNumberDeleteLines()==4){
+
+        } else if (Board.getInstance().getNumberDeleteLines()==1){
+
+        } else {
+
+        }
+    }
+
     private void paintBlockArray(){
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
+        Bitmap bitmapBlock;
         for (Block block : Board.getInstance().getBlocks()) {
-            Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            if (Board.getInstance().getNumberDeleteLines()>0){
+                bitmapBlock = Colors.blockTextureSelector(this.getResources(), Board.getInstance().getColorLastFallingShape());
+            } else {
+                bitmapBlock = Colors.blockTextureSelector(this.getResources(), block.getColor());
+            }
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
-
+        Board.getInstance().setNumberDeleteLines(0);
         Board.getInstance().setNeedsUpdate(false);
         boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
     }
