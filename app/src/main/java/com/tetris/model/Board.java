@@ -42,6 +42,15 @@ public class Board extends Activity {
 
     protected int spawnY = -4;
 
+
+    public int getSquareGameOver() {
+        return squareGameOver;
+    }
+
+    public void setSquareGameOver(int squareGameOver) {
+        this.squareGameOver = squareGameOver;
+    }
+
     private int squareGameOver=0;
 
     public int deadBlockY =-2;
@@ -80,12 +89,11 @@ public class Board extends Activity {
         }
     }
 
-    //Check 50 seconds
     public boolean checkDeleteLinesUpdate50(){
         long deleteLines = 10000;//TODO:MIRAR
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
-            deadBlockY=deadBlockY+2; //increase the gray lines
+            deadBlockY=deadBlockY+2;
             return true;
         }
         return false;
@@ -94,7 +102,7 @@ public class Board extends Activity {
     //Updates the falling shape
     public void update() {
         if (checkDeleteLinesUpdate50()){
-            spawnY=spawnY+2;//increase the spawn of the shapes
+            spawnY=spawnY+2;
             setDeadBlocksUpdate(true);
         }
         if (fallingShape == null) { //Checks if the falling shape collided
@@ -108,7 +116,6 @@ public class Board extends Activity {
                 for (Block block : fallingShape.getBlocks()) {
                     block.setFalling(false);
                     blocks.add(block);
-                    colorLastFallingShape = block.getColor();
                 }
 
                 Shape layingShape = fallingShape;
@@ -126,21 +133,6 @@ public class Board extends Activity {
         }
     }
 
-    public int getColorLastFallingShape() {
-        return colorLastFallingShape;
-    }
-    private int colorLastFallingShape;
-
-
-    public int getNumberDeleteLines() {
-        return numberDeleteLines;
-    }
-
-    public void setNumberDeleteLines(int numberDeleteLines) {
-        this.numberDeleteLines = numberDeleteLines;
-    }
-
-    private int numberDeleteLines = 0;
     //Deletes the lines that the shape is touching
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
@@ -149,7 +141,6 @@ public class Board extends Activity {
             if (lineComplete(shapeBlock.getY())) {
 
                 score += 30;
-                numberDeleteLines++;
 
                 deletedLines.add(shapeBlock.getY());
 
@@ -327,13 +318,5 @@ public class Board extends Activity {
 
     public void setDeadBlockY(int deadBlockY) {
         this.deadBlockY = deadBlockY;
-    }
-
-    public int getSquareGameOver() {
-        return squareGameOver;
-    }
-
-    public void setSquareGameOver(int squareGameOver) {
-        this.squareGameOver = squareGameOver;
     }
 }
