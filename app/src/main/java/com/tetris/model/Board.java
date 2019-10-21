@@ -37,24 +37,17 @@ public class Board extends Activity {
         GAME_OVER,
     }
 
-    private boolean needsUpdate = true;
+    private List<Actions> actions = new CopyOnWriteArrayList<>();
 
-    private boolean deadBlocksUpdate = false;
+    public enum Actions {
+        DEAD_BLOCK,
+        COLLISION,
+    }
 
     protected long last_deadLine_update = SystemClock.uptimeMillis();
     protected long last_fast_shape_update = SystemClock.uptimeMillis();
 
-
     protected int spawnY = -4;
-
-
-    public int getSquareGameOver() {
-        return squareGameOver;
-    }
-
-    public void setSquareGameOver(int squareGameOver) {
-        this.squareGameOver = squareGameOver;
-    }
 
     private int squareGameOver = 0;
 
@@ -99,6 +92,7 @@ public class Board extends Activity {
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
             deadBlockY = deadBlockY + 2;
+            actions.add(Actions.DEAD_BLOCK);
             return true;
         }
         return false;
@@ -117,7 +111,6 @@ public class Board extends Activity {
     public void update() {
         if (checkDeleteLinesUpdate()) {
             spawnY = spawnY + 2;
-            setDeadBlocksUpdate(true);
         }
         if (checkFastShapeUpdate()) {
             if (fastShape == null) {
@@ -140,7 +133,7 @@ public class Board extends Activity {
 
                     fastShape = null;
 
-                    needsUpdate = true;
+                    actions.add(Actions.COLLISION);
                     last_fast_shape_update = SystemClock.uptimeMillis();
                 }
             }
@@ -172,7 +165,7 @@ public class Board extends Activity {
                     fallingShape = null;
                     makeNextShapeFalling();
                 }
-                needsUpdate = true;
+                actions.add(Actions.COLLISION);
             }
         }
     }
@@ -298,21 +291,25 @@ public class Board extends Activity {
 
     public void clear() {
         blocks.clear();
-        score = 0;
-        spawnY = -4;
         fallingShape = null;
         nextShape = null;
-        fastShape = new ShapeShort(spawnY);
+        fastShape = null;
+        score = 0;
+        spawnY = -4;
         setDeadBlockY(-2);
         setSquareGameOver(0);
-        needsUpdate = true;
-        deadBlocksUpdate = false;
+        actions.clear();
         last_deadLine_update = SystemClock.uptimeMillis();
+        last_fast_shape_update = SystemClock.uptimeMillis();
         gameStatus = GameStatus.INITIATING;
     }
 
     public List<Block> getBlocks() {
         return blocks;
+    }
+
+    public List<Actions> getActions() {
+        return actions;
     }
 
     public Shape getFallingShape() {
@@ -344,28 +341,19 @@ public class Board extends Activity {
         this.score = score;
     }
 
-
-    public boolean isNeedsUpdate() {
-        return needsUpdate;
-    }
-
-    public void setNeedsUpdate(boolean needsUpdate) {
-        this.needsUpdate = needsUpdate;
-    }
-
-    public boolean isDeadBlocksUpdate() {
-        return deadBlocksUpdate;
-    }
-
-    public void setDeadBlocksUpdate(boolean deadBlocksUpdate) {
-        this.deadBlocksUpdate = deadBlocksUpdate;
-    }
-
     public int getDeadBlockY() {
         return deadBlockY;
     }
 
     public void setDeadBlockY(int deadBlockY) {
         this.deadBlockY = deadBlockY;
+    }
+
+    public int getSquareGameOver() {
+        return squareGameOver;
+    }
+
+    public void setSquareGameOver(int squareGameOver) {
+        this.squareGameOver = squareGameOver;
     }
 }

@@ -1,6 +1,5 @@
 package com.tetris.model.impl;
 
-import android.graphics.Color;
 import android.os.SystemClock;
 
 import com.tetris.model.Block;
