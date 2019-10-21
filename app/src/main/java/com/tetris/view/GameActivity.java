@@ -25,6 +25,7 @@ import com.tetris.model.Board;
 import com.tetris.utils.Colors;
 import com.tetris.utils.EasterEggs;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameActivity extends Activity {
@@ -237,13 +238,21 @@ public class GameActivity extends Activity {
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
-    private int randomColor(){
-        Random r = new Random();
-        int index;
-        do {
-            index = r.nextInt(7);
-        }while (index!=Board.getInstance().getColorFallingShape());
-        return index;
+    private HashMap colorsRandom= new HashMap <Integer,Integer>();
+
+    private int randomColor(int defaultColor,int colorLineaCompleted){
+        if (colorsRandom.containsKey(defaultColor)){
+            return (int) colorsRandom.get(defaultColor);
+        } else {
+            Random r = new Random();
+            int index;
+            do {
+                index = r.nextInt(7);
+            }while (index!=colorLineaCompleted);
+            colorsRandom.put(defaultColor,index);
+            return index;
+        }
+
 
     }
 
@@ -254,7 +263,9 @@ public class GameActivity extends Activity {
         for (Block block : Board.getInstance().getBlocks()) {
             if (Board.getInstance().isFirstLineComplete()){
                 if (Board.getInstance().getNumberLinesComplete()==4){
-
+                    int newColor = randomColor(block.getColor(),block.getColorLineaCompleted());
+                    block.setColorLineaCompleted(newColor);
+                    bitmapBlock =  Colors.blockTextureSelector(this.getResources(),newColor);
                 }else if (Board.getInstance().getNumberLinesComplete()>0){
                     bitmapBlock =  Colors.blockTextureSelector(this.getResources(), Board.getInstance().getColorFallingShape());
                 }
@@ -262,9 +273,12 @@ public class GameActivity extends Activity {
                 bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
             }
 
+            Board.getInstance().setNumberLinesComplete(0);
+            colorsRandom.clear();
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
+
 
         Board.getInstance().setNeedsUpdate(false);
         boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));

@@ -6,17 +6,8 @@ public class Block extends Pixel {
     private boolean falling;
 
     private int color;
-/*
-    public int getColorLineaCompleted() {
-        return colorLineaCompleted;
-    }
+    private int colorLineaCompleted=-1;
 
-    public void setColorLineaCompleted(int colorLineaCompleted) {
-        this.colorLineaCompleted = colorLineaCompleted;
-    }
-
-    private int colorLineaCompleted;
-    */
     //Constructors
     public Block() {
         super(0, 0, 1, 1);
@@ -74,4 +65,13 @@ public class Block extends Pixel {
     public void setColor(int color) {
         this.color = color;
     }
+
+    public int getColorLineaCompleted() {
+        return colorLineaCompleted;
+    }
+
+    public void setColorLineaCompleted(int colorLineaCompleted) {
+        this.colorLineaCompleted = colorLineaCompleted;
+    }
+
 }

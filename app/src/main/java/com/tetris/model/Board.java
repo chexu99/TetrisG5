@@ -42,18 +42,15 @@ public class Board extends Activity {
 
     protected int spawnY = -4;
 
-
-    public int getSquareGameOver() {
-        return squareGameOver;
-    }
-
-    public void setSquareGameOver(int squareGameOver) {
-        this.squareGameOver = squareGameOver;
-    }
-
     private int squareGameOver=0;
 
-    public int deadBlockY =-2;
+    private int deadBlockY =-2;
+
+    private int colorFallingShape;
+
+    private boolean firstLineComplete;
+
+    private int numberLinesComplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,17 +96,7 @@ public class Board extends Activity {
         return false;
     }
 
-    public int getColorFallingShape() {
-        return colorFallingShape;
-    }
-
-    public void setColorFallingShape(int colorFallingShape) {
-        this.colorFallingShape = colorFallingShape;
-    }
-
     //Updates the falling shape
-    private int colorFallingShape;
-
     public void update() {
         if (checkDeleteLinesUpdate50()){
             spawnY=spawnY+2;
@@ -143,26 +130,7 @@ public class Board extends Activity {
         }
     }
 
-    public boolean isFirstLineComplete() {
-        return firstLineComplete;
-    }
-
-    public void setFirstLineComplete(boolean firstLineComplete) {
-        this.firstLineComplete = firstLineComplete;
-    }
-
     //Deletes the lines that the shape is touching
-    private boolean firstLineComplete;
-
-    public int getNumberLinesComplete() {
-        return numberLinesComplete;
-    }
-
-    public void setNumberLinesComplete(int numberLinesComplete) {
-        this.numberLinesComplete = numberLinesComplete;
-    }
-
-    private int numberLinesComplete;
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
         //For each line the shape touches checks if its completed
@@ -348,5 +316,37 @@ public class Board extends Activity {
 
     public void setDeadBlockY(int deadBlockY) {
         this.deadBlockY = deadBlockY;
+    }
+
+    public int getSquareGameOver() {
+        return squareGameOver;
+    }
+
+    public void setSquareGameOver(int squareGameOver) {
+        this.squareGameOver = squareGameOver;
+    }
+
+    public int getColorFallingShape() {
+        return colorFallingShape;
+    }
+
+    public void setColorFallingShape(int colorFallingShape) {
+        this.colorFallingShape = colorFallingShape;
+    }
+
+    public boolean isFirstLineComplete() {
+        return firstLineComplete;
+    }
+
+    public void setFirstLineComplete(boolean firstLineComplete) {
+        this.firstLineComplete = firstLineComplete;
+    }
+
+    public int getNumberLinesComplete() {
+        return numberLinesComplete;
+    }
+
+    public void setNumberLinesComplete(int numberLinesComplete) {
+        this.numberLinesComplete = numberLinesComplete;
     }
 }
