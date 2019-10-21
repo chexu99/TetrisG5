@@ -25,6 +25,8 @@ import com.tetris.model.Board;
 import com.tetris.utils.Colors;
 import com.tetris.utils.EasterEggs;
 
+import java.util.Random;
+
 public class GameActivity extends Activity {
 
     boolean stopped = false;
@@ -235,12 +237,31 @@ public class GameActivity extends Activity {
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
+    private int randomColor(){
+        Random r = new Random();
+        int index;
+        do {
+            index = r.nextInt(7);
+        }while (index!=Board.getInstance().getColorFallingShape());
+        return index;
+
+    }
+
     private void paintBlockArray(){
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
+        Bitmap bitmapBlock = null;
         for (Block block : Board.getInstance().getBlocks()) {
-            Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            if (Board.getInstance().isFirstLineComplete()){
+                if (Board.getInstance().getNumberLinesComplete()==4){
+
+                }else if (Board.getInstance().getNumberLinesComplete()>0){
+                    bitmapBlock =  Colors.blockTextureSelector(this.getResources(), Board.getInstance().getColorFallingShape());
+                }
+            } else {
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            }
+
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }

@@ -99,7 +99,17 @@ public class Board extends Activity {
         return false;
     }
 
+    public int getColorFallingShape() {
+        return colorFallingShape;
+    }
+
+    public void setColorFallingShape(int colorFallingShape) {
+        this.colorFallingShape = colorFallingShape;
+    }
+
     //Updates the falling shape
+    private int colorFallingShape;
+
     public void update() {
         if (checkDeleteLinesUpdate50()){
             spawnY=spawnY+2;
@@ -133,14 +143,34 @@ public class Board extends Activity {
         }
     }
 
+    public boolean isFirstLineComplete() {
+        return firstLineComplete;
+    }
+
+    public void setFirstLineComplete(boolean firstLineComplete) {
+        this.firstLineComplete = firstLineComplete;
+    }
+
     //Deletes the lines that the shape is touching
+    private boolean firstLineComplete;
+
+    public int getNumberLinesComplete() {
+        return numberLinesComplete;
+    }
+
+    public void setNumberLinesComplete(int numberLinesComplete) {
+        this.numberLinesComplete = numberLinesComplete;
+    }
+
+    private int numberLinesComplete;
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
         //For each line the shape touches checks if its completed
         for (Block shapeBlock : shape.getBlocks()) {
             if (lineComplete(shapeBlock.getY())) {
-
+                setFirstLineComplete(true);
                 score += 30;
+                numberLinesComplete++;
 
                 deletedLines.add(shapeBlock.getY());
 
@@ -148,7 +178,7 @@ public class Board extends Activity {
                 for (Block block : blocks) {
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
                         blocks.remove(block);
-
+                    setColorFallingShape(block.getColor());
                 }
             }
         }
