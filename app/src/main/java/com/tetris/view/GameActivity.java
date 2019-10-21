@@ -24,6 +24,7 @@ import com.tetris.model.Block;
 import com.tetris.model.Board;
 import com.tetris.utils.Colors;
 import com.tetris.utils.EasterEggs;
+import com.tetris.utils.UserSettings;
 
 public class GameActivity extends Activity {
 
@@ -235,6 +236,8 @@ public class GameActivity extends Activity {
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
+
+
     private void paintBlockArray(){
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
@@ -258,10 +261,16 @@ public class GameActivity extends Activity {
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
 
+        if(Board.getInstance().getFastShape() != null){
+            for(Block block : Board.getInstance().getFastShape().getBlocks()){
+                Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+                bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
+                fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
+            }
+        }
+
         fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
     }
-
-
 
     @Override
     protected void onPause() {

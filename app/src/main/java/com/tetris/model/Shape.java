@@ -22,10 +22,10 @@ public class Shape extends Pixel {
     protected int rotation_cycle; //Number of cycles the shape has
     protected int rotation; //Rotation cycle we are in
 
+    protected long update_interval = 230; //Time a normal shape needs to fall one block
+
     //Constructors
     //Shapeless shape
-
-
     protected Shape(int width, int height,int spawnY) {
         super(4, spawnY, width, height);
 
@@ -84,7 +84,6 @@ public class Shape extends Pixel {
         }
     }
 
-
     //SHAPE INTERACTIONS
     //Checks if our shape collide with anything
     public boolean collide() {
@@ -98,18 +97,12 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        long updateInterval = 230;
-
-        if (SystemClock.uptimeMillis() - last_fall_update > updateInterval) {
+        if (SystemClock.uptimeMillis() - last_fall_update > update_interval) {
             last_fall_update = SystemClock.uptimeMillis();
             return true;
         }
-
         return false;
     }
-
-
-
 
     //MOVEMENT
     //Move whole shape 1 down

@@ -9,6 +9,14 @@ import com.tetris.R;
 
 public class Colors {
 
+    public static Bitmap blockByPalette(Resources res, int palette, int color){
+        switch (palette){
+            case 0:
+            default:
+                return blockTextureSelector(res, color);
+        }
+    }
+
     public static Bitmap blockTextureSelector(Resources res, int color) {
         switch (color) {
             case 0:
