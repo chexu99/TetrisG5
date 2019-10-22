@@ -12,6 +12,7 @@ public class ShapeShort extends Shape {
     public ShapeShort(int spawnY) {
         super(1, 2,spawnY+2);
 
+        update_interval = 230;
         blocks = new Block[2];
 
         blocks[0] = new Block();

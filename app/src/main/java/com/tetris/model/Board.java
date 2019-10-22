@@ -75,6 +75,7 @@ public class Board extends Activity {
         int index = r.nextInt(7) + 1;
 
         nextShape = Shape.randomShape(index, spawnY);
+        actions.add(Actions.COLLISION);
     }
 
     //Next shape falls
