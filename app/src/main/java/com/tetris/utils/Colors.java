@@ -8,15 +8,9 @@ import com.tetris.R;
 
 public class Colors {
 
-    public static Bitmap blockByPalette(Resources res, int palette, int color){
-        switch (palette){
-            case 0:
-            default:
-                return blockTextureSelector(res, color);
-        }
-    }
 
-    public static Bitmap blockTextureSelector(Resources res, int color) {
+
+    public static Bitmap blockTextureSelector(Resources res, int color) { //Original palette
         switch (color) {
             case 0:
                 return BitmapFactory.decodeResource(res, R.drawable.block_yellow);
@@ -33,6 +27,8 @@ public class Colors {
             case 6:
             default:
                 return BitmapFactory.decodeResource(res, R.drawable.block_purple);
+            case 7: //For short shape
+                return BitmapFactory.decodeResource(res, R.drawable.block_magenta);
         }
     }
 
@@ -44,26 +40,26 @@ public class Colors {
         Bitmap texture;
         switch (color) {
             case 0:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_yellow_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_t_shape);
                 break;
             case 1:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_blue_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_cube_shape);
                 break;
             case 2:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_white_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_inverted_l_shape);
                 break;
             case 3:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_cyan_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_inverted_z_shape);
                 break;
             case 4:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_lime_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_z_shape);
                 break;
             case 5:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_red_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_i_shape);
                 break;
             case 6:
             default:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_purple_shape);
+                texture = BitmapFactory.decodeResource(res, R.drawable.block_l_shape);
                 break;
         }
         return texture;

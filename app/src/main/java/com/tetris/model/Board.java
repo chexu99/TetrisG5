@@ -57,6 +57,7 @@ public class Board extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        spawnNextShape();
     }
 
     //Board instance for use by other classes
@@ -100,7 +101,7 @@ public class Board extends Activity {
 
 
     public boolean checkFastShapeUpdate() {
-        long fastShape = 30000;//TODO: cambiar time de 20s a 30s
+        long fastShape = 10000;//TODO: cambiar time de 20s a 30s
         if (SystemClock.uptimeMillis() - last_fast_shape_update > fastShape) {
             return true;
         }

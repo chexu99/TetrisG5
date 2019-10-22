@@ -31,7 +31,7 @@ public class ShapeShort extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(1); //TODO: create new texture
+            block.setColor(7);
         }
         falling = true;
         return blocks;
