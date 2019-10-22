@@ -1,4 +1,4 @@
-package com.tetris.view.LayoutPainting;
+package com.tetris.view.layout_painting;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

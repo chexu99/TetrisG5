@@ -11,8 +11,6 @@ public class MovementEvents {
         if (Board.getFallingShape().collide()) { //Check if shape collided
             Board.getFallingShape().moveRight(); //If collided move back
         }
-        //Board.getFallingShape().moveRight(); //If not move back and tell that it can move
-        //return true;
     }
 
     public static void checkAndMoveRight() {
@@ -22,8 +20,6 @@ public class MovementEvents {
         if (Board.getFallingShape().collide()) { //Check if shape collided
             Board.getFallingShape().moveLeft(); //If collided move back
         }
-        //Board.getFallingShape().moveLeft(); //If not move back and tell that it can move
-        //return true;
     }
 
     public static void checkAndMoveDown() {
@@ -52,8 +48,10 @@ public class MovementEvents {
 
             // try to move left
             Board.getFallingShape().moveLeft();
-            if (Board.getFallingShape().collide()) //If it has collided check to move left
+            if (Board.getFallingShape().collide()) { //If it has collided check to move left
                 Board.getFallingShape().moveRight();
+                Board.getFallingShape().unrotate(); //Undo rotation as it cant happen
+            }
             else
                 return; //Return rotated and moved to the left
         }
