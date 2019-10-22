@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.tetris.R;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.tetris.R;
 
 public class MainActivity extends AppCompatActivity {
 

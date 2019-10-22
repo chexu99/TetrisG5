@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tetris.R;
 import com.tetris.model.Board;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class FinalScoreActivity extends AppCompatActivity {
 
