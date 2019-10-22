@@ -1,7 +1,5 @@
 package com.tetris.utils;
 
-import android.graphics.Color;
-
 import com.tetris.model.Board;
 
 public class EasterEggs {

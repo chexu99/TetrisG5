@@ -1,7 +1,5 @@
 package com.tetris.model.impl;
 
-import android.graphics.Color;
-
 import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
