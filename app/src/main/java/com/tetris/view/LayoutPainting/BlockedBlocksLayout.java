@@ -19,8 +19,8 @@ public class BlockedBlocksLayout {
 
 
     public static void blockedBlocksLayoutInit(){
-        blockedBlocksBitmap = Bitmap.createBitmap((int) (3 * GameActivity.PIXEL_SIZE * 0.5),
-                (int) (4 * GameActivity.PIXEL_SIZE * 0.5), Bitmap.Config.ARGB_8888);
+        blockedBlocksBitmap = Bitmap.createBitmap(GameActivity.BOARD_WIDTH, GameActivity.BOARD_HEIGHT,
+                Bitmap.Config.ARGB_8888);
         blockedBlocksCanvas = new Canvas(blockedBlocksBitmap);
         blockedBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }

@@ -10,7 +10,7 @@ import static com.tetris.model.Board.ActionList;
 public class FastShapeEvents {
 
     public static long last_fast_shape_update = SystemClock.uptimeMillis();
-    public static long fastShapeTimer = 10000; //TODO: cambiar time de 20s a 30s
+    public static long fastShapeTimer = 20000; //TODO: cambiar time de 20s a 30s
 
     public static void createFastShape(){
         Board.getInstance().setFastShape(new ShapeShort(
