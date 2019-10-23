@@ -9,6 +9,7 @@ import com.tetris.R;
 import com.tetris.model.impl.ShapeShort;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -49,9 +50,17 @@ public class Board extends Activity {
 
     protected int spawnY = -4;
 
-    private int squareGameOver = 0;
+    private int squareGameOver=0;
 
-    public int deadBlockY = -2;
+    private int deadBlockY =-2;
+
+    private int colorFallingShape;
+
+    private boolean firstLineComplete;
+
+    private int numberLinesComplete;
+
+    private HashMap colorsRandom= new HashMap <Integer,Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +187,9 @@ public class Board extends Activity {
         //For each line the shape touches checks if its completed
         for (Block shapeBlock : shape.getBlocks()) {
             if (lineComplete(shapeBlock.getY())) {
-
+                setFirstLineComplete(true);
                 score += 30;
+                numberLinesComplete++;
 
                 deletedLines.add(shapeBlock.getY());
 
@@ -187,10 +197,11 @@ public class Board extends Activity {
                 for (Block block : blocks) {
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
                         blocks.remove(block);
-
+                    setColorFallingShape(block.getColor());
                 }
             }
         }
+        removeColors();
         for (Block block : blocks) {
             int count = 0;
             for (int y : deletedLines) {
@@ -201,8 +212,50 @@ public class Board extends Activity {
             //Moves block down per deleted line
             block.setY(block.getY() + count);
         }
+    }
 
+    private int randomColor(int defaultColor,int colorLineaCompleted){
+        if (colorsRandom.containsKey(defaultColor)){
+            return (int) colorsRandom.get(defaultColor);
+        } else {
+            Random r = new Random();
+            int index;
 
+            if (colorLineaCompleted == -1) {
+                index = r.nextInt(7);
+            } else {
+                do {
+                    index = r.nextInt(7);
+                }while (index!=colorLineaCompleted);
+            }
+
+            colorsRandom.put(defaultColor,index);
+            return index;
+        }
+    }
+
+    public int chooseColor (Block block){
+        int newColor;
+        if (getNumberLinesComplete()==4){
+            newColor = randomColor(block.getColor(),block.getColorNow());
+            block.setColorNow(newColor);
+        }else if (getNumberLinesComplete()>0){
+            newColor = getColorFallingShape();
+            block.setColorNow(newColor);
+        } else {
+            if(!colorsRandom.isEmpty()){
+                newColor = randomColor(block.getColor(),block.getColorNow());
+            }else {
+                newColor = getColorFallingShape();
+            }
+        }
+        return newColor;
+    }
+
+    private void removeColors(){
+        if (getNumberLinesComplete()>0){
+            colorsRandom.clear();
+        }
     }
 
     //Checks if a line is complete
@@ -291,6 +344,15 @@ public class Board extends Activity {
         return false;
     }
 
+    public void defaultSettings(){
+        deadBlocksUpdate = false;
+        spawnY = -4;
+        squareGameOver = 0;
+        deadBlockY = -2;
+        fallingShape.setY(-4);
+        nextShape.setY(-4);
+    }
+  
     public void clear() {
         blocks.clear();
         fallingShape = null;
@@ -300,6 +362,9 @@ public class Board extends Activity {
         spawnY = -4;
         setDeadBlockY(-2);
         setSquareGameOver(0);
+        needsUpdate = true;
+        deadBlocksUpdate = false;
+        firstLineComplete = false;
         actions.clear();
         last_deadLine_update = SystemClock.uptimeMillis();
         last_fast_shape_update = SystemClock.uptimeMillis();
@@ -357,5 +422,29 @@ public class Board extends Activity {
 
     public void setSquareGameOver(int squareGameOver) {
         this.squareGameOver = squareGameOver;
+    }
+
+    public int getColorFallingShape() {
+        return colorFallingShape;
+    }
+
+    public void setColorFallingShape(int colorFallingShape) {
+        this.colorFallingShape = colorFallingShape;
+    }
+
+    public boolean isFirstLineComplete() {
+        return firstLineComplete;
+    }
+
+    public void setFirstLineComplete(boolean firstLineComplete) {
+        this.firstLineComplete = firstLineComplete;
+    }
+
+    public int getNumberLinesComplete() {
+        return numberLinesComplete;
+    }
+
+    public void setNumberLinesComplete(int numberLinesComplete) {
+        this.numberLinesComplete = numberLinesComplete;
     }
 }

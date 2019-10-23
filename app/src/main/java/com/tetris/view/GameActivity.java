@@ -22,6 +22,8 @@ import com.tetris.model.Board;
 import com.tetris.utils.Colors;
 import com.tetris.utils.EasterEggs;
 
+import java.util.HashMap;
+import java.util.Random;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class GameActivity extends Activity {
@@ -192,6 +194,10 @@ public class GameActivity extends Activity {
 
                 //Paint next shape on left side
                 paintNextShape();
+              
+                if (Board.getInstance().getNumberLinesComplete()>0){
+                    deleteDeadBlocks();
+                }
             }
             if (a.equals(Board.Actions.DEAD_BLOCK)) {
                 paintDeadBlocks();
@@ -204,7 +210,15 @@ public class GameActivity extends Activity {
 
     }
 
+    private void deleteDeadBlocks(){
+        if (Board.getInstance().getNumberLinesComplete()==4){
+            deadBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            Board.getInstance().defaultSettings();
+        }
+        Board.getInstance().setNumberLinesComplete(0);
 
+    }
+  
     private void paintDeadBlocks() {
         Bitmap bitmapBlock = Colors.blockedTexture(this.getResources());
         for (int i = 0; i < Board.BOARD_COLS; i++) {
@@ -214,7 +228,6 @@ public class GameActivity extends Activity {
             }
         }
         deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(deadBlocksBitmap));
-        //Board.getInstance().setDeadBlockY(Board.getInstance().getDeadBlockY()+2);
     }
 
     private void paintNextShape() {
@@ -236,9 +249,15 @@ public class GameActivity extends Activity {
     private void paintBlockArray() {
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        Bitmap bitmapBlock;
+
 
         for (Block block : Board.getInstance().getBlocks()) {
-            Bitmap bitmapBlock = Colors.blockTextureSelector(this.getResources(), block.getColor());
+            if (Board.getInstance().isFirstLineComplete()){
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
+            } else {
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            }
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX() * PIXEL_SIZE, block.getY() * PIXEL_SIZE, paint);
         }
@@ -248,9 +267,14 @@ public class GameActivity extends Activity {
 
     private void paintFallingShape() {
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        Bitmap bitmapBlock;
 
-        for (Block block : Board.getInstance().getFallingShape().getBlocks()) {
-            Bitmap bitmapBlock = Colors.blockTextureSelector(this.getResources(), block.getColor());
+        for(Block block : Board.getInstance().getFallingShape().getBlocks()){
+            if (Board.getInstance().isFirstLineComplete()){
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
+            } else {
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            }
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * PIXEL_SIZE, block.getY() * PIXEL_SIZE, paint);
         }
