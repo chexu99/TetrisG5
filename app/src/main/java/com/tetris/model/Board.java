@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 
 import com.tetris.R;
+import com.tetris.model.impl.ShapeShort;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +25,12 @@ public class Board extends Activity {
     private List<Block> blocks = new CopyOnWriteArrayList<>();
     private Shape fallingShape;
     private Shape nextShape;
+    private Shape fastShape;
 
     private int score = 0;
 
     private GameStatus gameStatus;
+
     public enum GameStatus {
         INITIATING,
         IN_PROGRESS,
@@ -35,11 +38,15 @@ public class Board extends Activity {
         GAME_OVER,
     }
 
-    private boolean needsUpdate = true;
+    private List<Actions> actions = new CopyOnWriteArrayList<>();
 
-    private boolean deadBlocksUpdate = false;
+    public enum Actions {
+        DEAD_BLOCK,
+        COLLISION,
+    }
 
     protected long last_deadLine_update = SystemClock.uptimeMillis();
+    protected long last_fast_shape_update = SystemClock.uptimeMillis();
 
     protected int spawnY = -4;
 
@@ -59,6 +66,7 @@ public class Board extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        spawnNextShape();
     }
 
     //Board instance for use by other classes
@@ -75,7 +83,8 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(2, spawnY);
+        nextShape = Shape.randomShape(index, spawnY);
+        actions.add(Actions.COLLISION);
     }
 
     //Next shape falls
@@ -89,11 +98,21 @@ public class Board extends Activity {
         }
     }
 
-    public boolean checkDeleteLinesUpdate50(){
-        long deleteLines = 10000;//TODO:MIRAR
+    public boolean checkDeleteLinesUpdate() {
+        long deleteLines = 50000;//TODO: cambiar time de 100s a 50s
         if (SystemClock.uptimeMillis() - last_deadLine_update > deleteLines) {
             last_deadLine_update = SystemClock.uptimeMillis();
-            deadBlockY=deadBlockY+2;
+            deadBlockY = deadBlockY + 2;
+            actions.add(Actions.DEAD_BLOCK);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean checkFastShapeUpdate() {
+        long fastShape = 10000;//TODO: cambiar time de 20s a 30s
+        if (SystemClock.uptimeMillis() - last_fast_shape_update > fastShape) {
             return true;
         }
         return false;
@@ -101,10 +120,36 @@ public class Board extends Activity {
 
     //Updates the falling shape
     public void update() {
-        if (checkDeleteLinesUpdate50()){
-            spawnY=spawnY+2;
-            setDeadBlocksUpdate(true);
+        if (checkDeleteLinesUpdate()) {
+            spawnY = spawnY + 2;
         }
+        if (checkFastShapeUpdate()) {
+            if (fastShape == null) {
+                fastShape = new ShapeShort(spawnY);
+            } else {//Update fast shape
+                fastShape.update();
+                if (!fastShape.isFalling()) { //if it has collided
+                    //Add fast shape blocks to board
+                    for (Block block : fastShape.getBlocks()) {
+                        block.setFalling(false);
+                        blocks.add(block);
+                    }
+
+                    Shape layingShape = fastShape;
+                    deleteLinesOf(layingShape);
+
+                    if (checkGameOver()) {
+                        gameStatus = GameStatus.GAME_OVER;
+                    }
+
+                    fastShape = null;
+
+                    actions.add(Actions.COLLISION);
+                    last_fast_shape_update = SystemClock.uptimeMillis();
+                }
+            }
+        }
+
         if (fallingShape == null) { //Checks if the falling shape collided
             makeNextShapeFalling();
         } else {
@@ -123,12 +168,15 @@ public class Board extends Activity {
 
                 if (checkGameOver()) {
                     gameStatus = GameStatus.GAME_OVER;
+                } else if (fastShape != null) {  //Give movement controls to the fast shape
+                    fallingShape = fastShape;
+                    fastShape = null;
+                    last_fast_shape_update = SystemClock.uptimeMillis();
                 } else {
                     fallingShape = null;
                     makeNextShapeFalling();
                 }
-                needsUpdate = true;
-
+                actions.add(Actions.COLLISION);
             }
         }
     }
@@ -246,11 +294,11 @@ public class Board extends Activity {
 
     public void checkMoveDown() {
         boolean aux = true;
-        while (aux){
+        while (aux) {
             fallingShape.moveDown();
             if (fallingShape.collide()) { //Check if shape collided
                 fallingShape.moveUp();
-                aux=false;
+                aux = false;
             }
         }
     }
@@ -264,7 +312,7 @@ public class Board extends Activity {
             fallingShape.moveRight();
             if (fallingShape.collide())
                 fallingShape.moveLeft();
-            else{
+            else {
                 fallingShape.moveLeft();
                 fallingShape.unrotate();
                 fallingShape.moveRight();
@@ -290,8 +338,8 @@ public class Board extends Activity {
     }
 
     private boolean checkGameOver() {
-        for(Block block : blocks)
-            if(block.getY() <= squareGameOver) //If any of the blocks Y coordinate is above the board limit
+        for (Block block : blocks)
+            if (block.getY() <= squareGameOver) //If any of the blocks Y coordinate is above the board limit
                 return true;
         return false;
     }
@@ -304,24 +352,31 @@ public class Board extends Activity {
         fallingShape.setY(-4);
         nextShape.setY(-4);
     }
-
-    public void clear(){
+  
+    public void clear() {
         blocks.clear();
         fallingShape = null;
         nextShape = null;
+        fastShape = null;
         score = 0;
-        spawnY=-4;
+        spawnY = -4;
         setDeadBlockY(-2);
         setSquareGameOver(0);
         needsUpdate = true;
         deadBlocksUpdate = false;
         firstLineComplete = false;
-        last_deadLine_update =SystemClock.uptimeMillis();
+        actions.clear();
+        last_deadLine_update = SystemClock.uptimeMillis();
+        last_fast_shape_update = SystemClock.uptimeMillis();
         gameStatus = GameStatus.INITIATING;
     }
 
     public List<Block> getBlocks() {
         return blocks;
+    }
+
+    public List<Actions> getActions() {
+        return actions;
     }
 
     public Shape getFallingShape() {
@@ -331,6 +386,10 @@ public class Board extends Activity {
     public Shape getNextShape() {
 
         return nextShape;
+    }
+
+    public Shape getFastShape() {
+        return fastShape;
     }
 
     public GameStatus getGameStatus() {
@@ -347,23 +406,6 @@ public class Board extends Activity {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-
-    public boolean isNeedsUpdate() {
-        return needsUpdate;
-    }
-
-    public void setNeedsUpdate(boolean needsUpdate) {
-        this.needsUpdate = needsUpdate;
-    }
-
-    public boolean isDeadBlocksUpdate() {
-        return deadBlocksUpdate;
-    }
-
-    public void setDeadBlocksUpdate(boolean deadBlocksUpdate) {
-        this.deadBlocksUpdate = deadBlocksUpdate;
     }
 
     public int getDeadBlockY() {
