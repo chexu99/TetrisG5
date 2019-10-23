@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import com.tetris.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -52,6 +53,8 @@ public class Board extends Activity {
 
     private int numberLinesComplete;
 
+    private HashMap colorsRandom= new HashMap <Integer,Integer>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,7 @@ public class Board extends Activity {
         Random r = new Random();
         int index = r.nextInt(7) + 1;
 
-        nextShape = Shape.randomShape(index, spawnY);
+        nextShape = Shape.randomShape(2, spawnY);
     }
 
     //Next shape falls
@@ -150,6 +153,7 @@ public class Board extends Activity {
                 }
             }
         }
+        removeColors();
         for (Block block : blocks) {
             int count = 0;
             for (int y : deletedLines) {
@@ -160,8 +164,50 @@ public class Board extends Activity {
             //Moves block down per deleted line
             block.setY(block.getY() + count);
         }
+    }
 
+    private int randomColor(int defaultColor,int colorLineaCompleted){
+        if (colorsRandom.containsKey(defaultColor)){
+            return (int) colorsRandom.get(defaultColor);
+        } else {
+            Random r = new Random();
+            int index;
 
+            if (colorLineaCompleted == -1) {
+                index = r.nextInt(7);
+            } else {
+                do {
+                    index = r.nextInt(7);
+                }while (index!=colorLineaCompleted);
+            }
+
+            colorsRandom.put(defaultColor,index);
+            return index;
+        }
+    }
+
+    public int chooseColor (Block block){
+        int newColor;
+        if (getNumberLinesComplete()==4){
+            newColor = randomColor(block.getColor(),block.getColorNow());
+            block.setColorNow(newColor);
+        }else if (getNumberLinesComplete()>0){
+            newColor = getColorFallingShape();
+            block.setColorNow(newColor);
+        } else {
+            if(!colorsRandom.isEmpty()){
+                newColor = randomColor(block.getColor(),block.getColorNow());
+            }else {
+                newColor = getColorFallingShape();
+            }
+        }
+        return newColor;
+    }
+
+    private void removeColors(){
+        if (getNumberLinesComplete()>0){
+            colorsRandom.clear();
+        }
     }
 
     //Checks if a line is complete
@@ -250,6 +296,15 @@ public class Board extends Activity {
         return false;
     }
 
+    public void defaultSettings(){
+        deadBlocksUpdate = false;
+        spawnY = -4;
+        squareGameOver = 0;
+        deadBlockY = -2;
+        fallingShape.setY(-4);
+        nextShape.setY(-4);
+    }
+
     public void clear(){
         blocks.clear();
         fallingShape = null;
@@ -260,6 +315,7 @@ public class Board extends Activity {
         setSquareGameOver(0);
         needsUpdate = true;
         deadBlocksUpdate = false;
+        firstLineComplete = false;
         last_deadLine_update =SystemClock.uptimeMillis();
         gameStatus = GameStatus.INITIATING;
     }

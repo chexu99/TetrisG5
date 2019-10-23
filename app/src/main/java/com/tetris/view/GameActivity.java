@@ -3,7 +3,6 @@ package com.tetris.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -198,6 +197,10 @@ public class GameActivity extends Activity {
             //Paint next shape on left side
             paintNextShape();
 
+            if (Board.getInstance().getNumberLinesComplete()>0){
+                    deleteDeadBlocks();
+            }
+
             if (Board.getInstance().isDeadBlocksUpdate()){
                 paintDeadBlocks();
                 Board.getInstance().setDeadBlocksUpdate(false);
@@ -211,6 +214,15 @@ public class GameActivity extends Activity {
 
     }
 
+    private void deleteDeadBlocks(){
+        if (Board.getInstance().getNumberLinesComplete()==4){
+            deadBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            Board.getInstance().defaultSettings();
+        }
+        Board.getInstance().setNumberLinesComplete(0);
+
+    }
+
     private void paintDeadBlocks(){
         Bitmap bitmapBlock =  Colors.blockedTexture(this.getResources());
         for (int i = 0; i<Board.BOARD_COLS;i++){
@@ -220,7 +232,6 @@ public class GameActivity extends Activity {
             }
         }
         deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(deadBlocksBitmap));
-        //Board.getInstance().setDeadBlockY(Board.getInstance().getDeadBlockY()+2);
     }
 
     private void paintNextShape() {
@@ -238,47 +249,22 @@ public class GameActivity extends Activity {
         nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
     }
 
-    private HashMap colorsRandom= new HashMap <Integer,Integer>();
-
-    private int randomColor(int defaultColor,int colorLineaCompleted){
-        if (colorsRandom.containsKey(defaultColor)){
-            return (int) colorsRandom.get(defaultColor);
-        } else {
-            Random r = new Random();
-            int index;
-            do {
-                index = r.nextInt(7);
-            }while (index!=colorLineaCompleted);
-            colorsRandom.put(defaultColor,index);
-            return index;
-        }
-
-
-    }
-
     private void paintBlockArray(){
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        Bitmap bitmapBlock = null;
+        Bitmap bitmapBlock;
+
+
         for (Block block : Board.getInstance().getBlocks()) {
             if (Board.getInstance().isFirstLineComplete()){
-                if (Board.getInstance().getNumberLinesComplete()==4){
-                    int newColor = randomColor(block.getColor(),block.getColorLineaCompleted());
-                    block.setColorLineaCompleted(newColor);
-                    bitmapBlock =  Colors.blockTextureSelector(this.getResources(),newColor);
-                }else if (Board.getInstance().getNumberLinesComplete()>0){
-                    bitmapBlock =  Colors.blockTextureSelector(this.getResources(), Board.getInstance().getColorFallingShape());
-                }
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
             } else {
                 bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
             }
 
-            Board.getInstance().setNumberLinesComplete(0);
-            colorsRandom.clear();
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
-
 
         Board.getInstance().setNeedsUpdate(false);
         boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
@@ -286,17 +272,20 @@ public class GameActivity extends Activity {
 
     private void paintFallingShape(){
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        Bitmap bitmapBlock;
 
         for(Block block : Board.getInstance().getFallingShape().getBlocks()){
-            Bitmap bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            if (Board.getInstance().isFirstLineComplete()){
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
+            } else {
+                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
+            }
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX()*PIXEL_SIZE, block.getY()*PIXEL_SIZE, paint);
         }
 
         fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
     }
-
-
 
     @Override
     protected void onPause() {
