@@ -9,7 +9,7 @@ public class ShapeShort extends Shape {
 
     protected long update_interval = 180;
 
-    public ShapeShort(int spawnY) {
+    public ShapeShort(int spawnY, int color) {
         super(1, 2,spawnY+2);
 
         update_interval = 230;
@@ -21,6 +21,9 @@ public class ShapeShort extends Shape {
         //Rotation initiation
         rotation_block = blocks[1];
         rotation_cycle = 2;
+        for (Block block : blocks) {
+            block.setColorNow(color);
+        }
     }
 
     public Block[] getBlocks() {

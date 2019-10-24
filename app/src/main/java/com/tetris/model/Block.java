@@ -6,13 +6,12 @@ public class Block extends Pixel {
     private boolean falling;
 
     private int color;
-    private int colorNow =-1;
+    private int colorNow;
 
     //Constructors
     public Block() {
         super(0, 0, 1, 1);
         this.falling = false;
-        this.color = 0xffffffff;
     }
 
     //Checks if it collided with something

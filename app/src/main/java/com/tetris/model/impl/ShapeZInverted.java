@@ -4,10 +4,13 @@ import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
 public class ShapeZInverted extends Shape {
-    public ShapeZInverted(int spawnY) {
+    public ShapeZInverted(int spawnY, int color) {
         super(3, 2,spawnY+2);
         rotation_block = blocks[1];
         rotation_cycle = 2;
+        for (Block block : blocks) {
+            block.setColorNow(color);
+        }
     }
 
     public Block[] getBlocks() {
@@ -23,7 +26,7 @@ public class ShapeZInverted extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(4);
+            block.setColor(5);
         }
         return blocks;
     }

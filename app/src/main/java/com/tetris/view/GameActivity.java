@@ -194,29 +194,24 @@ public class GameActivity extends Activity {
 
                 //Paint next shape on left side
                 paintNextShape();
-              
-                if (Board.getInstance().getNumberLinesComplete()>0){
-                    deleteDeadBlocks();
-                }
+
             }
             if (a.equals(Board.Actions.DEAD_BLOCK)) {
                 paintDeadBlocks();
                 Board.getInstance().setSquareGameOver(Board.getInstance().getSquareGameOver() + 2);
             }
-            Board.getInstance().getActions().clear(); //Clear actions list
+            if (a.equals(Board.Actions.RESET_DEAD)) {
+                deleteDeadBlocks();
+            }
         }
+        Board.getInstance().getActions().clear(); //Clear actions list
         //Paint fallingShape Layout
         paintFallingShape();
 
     }
 
     private void deleteDeadBlocks(){
-        if (Board.getInstance().getNumberLinesComplete()==4){
-            deadBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            Board.getInstance().defaultSettings();
-        }
-        Board.getInstance().setNumberLinesComplete(0);
-
+        deadBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
   
     private void paintDeadBlocks() {
@@ -253,11 +248,8 @@ public class GameActivity extends Activity {
 
 
         for (Block block : Board.getInstance().getBlocks()) {
-            if (Board.getInstance().isFirstLineComplete()){
-                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
-            } else {
-                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
-            }
+            bitmapBlock =  Colors.blockTextureSelector(this.getResources(),block.getColorNow());
+
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX() * PIXEL_SIZE, block.getY() * PIXEL_SIZE, paint);
         }
@@ -270,18 +262,14 @@ public class GameActivity extends Activity {
         Bitmap bitmapBlock;
 
         for(Block block : Board.getInstance().getFallingShape().getBlocks()){
-            if (Board.getInstance().isFirstLineComplete()){
-                bitmapBlock =  Colors.blockTextureSelector(this.getResources(),Board.getInstance().chooseColor(block));
-            } else {
-                bitmapBlock =  Colors.blockTextureSelector(this.getResources(), block.getColor());
-            }
+            bitmapBlock =  Colors.blockTextureSelector(this.getResources(),block.getColorNow());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * PIXEL_SIZE, block.getY() * PIXEL_SIZE, paint);
         }
 
         if (Board.getInstance().getFastShape() != null) {
             for (Block block : Board.getInstance().getFastShape().getBlocks()) {
-                Bitmap bitmapBlock = Colors.blockTextureSelector(this.getResources(), block.getColor());
+                bitmapBlock = Colors.blockTextureSelector(this.getResources(), block.getColorNow());
                 bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
                 fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * PIXEL_SIZE, block.getY() * PIXEL_SIZE, paint);
             }

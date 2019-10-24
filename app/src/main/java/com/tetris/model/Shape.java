@@ -51,23 +51,23 @@ public class Shape extends Pixel {
     }
 
     //Shape defined by type
-    public static Shape randomShape(int type,int spawnY) {
+    public static Shape randomShape(int type, int spawnY, int color) {
         switch (type) {
+            case 0:
+                return new ShapeCube(spawnY, color);
             case 1:
-                return new ShapeCube(spawnY);
+                return new ShapeI(spawnY, color);
             case 2:
-                return new ShapeI(spawnY);
+                return new ShapeL(spawnY, color);
             case 3:
-                return new ShapeL(spawnY);
+                return new ShapeLInverted(spawnY, color);
             case 4:
-                return new ShapeLInverted(spawnY);
+                return new ShapeZ(spawnY, color);
             case 5:
-                return new ShapeZ(spawnY);
+                return new ShapeZInverted(spawnY, color);
             case 6:
-                return new ShapeZInverted(spawnY);
-            case 7:
             default:
-                return new ShapeT(spawnY);
+                return new ShapeT(spawnY, color);
         }
     }
 

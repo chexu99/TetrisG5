@@ -1,11 +1,8 @@
 package com.tetris.model;
 
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.os.SystemClock;
 
-import com.tetris.R;
 import com.tetris.model.impl.ShapeShort;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
-public class Board extends Activity {
+public class Board{
 
     public static final int BOARD_COLS = 10;
     public static final int BOARD_ROWS = 20;
@@ -42,6 +39,7 @@ public class Board extends Activity {
 
     public enum Actions {
         DEAD_BLOCK,
+        RESET_DEAD,
         COLLISION,
     }
 
@@ -54,25 +52,15 @@ public class Board extends Activity {
 
     private int deadBlockY =-2;
 
-    private int colorFallingShape;
-
-    private boolean firstLineComplete;
-
-    private int numberLinesComplete;
-
-    private HashMap colorsRandom= new HashMap <Integer,Integer>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        spawnNextShape();
-    }
+    private static HashMap colorMap = new HashMap <Integer,Integer>();
 
     //Board instance for use by other classes
     public static Board getInstance() {
         if (instance == null) {
             instance = new Board();
+            //Initialize color map
+            for(int color = 0; color <= 7; color++)
+                colorMap.put(color, color);
         }
         return instance;
     }
@@ -81,9 +69,11 @@ public class Board extends Activity {
     //Construct next shape randomly
     public void spawnNextShape() {
         Random r = new Random();
-        int index = r.nextInt(7) + 1;
+        int index = r.nextInt(7);
+        //Get the color assign to the shape
+        int color = (int) colorMap.get(index);
 
-        nextShape = Shape.randomShape(index, spawnY);
+        nextShape = Shape.randomShape(index, spawnY, color);
         actions.add(Actions.COLLISION);
     }
 
@@ -125,7 +115,7 @@ public class Board extends Activity {
         }
         if (checkFastShapeUpdate()) {
             if (fastShape == null) {
-                fastShape = new ShapeShort(spawnY);
+                fastShape = new ShapeShort(spawnY, (int) colorMap.get(7));
             } else {//Update fast shape
                 fastShape.update();
                 if (!fastShape.isFalling()) { //if it has collided
@@ -184,24 +174,33 @@ public class Board extends Activity {
     //Deletes the lines that the shape is touching
     void deleteLinesOf(Shape shape) {
         List<Integer> deletedLines = new ArrayList<>();
+        int numberLinesComplete = 0;
         //For each line the shape touches checks if its completed
         for (Block shapeBlock : shape.getBlocks()) {
-            if (lineComplete(shapeBlock.getY())) {
-                setFirstLineComplete(true);
+            if (lineComplete(shapeBlock.getY())) { //If line is complete
                 score += 30;
                 numberLinesComplete++;
 
                 deletedLines.add(shapeBlock.getY());
-
                 // Remove from blocks all the block belonging to the same line.
                 for (Block block : blocks) {
                     if (block.getY() == shapeBlock.getY()) //Remove block from Board if its in the line
                         blocks.remove(block);
-                    setColorFallingShape(block.getColor());
                 }
             }
         }
-        removeColors();
+
+        if(numberLinesComplete == 4){
+            resetDeadBlocks();
+            randomColor();
+            assignColor();
+        }else if(numberLinesComplete > 0){
+            colorForAll();
+            assignColor();
+        }
+
+        //chooseColor(shape.getBlocks()[0]);
+        //removeColors();
         for (Block block : blocks) {
             int count = 0;
             for (int y : deletedLines) {
@@ -214,47 +213,48 @@ public class Board extends Activity {
         }
     }
 
-    private int randomColor(int defaultColor,int colorLineaCompleted){
-        if (colorsRandom.containsKey(defaultColor)){
-            return (int) colorsRandom.get(defaultColor);
-        } else {
-            Random r = new Random();
-            int index;
+    private void randomColor(){
+        Random r = new Random();
+        int index;
 
-            if (colorLineaCompleted == -1) {
-                index = r.nextInt(7);
-            } else {
-                do {
-                    index = r.nextInt(7);
-                }while (index!=colorLineaCompleted);
-            }
-
-            colorsRandom.put(defaultColor,index);
-            return index;
+        for(int color = 0; color <= 7; color++){
+            do {
+                index = r.nextInt(8);
+                //Repeat until index is different from original color
+                // and the color is not the same as in the hash map
+            }while (index!=color && (!colorMap.get(index).equals(color)));
+            //Add random color to related color
+            colorMap.put(color, index);
         }
     }
 
-    public int chooseColor (Block block){
-        int newColor;
-        if (getNumberLinesComplete()==4){
-            newColor = randomColor(block.getColor(),block.getColorNow());
-            block.setColorNow(newColor);
-        }else if (getNumberLinesComplete()>0){
-            newColor = getColorFallingShape();
-            block.setColorNow(newColor);
-        } else {
-            if(!colorsRandom.isEmpty()){
-                newColor = randomColor(block.getColor(),block.getColorNow());
-            }else {
-                newColor = getColorFallingShape();
-            }
+    private void colorForAll(){
+        //Get original color of the last falling shape
+        int shapeColor = fallingShape.getBlocks()[0].getColor();
+        //Put original shapeColor to all
+        for(int color = 0; color <= 7; color++){
+            colorMap.put(color, shapeColor);
         }
-        return newColor;
+
     }
 
-    private void removeColors(){
-        if (getNumberLinesComplete()>0){
-            colorsRandom.clear();
+    private void assignColor(){
+        //Assign color to board blocks
+        for(Block block : blocks){
+            int actualColor = block.getColorNow();
+            block.setColorNow((int) colorMap.get(actualColor));
+        }
+        //Assign color to nextShape blocks
+        for(Block block : nextShape.getBlocks()){
+            int actualColor = block.getColorNow();
+            block.setColorNow((int) colorMap.get(actualColor));
+        }
+
+        if(fastShape != null) { //Assign color to fastShape blocks if exists
+            for (Block block : fastShape.getBlocks()) {
+                int actualColor = block.getColorNow();
+                block.setColorNow((int) colorMap.get(actualColor));
+            }
         }
     }
 
@@ -344,8 +344,10 @@ public class Board extends Activity {
         return false;
     }
 
-    public void defaultSettings(){
-        deadBlocksUpdate = false;
+    public void resetDeadBlocks(){
+        actions.add(Actions.RESET_DEAD);
+
+        last_deadLine_update = SystemClock.uptimeMillis();
         spawnY = -4;
         squareGameOver = 0;
         deadBlockY = -2;
@@ -362,9 +364,6 @@ public class Board extends Activity {
         spawnY = -4;
         setDeadBlockY(-2);
         setSquareGameOver(0);
-        needsUpdate = true;
-        deadBlocksUpdate = false;
-        firstLineComplete = false;
         actions.clear();
         last_deadLine_update = SystemClock.uptimeMillis();
         last_fast_shape_update = SystemClock.uptimeMillis();
@@ -422,29 +421,5 @@ public class Board extends Activity {
 
     public void setSquareGameOver(int squareGameOver) {
         this.squareGameOver = squareGameOver;
-    }
-
-    public int getColorFallingShape() {
-        return colorFallingShape;
-    }
-
-    public void setColorFallingShape(int colorFallingShape) {
-        this.colorFallingShape = colorFallingShape;
-    }
-
-    public boolean isFirstLineComplete() {
-        return firstLineComplete;
-    }
-
-    public void setFirstLineComplete(boolean firstLineComplete) {
-        this.firstLineComplete = firstLineComplete;
-    }
-
-    public int getNumberLinesComplete() {
-        return numberLinesComplete;
-    }
-
-    public void setNumberLinesComplete(int numberLinesComplete) {
-        this.numberLinesComplete = numberLinesComplete;
     }
 }

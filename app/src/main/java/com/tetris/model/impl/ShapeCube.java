@@ -5,8 +5,11 @@ import com.tetris.model.Shape;
 
 public class ShapeCube extends Shape {
 
-    public ShapeCube(int spawnY) {
+    public ShapeCube(int spawnY, int color) {
         super(2, 2,spawnY+2);
+        for (Block block : blocks) {
+            block.setColorNow(color);
+        }
     }
 
     public Block[] getBlocks() {
@@ -22,7 +25,7 @@ public class ShapeCube extends Shape {
 
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(1);
+            block.setColor(0);
         }
         return blocks;
     }

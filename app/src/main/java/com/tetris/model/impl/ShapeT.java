@@ -4,10 +4,13 @@ import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
 public class ShapeT extends Shape {
-    public ShapeT(int spawnY) {
+    public ShapeT(int spawnY, int color) {
         super(3, 2,spawnY+2);
         rotation_block = blocks[1];
         rotation_cycle = 4;
+        for (Block block : blocks) {
+            block.setColorNow(color);
+        }
     }
 
     public Block[] getBlocks() {
@@ -23,7 +26,7 @@ public class ShapeT extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(0);
+            block.setColor(6);
         }
         return blocks;
     }

@@ -13,20 +13,20 @@ public class Colors {
     public static Bitmap blockTextureSelector(Resources res, int color) { //Original palette
         switch (color) {
             case 0:
-                return BitmapFactory.decodeResource(res, R.drawable.block_yellow);
-            case 1:
                 return BitmapFactory.decodeResource(res, R.drawable.block_blue);
-            case 2:
-                return BitmapFactory.decodeResource(res, R.drawable.block_white);
-            case 3:
-                return BitmapFactory.decodeResource(res, R.drawable.block_cyan);
-            case 4:
-                return BitmapFactory.decodeResource(res, R.drawable.block_lime);
-            case 5:
+            case 1:
                 return BitmapFactory.decodeResource(res, R.drawable.block_red);
+            case 2:
+                return BitmapFactory.decodeResource(res, R.drawable.block_purple);
+            case 3:
+                return BitmapFactory.decodeResource(res, R.drawable.block_white);
+            case 4:
+                return BitmapFactory.decodeResource(res, R.drawable.block_cyan);
+            case 5:
+                return BitmapFactory.decodeResource(res, R.drawable.block_lime);
             case 6:
             default:
-                return BitmapFactory.decodeResource(res, R.drawable.block_purple);
+                return BitmapFactory.decodeResource(res, R.drawable.block_yellow);
             case 7: //For short shape
                 return BitmapFactory.decodeResource(res, R.drawable.block_magenta);
         }
@@ -37,32 +37,23 @@ public class Colors {
     }
 
     public static Bitmap nextShapeTextureSelector(Resources res, int color) {
-        Bitmap texture;
         switch (color) {
             case 0:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_t_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_cube_shape);
             case 1:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_cube_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_i_shape);
             case 2:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_inverted_l_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_l_shape);
             case 3:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_inverted_z_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_inverted_l_shape);
             case 4:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_z_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_inverted_z_shape);
             case 5:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_i_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_z_shape);
             case 6:
             default:
-                texture = BitmapFactory.decodeResource(res, R.drawable.block_l_shape);
-                break;
+                return BitmapFactory.decodeResource(res, R.drawable.block_t_shape);
         }
-        return texture;
     }
 
 

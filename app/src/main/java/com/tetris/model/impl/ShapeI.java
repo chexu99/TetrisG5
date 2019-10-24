@@ -5,11 +5,14 @@ import com.tetris.model.Shape;
 
 public class ShapeI extends Shape {
 
-    public ShapeI(int spawnY) {
+    public ShapeI(int spawnY, int color) {
         super(1, 4,spawnY);
         this.x = x + 1;
         rotation_block = blocks[1];
         rotation_cycle = 2;
+        for (Block block : blocks) {
+            block.setColorNow(color);
+        }
     }
 
     public Block[] getBlocks() {
@@ -25,7 +28,7 @@ public class ShapeI extends Shape {
         doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
-            block.setColor(5);
+            block.setColor(1);
         }
         return blocks;
     }
