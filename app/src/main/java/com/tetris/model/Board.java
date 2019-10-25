@@ -65,6 +65,10 @@ public class Board{
         return instance;
     }
 
+    public static HashMap getColorMap(){
+        return colorMap;
+    }
+
 
     //Construct next shape randomly
     public void spawnNextShape() {
