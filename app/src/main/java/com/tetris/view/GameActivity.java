@@ -31,9 +31,9 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    public static final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
-    public static final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
-    public static final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
+    public static int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
+    public static int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
+    public static int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
     //Buttons
@@ -295,5 +295,18 @@ public class GameActivity extends Activity {
             Intent intent = new Intent(this, FinalScoreActivity.class);
             startActivity(intent);
         }
+    }
+
+
+    public static void setBoardHeight(int boardHeight) {
+        BOARD_HEIGHT = boardHeight;
+    }
+
+    public static void setBoardWidth(int boardWidth) {
+        BOARD_WIDTH = boardWidth;
+    }
+
+    public static void setPixelSize(int pixelWidth) {
+        PIXEL_SIZE = pixelWidth / Board.BOARD_COLS;
     }
 }

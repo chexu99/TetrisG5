@@ -12,11 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
+    private Button graphic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        graphic = findViewById(R.id.graphic_button);
+        graphic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGraphicActivity();
+            }
+        });
 
         button = findViewById(R.id.new_game_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -27,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
+    private void openGraphicActivity() {
+        Intent intent = new Intent(this, GraphicActivity.class);
+        startActivity(intent);
+    }
 }
 
 
