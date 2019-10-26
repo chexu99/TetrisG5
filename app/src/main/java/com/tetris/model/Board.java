@@ -7,6 +7,7 @@ import com.tetris.model.impl.ShapeShort;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -216,16 +217,19 @@ public class Board{
     private void randomColor(){
         Random r = new Random();
         int index;
+        HashSet colorSelected = new HashSet<Integer>();
 
         for(int color = 0; color <= 7; color++){
             do {
                 index = r.nextInt(8);
                 //Repeat until index is different from original color
                 // and the color is not the same as in the hash map
-            }while (index!=color && (!colorMap.get(index).equals(color)));
+            }while ((index == color) || (colorSelected.contains(index)));
             //Add random color to related color
+            colorSelected.add(index);
             colorMap.put(color, index);
         }
+        colorSelected.clear();
     }
 
     private void colorForAll(){
@@ -241,18 +245,18 @@ public class Board{
     private void assignColor(){
         //Assign color to board blocks
         for(Block block : blocks){
-            int actualColor = block.getColorNow();
+            int actualColor = block.getColor();
             block.setColorNow((int) colorMap.get(actualColor));
         }
         //Assign color to nextShape blocks
         for(Block block : nextShape.getBlocks()){
-            int actualColor = block.getColorNow();
+            int actualColor = block.getColor();
             block.setColorNow((int) colorMap.get(actualColor));
         }
 
         if(fastShape != null) { //Assign color to fastShape blocks if exists
             for (Block block : fastShape.getBlocks()) {
-                int actualColor = block.getColorNow();
+                int actualColor = block.getColor();
                 block.setColorNow((int) colorMap.get(actualColor));
             }
         }
