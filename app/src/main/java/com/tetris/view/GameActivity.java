@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,9 +31,9 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
-    final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
-    final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
+    public static final int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
+    public static final int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
+    public static final int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
     final Handler handler = new Handler();
 
     //Buttons
@@ -229,15 +230,9 @@ public class GameActivity extends Activity {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         int color = Board.getInstance().getNextShape().getBlocks()[0].getColor(); //Color of first block
-        Bitmap bitmapBlock = Colors.nextShapeTextureSelector(this.getResources(), color);
-        if (color == 5) //If the piece is red (4x1)
-            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, (int) (PIXEL_SIZE), (int) (PIXEL_SIZE * 1.0), false); //110 -> 64 = 1.71875
-        else
-            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
-        bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, PIXEL_SIZE, PIXEL_SIZE, false);
-        nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, paint);
+        BitmapDrawable bitmapShape = Colors.nextShapeTextureSelector(this.getResources(), color);
 
-        nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
+        nextShapeLayout.setBackgroundDrawable(bitmapShape);
     }
 
 
@@ -294,8 +289,6 @@ public class GameActivity extends Activity {
     protected void onStop() {
         super.onStop();
         Board.getInstance().setGameStatus(Board.GameStatus.PAUSED);
-
-        //handler.removeCallbacks(runnable);
 
         if (!stopped) {
             stopped = true;
