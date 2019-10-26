@@ -8,8 +8,8 @@ import static com.tetris.model.Board.ActionList;
 
 public class BlockedLinesEvents {
 
-    public static long last_deadLine_update = SystemClock.uptimeMillis();
-    public static long blockLinesTimer = 50000; //TODO: cambiar time de 100s a 50s
+    private static long last_deadLine_update = SystemClock.uptimeMillis();
+    private static long blockLinesTimer = 50000; //TODO: cambiar time de 100s a 50s
 
     public static boolean checkBlockedLinesUpdate(){
         if (SystemClock.uptimeMillis() - last_deadLine_update > blockLinesTimer) {
