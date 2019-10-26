@@ -24,4 +24,15 @@ public class BlockedLinesEvents {
     public static void resetTimer() {
         last_deadLine_update = SystemClock.uptimeMillis();
     }
+
+    public static void deleteBlockedLines(){
+        ActionList.add(Board.Actions.RESET_DEAD);
+
+        last_deadLine_update = SystemClock.uptimeMillis();
+        Board.getInstance().setSpawnY(-4);
+        Board.getInstance().setSquareGameOver(0);
+        Board.getInstance().setDeadBlockY(-2);
+        Board.getFallingShape().setY(-4);
+        Board.getNextShape().setY(-4);
+    }
 }

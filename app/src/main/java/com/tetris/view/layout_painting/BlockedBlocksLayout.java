@@ -18,7 +18,7 @@ public class BlockedBlocksLayout {
     private static Canvas blockedBlocksCanvas;
 
 
-    public static void blockedBlocksLayoutInit(){
+    public static void blockedBlocksLayoutInit() {
         blockedBlocksBitmap = Bitmap.createBitmap(GameActivity.BOARD_WIDTH, GameActivity.BOARD_HEIGHT,
                 Bitmap.Config.ARGB_8888);
         blockedBlocksCanvas = new Canvas(blockedBlocksBitmap);
@@ -35,5 +35,11 @@ public class BlockedBlocksLayout {
                         j * GameActivity.PIXEL_SIZE, new Paint());
             }
         }
-        GameActivity.deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(blockedBlocksBitmap));}
+        GameActivity.deadBlocksLayout.setBackgroundDrawable(new BitmapDrawable(blockedBlocksBitmap));
+    }
+
+    public static void deleteDeadBlocks() {
+        blockedBlocksCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+    }
+
 }

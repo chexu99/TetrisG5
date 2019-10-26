@@ -14,7 +14,7 @@ public class FastShapeEvents {
 
     public static void createFastShape(){
         Board.getInstance().setFastShape(new ShapeShort(
-                Board.getInstance().getSpawnY()
+                Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(7)
         ));
     }
 

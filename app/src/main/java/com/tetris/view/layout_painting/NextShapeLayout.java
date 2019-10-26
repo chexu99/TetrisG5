@@ -29,11 +29,8 @@ public class NextShapeLayout {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         int color = Board.getNextShape().getBlocks()[0].getColor(); //Color of first block
-        Bitmap bitmapBlock = Colors.nextShapeTextureSelector(res, color);
-        bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
-                GameActivity.PIXEL_SIZE, false);
-        nextShapeCanvas.drawBitmap(bitmapBlock, 0, 30, new Paint());
+        BitmapDrawable bitmapShape = Colors.nextShapeTextureSelector(res, color);
 
-        GameActivity.nextShapeLayout.setBackgroundDrawable(new BitmapDrawable(nextShapeBitmap));
+        GameActivity.nextShapeLayout.setBackgroundDrawable(bitmapShape);
     }
 }

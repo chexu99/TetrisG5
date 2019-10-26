@@ -30,7 +30,7 @@ public class BoardLayout {
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         for (Block block : Board.getInstance().getBlocks()) {
-            Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColor());
+            Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
                     GameActivity.PIXEL_SIZE, false);
             boardCanvas.drawBitmap(bitmapBlock, block.getX() * GameActivity.PIXEL_SIZE,
