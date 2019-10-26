@@ -29,6 +29,14 @@ public class FallingShapeLayout {
     public static void paintFallingShape(Resources res) {
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
+        paintFalling(res);
+
+        paintFast(res);
+        
+        GameActivity.fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
+    }
+
+    private static void paintFalling(Resources res){
         for (Block block : Board.getFallingShape().getBlocks()) {
             Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
             bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
@@ -36,7 +44,9 @@ public class FallingShapeLayout {
             fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * GameActivity.PIXEL_SIZE,
                     block.getY() * GameActivity.PIXEL_SIZE, new Paint());
         }
+    }
 
+    private static void paintFast(Resources res){
         if (Board.getFastShape() != null) {
             for (Block block : Board.getFastShape().getBlocks()) {
                 Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
@@ -46,7 +56,5 @@ public class FallingShapeLayout {
                         block.getY() * GameActivity.PIXEL_SIZE, new Paint());
             }
         }
-
-        GameActivity.fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
     }
 }
