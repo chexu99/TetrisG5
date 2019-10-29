@@ -18,11 +18,11 @@ import com.tetris.model.database.ConexionSQLiteHelper;
 import java.util.ArrayList;
 
 public class ranking extends AppCompatActivity {
-    private Button button;
-    private ListView LRanking;
-    private ArrayList<String> Listainfo;
-    private ArrayList<Player> Listaplayers;
-    private ConexionSQLiteHelper conn;
+     Button button;
+     ListView LRanking;
+     ArrayList<String> Listainfo;
+     ArrayList<Player> Listaplayers;
+     ConexionSQLiteHelper conn;
 
 
     @Override
