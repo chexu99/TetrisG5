@@ -2,4 +2,7 @@
     <string name="app_name">My Application</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="adios">Adios</string>
+    <string name="ver_ranking">Ver Ranking</string>
+    <string name="a_adir_usuario">Añadir Usuario</string>
+    <string name="name">Name</string>
 </resources>
