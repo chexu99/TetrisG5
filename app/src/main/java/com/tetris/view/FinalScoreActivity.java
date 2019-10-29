@@ -15,6 +15,7 @@ public class FinalScoreActivity extends AppCompatActivity {
 
     private Button button;
     public TextView score_gameover_text;
+    private Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +24,17 @@ public class FinalScoreActivity extends AppCompatActivity {
 
 
         button = findViewById(R.id.restart_button);
+        button2=findViewById(R.id.R_Button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMainActivity();
+            }
+        });
+        button2.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRanking();
             }
         });
 
@@ -38,4 +46,10 @@ public class FinalScoreActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
+
+    public void openRanking() {
+        Intent intent = new Intent(this, ranking.class);
+        startActivity(intent);
+    }
+
 }

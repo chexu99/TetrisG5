@@ -13,6 +13,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button button;
     private Button graphic;
+    private Button ranking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,14 @@ public class MenuActivity extends AppCompatActivity {
                 openGameActivity();
             }
         });
+
+        ranking = findViewById(R.id.ranking_button);
+        ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRanking();
+            }
+        });
     }
 
     public void openGameActivity() {
@@ -44,6 +53,12 @@ public class MenuActivity extends AppCompatActivity {
     private void openGraphicActivity() {
         Intent intent = new Intent(this, GraphicActivity.class);
         startActivity(intent);
+    }
+
+    private void openRanking(){
+        Intent intent = new Intent(this, ranking.class);
+        startActivity(intent);
+
     }
 }
 
