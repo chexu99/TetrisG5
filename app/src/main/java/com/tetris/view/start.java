@@ -38,7 +38,8 @@ public class start extends AppCompatActivity {
 
     private void Comparador() {
         db = conn.getReadableDatabase();
-        username = campo_nombre.getText().toString();
+        UserSettings.setUserName(campo_nombre.getText().toString());
+        username = UserSettings.getUserName();
         cursor = db.rawQuery("SELECT * FROM ranking WHERE nombre ='"+username+"'",null);
         if (cursor.moveToFirst()){ // si cursor no apunta a nada entra por el else
             login();
@@ -52,6 +53,7 @@ public class start extends AppCompatActivity {
         puntuacion= cursor.getInt(2);
         cursor.close();
         db.close();
+        Toast.makeText(getApplicationContext(),"Hola de nuevo "+username,Toast.LENGTH_LONG).show();
     }
     private void register(){
         Integer id;

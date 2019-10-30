@@ -10,8 +10,23 @@ public class UserSettings {
 
     public static int score;
 
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static void setUserName(String userName) {
+        UserSettings.userName = userName;
+    }
+
     public static String userName;
 
+    public static int getScore() {
+        return score;
+    }
+
+    public static void setScore(int score) {
+        UserSettings.score = score;
+    }
 
     public static void changeResolution() {
         switch (graphicsResolution){
