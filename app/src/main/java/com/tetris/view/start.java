@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.tetris.R;
 import com.tetris.model.database.ConexionSQLiteHelper;
+import com.tetris.utils.UserSettings;
 
 public class start extends AppCompatActivity {
     ConexionSQLiteHelper conn;
@@ -20,6 +21,7 @@ public class start extends AppCompatActivity {
     String username;
     EditText campo_nombre;
     Cursor cursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,6 @@ public class start extends AppCompatActivity {
     }
 
     private void Comparador() {
-
         db = conn.getReadableDatabase();
         username = campo_nombre.getText().toString();
         cursor = db.rawQuery("SELECT * FROM ranking WHERE nombre ='"+username+"'",null);
