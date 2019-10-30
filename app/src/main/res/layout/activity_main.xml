@@ -4,23 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_logo"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MenuActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="217dp"
-        android:layout_height="336dp"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.731">
+        app:layout_constraintVertical_bias="0.818">
 
-        <Button
+        <ImageButton
             android:id="@+id/new_game_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Empezar partida"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_empezar_partida"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
@@ -28,32 +31,38 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.086" />
 
-        <Button
+        <ImageButton
             android:id="@+id/ranking_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
             android:layout_marginTop="40dp"
-            android:text="Ranking"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_ranking"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_game_button" />
 
-        <Button
+        <ImageButton
             android:id="@+id/graphic_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
             android:layout_marginTop="40dp"
-            android:text="Graficos"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_graficos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/themes_button" />
 
-        <Button
+        <ImageButton
             android:id="@+id/themes_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
             android:layout_marginTop="40dp"
-            android:text="gamas"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_gamas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ranking_button" />

@@ -4,28 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.start">
+    android:background="@drawable/background_logo"
+    tools:context=".view.InitDBActivity">
 
     <EditText
         android:id="@+id/formulario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:text="Username"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="308dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/generic_btn"
+        android:gravity="center"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/btnlogin"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnlogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
         android:onClick="onClick"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_credenciales"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.527" />
+        app:layout_constraintVertical_bias="0.566" />
 </androidx.constraintlayout.widget.ConstraintLayout>

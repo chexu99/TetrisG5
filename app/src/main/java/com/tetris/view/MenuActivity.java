@@ -3,17 +3,17 @@ package com.tetris.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-
-import com.tetris.R;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tetris.R;
+
 public class MenuActivity extends AppCompatActivity {
 
-    private Button button;
-    private Button graphic;
-    private Button ranking;
+    private ImageButton button;
+    private ImageButton graphic;
+    private ImageButton ranking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void openRanking(){
-        Intent intent = new Intent(this, ranking.class);
+        Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
 
     }

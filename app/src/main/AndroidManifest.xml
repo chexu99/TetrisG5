@@ -16,8 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ranking"></activity>
-        <activity android:name=".view.start">
+        <activity android:name=".view.RankingActivity"></activity>
+        <activity android:name=".view.InitDBActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

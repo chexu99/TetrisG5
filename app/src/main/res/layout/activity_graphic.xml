@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".view.GraphicActivity">
 
     <RadioGroup
@@ -22,6 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:buttonTint="#9e12bf"
+            android:textColor="#ffffff"
             android:text="HIGH"/>
 
         <RadioButton
@@ -29,6 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:buttonTint="#9e12bf"
+            android:textColor="#ffffff"
             android:text="MEDIUM"/>
 
         <RadioButton
@@ -36,15 +43,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:buttonTint="#9e12bf"
+            android:textColor="#ffffff"
             android:text="LOW"/>
 
     </RadioGroup>
 
-    <Button
+    <ImageButton
         android:id="@+id/ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@android:string/ok"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:src="@drawable/btn_volver"
+        android:scaleType="fitXY"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

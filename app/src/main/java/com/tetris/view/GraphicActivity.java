@@ -1,13 +1,13 @@
 package com.tetris.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
 import com.tetris.utils.UserSettings;
@@ -15,7 +15,7 @@ import com.tetris.utils.UserSettings;
 public class GraphicActivity extends AppCompatActivity {
 
     private RadioGroup myRadioGroup;
-    private Button confirm;
+    private ImageButton confirm;
     private int optionDefault;
     private RadioButton highButton;
     private RadioButton mediumButton;
@@ -36,11 +36,11 @@ public class GraphicActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.high_radioButton:UserSettings.setGraphicsResolution(1);
+                    case R.id.high_radioButton:UserSettings.graphicsResolution = 1;
                         break;
-                    case R.id.medium_radioButton:UserSettings.setGraphicsResolution(2);
+                    case R.id.medium_radioButton:UserSettings.graphicsResolution = 2;
                         break;
-                    case R.id.low_radioButton:UserSettings.setGraphicsResolution(3);
+                    case R.id.low_radioButton:UserSettings.graphicsResolution = 3;
                         break;
                 }
             }
@@ -57,7 +57,7 @@ public class GraphicActivity extends AppCompatActivity {
     }
 
     private void settingDefault() {
-        optionDefault = UserSettings.getGraphicsResolution();
+        optionDefault = UserSettings.graphicsResolution;
         switch (optionDefault){
             case 1:
                 highButton.setChecked(true);

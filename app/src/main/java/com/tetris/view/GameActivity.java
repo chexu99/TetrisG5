@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +33,7 @@ public class GameActivity extends Activity {
     public ImageButton despDer;
     public ImageButton despIzq;
     public ImageButton despRotate;
-    public Button despDown;
+    public ImageButton despDown;
 
     //Board values
     int speed = 50;

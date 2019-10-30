@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 
 public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     final String CREAR_TABLA_PLAYERS = "CREATE TABLE ranking (id INTEGER, nombre TEXT, score INTEGER)";
-    public ConexionSQLiteHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+
+    public ConexionSQLiteHelper(@Nullable Context context, @Nullable String name,
+                                @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
