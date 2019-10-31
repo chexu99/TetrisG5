@@ -12,6 +12,8 @@ public class UserSettings {
 
     public static int score;
 
+    private String gamma;
+
     public static void changeResolution() {
         switch (graphicsResolution){
             case 1:
@@ -30,5 +32,14 @@ public class UserSettings {
                 GameActivity.setPixelSize(400);
                 break;
         }
+    }
+    public void setCurrentGamma(String g){
+        this.gamma= g;
+
+    }
+
+    public String getCurrentGamma(){
+        return this.gamma;
+
     }
 }

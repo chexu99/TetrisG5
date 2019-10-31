@@ -16,19 +16,76 @@ public class Colors {
 
 
 
-    public static Bitmap blockTextureSelector(Resources res, int color) { //Original palette
-        switch (color) {
-            case 0: return BitmapFactory.decodeResource(res, R.drawable.original_block_blue);
-            case 1: return BitmapFactory.decodeResource(res, R.drawable.original_block_red);
-            case 2: return BitmapFactory.decodeResource(res, R.drawable.original_block_purple);
-            case 3: return BitmapFactory.decodeResource(res, R.drawable.original_block_white);
-            case 4: return BitmapFactory.decodeResource(res, R.drawable.original_block_cyan);
-            case 5: return BitmapFactory.decodeResource(res, R.drawable.original_block_lime);
-            case 6:
-            default: return BitmapFactory.decodeResource(res, R.drawable.original_block_yellow);
-            case 7: //For short shape
-                return BitmapFactory.decodeResource(res, R.drawable.original_block_magenta);
+
+    public static Bitmap blockTextureSelector(Resources res, int color,UserSettings user) {//Change strings for ints
+
+
+        if (user.getCurrentGamma() == "o") {
+            //Original palette
+            switch (color) {
+                case 0:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_blue);
+                case 1:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_red);
+                case 2:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_purple);
+                case 3:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_white);
+                case 4:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_cyan);
+                case 5:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_lime);
+                case 6:
+                default:
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_yellow);
+                case 7: //For short shape
+                    return BitmapFactory.decodeResource(res, R.drawable.original_block_magenta);
+            }
+        }else if (user.getCurrentGamma() == "m"){
+            //marvel palette
+            switch (color) {
+                case 0:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_america);
+                case 1:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_ironman);
+                case 2:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_spiderman);
+                case 3:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_hulk);
+                case 4:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_loki);
+                case 5:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_thor);
+                case 6:
+                default:
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_thanos);
+                case 7: //For short shape
+                    return BitmapFactory.decodeResource(res, R.drawable.marvel_wakanda);
+            }
+        }else {
+            //planets palette
+            switch (color) {
+                case 0:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_neptune);
+                case 1:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_mars);
+                case 2:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_jupiter);
+                case 3:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_uranus);
+                case 4:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_earth);
+                case 5:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_venus);
+                case 6:
+                default:
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_sun);
+                case 7: //For short shape
+                    return BitmapFactory.decodeResource(res, R.drawable.planets_mercury);
+            }
         }
+
+
     }
 
     public static Bitmap blockedTexture(Resources res){
