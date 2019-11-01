@@ -63,7 +63,7 @@ public class FinalScoreActivity extends AppCompatActivity {
             db = conn.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put("score", score);
-            db.update("RankingActivity", values, "nombre='" + username + "'", null);
+            db.update("ranking", values, "nombre='" + username + "'", null);
             UserSettings.score = score;
             Toast.makeText(getApplicationContext(), "New highscore", Toast.LENGTH_LONG).show();
         } else {
