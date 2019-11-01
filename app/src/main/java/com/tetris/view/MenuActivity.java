@@ -11,36 +11,45 @@ import com.tetris.R;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private ImageButton button;
-    private ImageButton graphic;
-    private ImageButton ranking;
+    private ImageButton btn_new_game;
+    private ImageButton btn_graphic;
+    private ImageButton btn_ranking;
+    private ImageButton btn_gamma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
-        graphic = findViewById(R.id.graphic_button);
-        graphic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGraphicActivity();
-            }
-        });
-
-        button = findViewById(R.id.new_game_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        btn_new_game = findViewById(R.id.new_game_button);
+        btn_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGameActivity();
             }
         });
 
-        ranking = findViewById(R.id.ranking_button);
-        ranking.setOnClickListener(new View.OnClickListener() {
+        btn_graphic = findViewById(R.id.graphic_button);
+        btn_graphic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGraphicActivity();
+            }
+        });
+
+        btn_ranking = findViewById(R.id.ranking_button);
+        btn_ranking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openRanking();
+            }
+        });
+
+        btn_gamma = findViewById(R.id.gamma_button);
+        btn_gamma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGammas();
             }
         });
     }
@@ -58,7 +67,11 @@ public class MenuActivity extends AppCompatActivity {
     private void openRanking(){
         Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
+    }
 
+    private void openGammas(){
+        Intent intent = new Intent(this, GammaActivity.class);
+        startActivity(intent);
     }
 }
 

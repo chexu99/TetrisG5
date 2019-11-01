@@ -32,6 +32,9 @@
             android:name=".view.GameActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.GammaActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.MenuActivity"
             android:screenOrientation="portrait"></activity>
     </application>
