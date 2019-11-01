@@ -51,7 +51,7 @@ public class GraphicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserSettings.changeResolution();
-                openMainActivity();
+                openMenuActivity();
             }
         });
     }
@@ -69,7 +69,7 @@ public class GraphicActivity extends AppCompatActivity {
         }
     }
 
-    public void openMainActivity() {
+    public void openMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

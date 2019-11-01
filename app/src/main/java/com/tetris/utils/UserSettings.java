@@ -4,13 +4,13 @@ import com.tetris.view.GameActivity;
 
 public class UserSettings {
 
-    public static int colorPalette;
-
     public static int  graphicsResolution = 2;
 
     public static String username;
 
     public static int score;
+
+    public static int gamma;
 
     public static void changeResolution() {
         switch (graphicsResolution){
