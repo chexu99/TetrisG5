@@ -11,10 +11,10 @@ public class ColorChangesEvents {
     private static Random r = new Random();
 
     public static void numberOfLinesSelector(int lines){
-        if(lines == 4){
+        if(lines > 1){
             randomColorChange();
             assignColor();
-        } else if(lines > 0){
+        } else if(lines == 1){
             colorForAll();
             assignColor();
         }

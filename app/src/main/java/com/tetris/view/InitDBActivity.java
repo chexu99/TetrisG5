@@ -50,10 +50,18 @@ public class InitDBActivity extends AppCompatActivity {
     }
 
     private void login() {
+        Integer lastHighScore;
         puntuacion = cursor.getInt(2);
+        Cursor cursor = db.rawQuery("SELECT score FROM ranking WHERE nombre='" + username + "'", null);
+        cursor.moveToFirst();
+        lastHighScore = cursor.getInt(0);
+        UserSettings.score = lastHighScore;
         cursor.close();
         db.close();
+
         Toast.makeText(getApplicationContext(), "Hola de nuevo " + username, Toast.LENGTH_LONG).show();
+
+
     }
 
     private void register() {

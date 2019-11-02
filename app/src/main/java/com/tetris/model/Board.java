@@ -58,15 +58,16 @@ public class Board {
         if (instance == null) {
             instance = new Board();
             //Initialize color map
-            for (int color = 0; color <= 7; color++)
-                colorMap.put(color, color);
+            initializeMap();
         }
         return instance;
     }
 
-    public static HashMap getColorMap() {
-        return colorMap;
+    public static void initializeMap(){
+        for (int color = 0; color <= 7; color++)
+            colorMap.put(color, color);
     }
+
 
     //FallingShape instance for use by other classes
     public static Shape getFallingShape() {
@@ -186,6 +187,7 @@ public class Board {
         deadBlockY = -2;
         squareGameOver = 0;
         ActionList.clear();
+        initializeMap();
         BlockedLinesEvents.resetTimer();
         FastShapeEvents.resetTimer();
         gameStatus = GameStatus.INITIATING;
@@ -249,5 +251,9 @@ public class Board {
 
     public void setSquareGameOver(int squareGameOver) {
         this.squareGameOver = squareGameOver;
+    }
+
+    public static HashMap getColorMap() {
+        return colorMap;
     }
 }
