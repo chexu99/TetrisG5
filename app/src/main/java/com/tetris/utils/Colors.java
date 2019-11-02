@@ -97,13 +97,12 @@ public class Colors {
         switch (UserSettings.gamma) {
             case 0:
             default:
-                return BitmapFactory.decodeResource(res, R.drawable.original_block_grey);
-                /*
-            case 1: TODO
-                return
+                return BitmapFactory.decodeResource(res, R.drawable.original_blocked);
+            case 1: 
+                return BitmapFactory.decodeResource(res, R.drawable.marvel_blocked);
             case 2:
-                return
-                 */
+                return BitmapFactory.decodeResource(res, R.drawable.planets_blocked);
+
         }
     }
 
