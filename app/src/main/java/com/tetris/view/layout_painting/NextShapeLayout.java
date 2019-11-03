@@ -13,23 +13,26 @@ import com.tetris.view.GameActivity;
 
 public class NextShapeLayout {
 
-    private static Bitmap nextShapeBitmap;
-    private static Canvas nextShapeCanvas;
+    public NextShapeLayout(){
+        nextShapeLayoutInit();
+    }
 
+    private Bitmap nextShapeBitmap;
+    private Canvas nextShapeCanvas;
 
-    public static void nextShapeLayoutInit(){
-        nextShapeBitmap = Bitmap.createBitmap((int) (3 * GameActivity.PIXEL_SIZE * 0.5),
-                (int) (4 * GameActivity.PIXEL_SIZE * 0.5), Bitmap.Config.ARGB_8888);
+    public void nextShapeLayoutInit(){
+        nextShapeBitmap = Bitmap.createBitmap((int) (3 * GameActivity.getPixelSize() * 0.5),
+                (int) (4 * GameActivity.getPixelSize() * 0.5), Bitmap.Config.ARGB_8888);
         nextShapeCanvas = new Canvas(nextShapeBitmap);
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
 
-    public static void paintNextShape(Resources res) {
+    public void paintNextShape(Resources res) {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         int color = Board.getNextShape().getBlocks()[0].getColor(); //Color of first block
         BitmapDrawable bitmapShape = Colors.nextShapeTextureSelector(res, color);
 
-        GameActivity.nextShapeLayout.setBackgroundDrawable(bitmapShape);
+        GameActivity.getNextShapeLayout().setBackgroundDrawable(bitmapShape);
     }
 }

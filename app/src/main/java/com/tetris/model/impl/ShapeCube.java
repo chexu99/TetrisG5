@@ -12,8 +12,8 @@ public class ShapeCube extends Shape {
         }
     }
 
+    @Override
     public Block[] getBlocks() {
-        //this.x = x - 1;
         blocks[0].setX(x);
         blocks[1].setX(x);
         blocks[2].setX(x + 1);

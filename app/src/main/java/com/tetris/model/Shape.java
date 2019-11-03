@@ -16,13 +16,13 @@ public class Shape extends Pixel {
 
     protected boolean falling; //True if the shape is falling
 
-    protected long last_fall_update; //Last time the piece felt
+    protected long lastFallUpdate; //Last time the piece felt
 
-    protected Block rotation_block; //Block which 'rotates'
-    protected int rotation_cycle; //Number of cycles the shape has
+    protected Block rotationBlock; //Block which 'rotates'
+    protected int rotationCycle; //Number of cycles the shape has
     protected int rotation; //Rotation cycle we are in
 
-    protected long update_interval = 300; //Time a normal shape needs to fall one block
+    protected long updateInterval = 300; //Time a normal shape needs to fall one block
 
     //Constructors
     //Shapeless shape
@@ -38,8 +38,8 @@ public class Shape extends Pixel {
         falling = true;
 
         //Rotation initiation
-        rotation_block = blocks[1];
-        rotation_cycle = 1;
+        rotationBlock = blocks[1];
+        rotationCycle = 1;
         rotation = 0;
 
     }
@@ -47,7 +47,7 @@ public class Shape extends Pixel {
     protected Shape(Shape s) {
         this.blocks = s.getBlocks();
         this.falling = s.isFalling();
-        this.last_fall_update = s.getLast_fall_update();
+        this.lastFallUpdate = s.getLastFallUpdate();
     }
 
     //Shape defined by type
@@ -97,8 +97,8 @@ public class Shape extends Pixel {
 
     //Checks if enough time has passed for the shape to update its position
     public boolean needsFallUpdate() {
-        if (SystemClock.uptimeMillis() - last_fall_update > update_interval) {
-            last_fall_update = SystemClock.uptimeMillis();
+        if (SystemClock.uptimeMillis() - lastFallUpdate > updateInterval) {
+            lastFallUpdate = SystemClock.uptimeMillis();
             return true;
         }
         return false;
@@ -139,14 +139,15 @@ public class Shape extends Pixel {
 
     //Applies rotation to the shape
     public void doRotation() {
-        int old_x, old_y;
-        if (rotation_block != null) {
-            for (int i = 1; i <= (rotation % rotation_cycle); ++i) {
+        int oldX;
+        int oldY;
+        if (rotationBlock != null) {
+            for (int i = 1; i <= (rotation % rotationCycle); ++i) {
                 for (Block block : blocks) {
-                    old_x = block.getX();
-                    old_y = block.getY();
-                    block.setX(rotation_block.getX() + (rotation_block.getY() - old_y));
-                    block.setY(rotation_block.getY() - (rotation_block.getX() - old_x));
+                    oldX = block.getX();
+                    oldY = block.getY();
+                    block.setX(rotationBlock.getX() + (rotationBlock.getY() - oldY));
+                    block.setY(rotationBlock.getY() - (rotationBlock.getX() - oldX));
                 }
             }
         }
@@ -168,8 +169,8 @@ public class Shape extends Pixel {
         return falling;
     }
 
-    public long getLast_fall_update() {
-        return last_fall_update;
+    public long getLastFallUpdate() {
+        return lastFallUpdate;
     }
 
     public int getRotation() {

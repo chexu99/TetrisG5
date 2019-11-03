@@ -4,6 +4,8 @@ import com.tetris.model.Board;
 
 public class MovementEvents {
 
+    private MovementEvents(){}
+
     public static void checkAndMoveLeft() {
         if (Board.getFallingShape() == null) //If there is no falling shape cant move
             return;
@@ -51,9 +53,7 @@ public class MovementEvents {
             if (Board.getFallingShape().collide()) { //If it has collided check to move left
                 Board.getFallingShape().moveRight();
                 Board.getFallingShape().unrotate(); //Undo rotation as it cant happen
-            }
-            else
-                return; //Return rotated and moved to the left
+            } //Else return rotated and moved to the left
         }
     }
 }

@@ -39,8 +39,8 @@ public class InitDBActivity extends AppCompatActivity {
 
     private void usernameComparator() {
         db = conn.getReadableDatabase();
-        UserSettings.username = campo_nombre.getText().toString();
-        username = UserSettings.username;
+        UserSettings.setUsername(campo_nombre.getText().toString());
+        username = UserSettings.getUsername();
         cursor = db.rawQuery("SELECT * FROM ranking WHERE nombre ='" + username + "'", null);
         if (cursor.moveToFirst()) { // si cursor no apunta a nada entra por el else
             login();
@@ -55,7 +55,7 @@ public class InitDBActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("SELECT score FROM ranking WHERE nombre='" + username + "'", null);
         cursor.moveToFirst();
         lastHighScore = cursor.getInt(0);
-        UserSettings.score = lastHighScore;
+        UserSettings.setScore(lastHighScore);
         cursor.close();
         db.close();
 

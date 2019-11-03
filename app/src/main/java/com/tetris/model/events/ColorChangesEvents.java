@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class ColorChangesEvents {
 
+    private ColorChangesEvents(){}
+
     private static Random r = new Random();
 
     public static void numberOfLinesSelector(int lines){

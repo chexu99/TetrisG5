@@ -8,13 +8,14 @@ public class ShapeI extends Shape {
     public ShapeI(int spawnY, int color) {
         super(1, 4,spawnY);
         this.x = x + 1;
-        rotation_block = blocks[1];
-        rotation_cycle = 2;
+        rotationBlock = blocks[1];
+        rotationCycle = 2;
         for (Block block : blocks) {
             block.setColorNow(color);
         }
     }
 
+    @Override
     public Block[] getBlocks() {
         blocks[0].setX(x);
         blocks[1].setX(x);

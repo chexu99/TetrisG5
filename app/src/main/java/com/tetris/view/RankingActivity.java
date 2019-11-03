@@ -18,11 +18,11 @@ import com.tetris.model.database.ConexionSQLiteHelper;
 import java.util.ArrayList;
 
 public class RankingActivity extends AppCompatActivity {
-     ImageButton button;
-     ListView LRanking;
-     ArrayList<String> listaInfo;
-     ArrayList<Player> listaPlayers;
-     ConexionSQLiteHelper conn;
+    ImageButton button;
+    ListView LRanking;
+    ArrayList<String> listaInfo;
+    ArrayList<Player> listaPlayers;
+    ConexionSQLiteHelper conn;
 
 
     @Override
@@ -41,7 +41,7 @@ public class RankingActivity extends AppCompatActivity {
 
         LRanking = (ListView) findViewById(R.id.L_ranking);
 
-        conn = new ConexionSQLiteHelper(getApplicationContext(),"db_ranking",null,1);
+        conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         checkPlayerList();
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, listaInfo);
@@ -52,9 +52,9 @@ public class RankingActivity extends AppCompatActivity {
         SQLiteDatabase db = conn.getReadableDatabase();
         Player player;
         listaPlayers = new ArrayList<>();
-        Cursor cursor =db.rawQuery("SELECT * FROM ranking ORDER BY score DESC", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM ranking ORDER BY score DESC", null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             player = new Player();
             player.setId(cursor.getInt(0));
             player.setNombre(cursor.getString(1));
@@ -65,14 +65,12 @@ public class RankingActivity extends AppCompatActivity {
         getPlayerList();
     }
 
-    private void getPlayerList() {
-        listaInfo = new ArrayList<String>();
-        for (int i = 0; i< listaPlayers.size(); i++){
-            listaInfo.add(listaPlayers.get(i).getNombre()+ " - "+ listaPlayers.get(i).getScore());
+    private void getPlayerList() { //TODO: se necesita para algo?
+        listaInfo = new ArrayList<>();
+        for (int i = 0; i < listaPlayers.size(); i++) {
+            listaInfo.add(listaPlayers.get(i).getNombre() + " - " + listaPlayers.get(i).getScore());
         }
     }
-
-
 
     private void openMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);

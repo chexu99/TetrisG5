@@ -24,29 +24,25 @@ public class GameActivity extends Activity {
 
     boolean stopped = false;
 
-    public static int BOARD_HEIGHT = 800; //Max quality = 6400 -> Laser-mode = 20
-    public static int BOARD_WIDTH = 400; //Max quality = 3200 -> Laser-mode = 10
-    public static int PIXEL_SIZE = BOARD_WIDTH / Board.BOARD_COLS;
-    final Handler handler = new Handler();
-
-    //Buttons
-    public ImageButton despDer;
-    public ImageButton despIzq;
-    public ImageButton despRotate;
-    public ImageButton despDown;
+    private static int boardHeight = 800; //Max quality = 6400 -> Laser-mode = 20
+    private static int boardWidth = 400; //Max quality = 3200 -> Laser-mode = 10
+    private static int pixelSize = boardWidth / Board.BOARD_COLS;
+    private final Handler handler = new Handler();
 
     //Board values
     int speed = 50;
 
-    Paint paint;
+    private static ImageView boardLayout;
+    private static ImageView fallingShapeLayout;
+    private static ImageView nextShapeLayout;
+    private static ImageView deadBlocksLayout;
 
-    public static ImageView boardLayout;
-    public static ImageView fallingShapeLayout;
-    ConstraintLayout scoreLayout;
-    public static ImageView nextShapeLayout;
-    public static ImageView deadBlocksLayout;
+    private BoardLayout boardLay;
+    private FallingShapeLayout fallingLay;
+    private NextShapeLayout nextLay;
+    private BlockedBlocksLayout blockedLay;
 
-    TextView scoreText;
+    private TextView scoreText;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -80,31 +76,30 @@ public class GameActivity extends Activity {
     private void setUpLayouts() {
         // Game board
         boardLayout = findViewById(R.id.game_board);
-        BoardLayout.boardLayoutInit();
-
+        boardLay = new BoardLayout();
 
         //Falling shape
         fallingShapeLayout = findViewById(R.id.falling_shape);
-        FallingShapeLayout.fallingShapeLayoutInit();
+        fallingLay = new FallingShapeLayout();
 
         //Score
-        scoreLayout = findViewById(R.id.top_board);
-        scoreText = (TextView) findViewById(R.id.score_text_view);
+        ConstraintLayout scoreLayout = findViewById(R.id.top_board);
+        scoreText =  findViewById(R.id.score_text_view);
 
         //Next shape
         nextShapeLayout = findViewById(R.id.next_shape);
-        NextShapeLayout.nextShapeLayoutInit();
+        nextLay = new NextShapeLayout();
 
 
         //DeadBlocks
         deadBlocksLayout = findViewById(R.id.dead_blocks);
-        BlockedBlocksLayout.blockedBlocksLayoutInit();
+        blockedLay = new BlockedBlocksLayout();
 
     }
 
     private void setUpButtons() {
         //MoveRight button
-        despDer = findViewById(R.id.mvRight);
+        ImageButton despDer = findViewById(R.id.mvRight);
         despDer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -112,7 +107,7 @@ public class GameActivity extends Activity {
             }
         });
         //MoveLeft button
-        despIzq = findViewById(R.id.mvLeft);
+        ImageButton despIzq = findViewById(R.id.mvLeft);
         despIzq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -120,7 +115,7 @@ public class GameActivity extends Activity {
             }
         });
         //MoveRotate button
-        despRotate = findViewById(R.id.mvRotate);
+        ImageButton despRotate = findViewById(R.id.mvRotate);
         despRotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -128,7 +123,7 @@ public class GameActivity extends Activity {
             }
         });
         //MoveDown button
-        despDown = findViewById(R.id.mvDown);
+        ImageButton despDown = findViewById(R.id.mvDown);
         despDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,8 +133,7 @@ public class GameActivity extends Activity {
     }
 
     private void gameInit() {
-        // TODO: do more stuff like set score to 0 or prepare controls
-        if (Board.getInstance().getBlocks().size() > 0)
+        if (Board.getInstance().getBlocks().isEmpty())
             Board.getInstance().clear();
 
         scoreText.setText(String.valueOf(Board.getInstance().getScore()));
@@ -152,26 +146,26 @@ public class GameActivity extends Activity {
 
     //Painting methods
     private void paintGame() {
-        for (Board.Actions a : Board.getInstance().getActionList()) {
+        for (Board.Actions a : Board.getActionList()) {
             if (a.equals(Board.Actions.COLLISION)) {
                 //Update board layout
-                BoardLayout.paintBlockArray(this.getResources());
+                boardLay.paintBlockArray(this.getResources());
                 //Update score
                 scoreText.setText(String.valueOf(Board.getInstance().getScore()));
             }
             if (a.equals(Board.Actions.DEAD_BLOCK)) {
-                BlockedBlocksLayout.paintBlockedBlocks(this.getResources());
+                blockedLay.paintBlockedBlocks(this.getResources());
                 Board.getInstance().setSquareGameOver(Board.getInstance().getSquareGameOver() + 2);
             }
             if (a.equals(Board.Actions.RESET_DEAD)) {
-                BlockedBlocksLayout.deleteDeadBlocks();
+                blockedLay.deleteDeadBlocks();
             }
-            Board.getInstance().getActionList().clear(); //Clear actions list
+            Board.getActionList().clear(); //Clear actions list
         }
         //Paint fallingShape Layout
-        FallingShapeLayout.paintFallingShape(this.getResources());
+        fallingLay.paintFallingShape(this.getResources());
         //Paint next shape on left side
-        NextShapeLayout.paintNextShape(this.getResources());
+        nextLay.paintNextShape(this.getResources());
     }
 
 
@@ -192,8 +186,6 @@ public class GameActivity extends Activity {
         super.onStop();
         Board.getInstance().setGameStatus(Board.GameStatus.PAUSED);
 
-        //handler.removeCallbacks(runnable);
-
         if (!stopped) {
             stopped = true;
             Intent intent = new Intent(this, FinalScoreActivity.class);
@@ -201,16 +193,43 @@ public class GameActivity extends Activity {
         }
     }
 
+    public static int getBoardHeight() {
+        return boardHeight;
+    }
+
+    public static int getBoardWidth() {
+        return boardWidth;
+    }
+
+    public static int getPixelSize() {
+        return pixelSize;
+    }
 
     public static void setBoardHeight(int boardHeight) {
-        BOARD_HEIGHT = boardHeight;
+        GameActivity.boardHeight = boardHeight;
     }
 
     public static void setBoardWidth(int boardWidth) {
-        BOARD_WIDTH = boardWidth;
+        GameActivity.boardWidth = boardWidth;
     }
 
     public static void setPixelSize(int pixelWidth) {
-        PIXEL_SIZE = pixelWidth / Board.BOARD_COLS;
+        pixelSize = pixelWidth / Board.BOARD_COLS;
+    }
+
+    public static ImageView getBoardLayout() {
+        return boardLayout;
+    }
+
+    public static ImageView getFallingShapeLayout() {
+        return fallingShapeLayout;
+    }
+
+    public static ImageView getNextShapeLayout() {
+        return nextShapeLayout;
+    }
+
+    public static ImageView getDeadBlocksLayout() {
+        return deadBlocksLayout;
     }
 }

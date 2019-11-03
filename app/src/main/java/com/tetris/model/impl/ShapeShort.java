@@ -7,25 +7,26 @@ import com.tetris.model.Shape;
 
 public class ShapeShort extends Shape {
 
-    protected long update_interval = 180;
+    protected long updateInterval;
 
     public ShapeShort(int spawnY, int color) {
         super(1, 2,spawnY+2);
 
-        update_interval = 230;
+        updateInterval = 230;
         blocks = new Block[2];
 
         blocks[0] = new Block();
         blocks[1] = new Block();
 
         //Rotation initiation
-        rotation_block = blocks[1];
-        rotation_cycle = 2;
+        rotationBlock = blocks[1];
+        rotationCycle = 2;
         for (Block block : blocks) {
             block.setColorNow(color);
         }
     }
 
+    @Override
     public Block[] getBlocks() {
         blocks[0].setX(x);
         blocks[1].setX(x);
@@ -57,8 +58,8 @@ public class ShapeShort extends Shape {
 
     @Override
     public boolean needsFallUpdate() {
-        if (SystemClock.uptimeMillis() - last_fall_update > update_interval) {
-            last_fall_update = SystemClock.uptimeMillis();
+        if (SystemClock.uptimeMillis() - lastFallUpdate > updateInterval) {
+            lastFallUpdate = SystemClock.uptimeMillis();
             return true;
         }
         return false;

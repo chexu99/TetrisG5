@@ -15,28 +15,32 @@ import com.tetris.view.GameActivity;
 
 public class BoardLayout {
 
-    private static  Bitmap boardBitmap;
-    private static Canvas boardCanvas;
+    public BoardLayout(){
+        boardLayoutInit();
+    }
 
-    public static void boardLayoutInit(){
-        boardBitmap = Bitmap.createBitmap(GameActivity.BOARD_WIDTH, GameActivity.BOARD_HEIGHT,
+    private Bitmap boardBitmap;
+    private Canvas boardCanvas;
+
+    public void boardLayoutInit(){
+        boardBitmap = Bitmap.createBitmap(GameActivity.getBoardWidth(), GameActivity.getBoardHeight(),
                 Bitmap.Config.ARGB_8888);
         boardCanvas = new Canvas(boardBitmap);
         boardCanvas.drawColor(Color.TRANSPARENT);
-        GameActivity.boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
+        GameActivity.getBoardLayout().setBackgroundDrawable(new BitmapDrawable(boardBitmap));
     }
 
-    public static void paintBlockArray(Resources res) {
+    public void paintBlockArray(Resources res) {
         boardCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         for (Block block : Board.getInstance().getBlocks()) {
             Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
-            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
-                    GameActivity.PIXEL_SIZE, false);
-            boardCanvas.drawBitmap(bitmapBlock, block.getX() * GameActivity.PIXEL_SIZE,
-                    block.getY() * GameActivity.PIXEL_SIZE, new Paint());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.getPixelSize(),
+                    GameActivity.getPixelSize(), false);
+            boardCanvas.drawBitmap(bitmapBlock, block.getX() * (float) GameActivity.getPixelSize(),
+                    block.getY() * (float) GameActivity.getPixelSize(), new Paint());
         }
 
-        GameActivity.boardLayout.setBackgroundDrawable(new BitmapDrawable(boardBitmap));
+        GameActivity.getBoardLayout().setBackgroundDrawable(new BitmapDrawable(boardBitmap));
     }
 }

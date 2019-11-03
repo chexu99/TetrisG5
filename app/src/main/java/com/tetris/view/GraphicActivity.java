@@ -36,11 +36,15 @@ public class GraphicActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.high_radioButton:UserSettings.graphicsResolution = 1;
+                    case R.id.high_radioButton:
+                        UserSettings.setGraphicsResolution(1);
                         break;
-                    case R.id.medium_radioButton:UserSettings.graphicsResolution = 2;
+                    case R.id.medium_radioButton:
+                        UserSettings.setGraphicsResolution(2);
                         break;
-                    case R.id.low_radioButton:UserSettings.graphicsResolution = 3;
+                    case R.id.low_radioButton:
+                    default:
+                        UserSettings.setGraphicsResolution(3);
                         break;
                 }
             }
@@ -57,14 +61,17 @@ public class GraphicActivity extends AppCompatActivity {
     }
 
     private void settingDefault() {
-        optionDefault = UserSettings.graphicsResolution;
+        optionDefault = UserSettings.getGraphicsResolution();
         switch (optionDefault){
             case 1:
                 highButton.setChecked(true);
                 break;
-            case 2:mediumButton.setChecked(true);
+            case 2:
+                mediumButton.setChecked(true);
                 break;
-            case 3:lowButton.setChecked(true);
+            case 3:
+            default:
+                lowButton.setChecked(true);
                 break;
         }
     }

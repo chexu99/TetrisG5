@@ -15,45 +15,48 @@ import com.tetris.view.GameActivity;
 
 public class FallingShapeLayout {
 
-    private static Bitmap fallingShapeBitmap;
-    private static Canvas fallingShapeCanvas;
+    public FallingShapeLayout(){
+        fallingShapeLayoutInit();
+    }
 
+    private Bitmap fallingShapeBitmap;
+    private Canvas fallingShapeCanvas;
 
-    public static void fallingShapeLayoutInit(){
-        fallingShapeBitmap = Bitmap.createBitmap(GameActivity.BOARD_WIDTH, GameActivity.BOARD_HEIGHT,
+    public void fallingShapeLayoutInit(){
+        fallingShapeBitmap = Bitmap.createBitmap(GameActivity.getBoardWidth(), GameActivity.getBoardHeight(),
                 Bitmap.Config.ARGB_8888);
         fallingShapeCanvas = new Canvas(fallingShapeBitmap);
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
     }
 
-    public static void paintFallingShape(Resources res) {
+    public void paintFallingShape(Resources res) {
         fallingShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         paintFalling(res);
 
         paintFast(res);
         
-        GameActivity.fallingShapeLayout.setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
+        GameActivity.getFallingShapeLayout().setBackgroundDrawable(new BitmapDrawable(fallingShapeBitmap));
     }
 
-    private static void paintFalling(Resources res){
+    private void paintFalling(Resources res){
         for (Block block : Board.getFallingShape().getBlocks()) {
             Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
-            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
-                    GameActivity.PIXEL_SIZE,false);
-            fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * GameActivity.PIXEL_SIZE,
-                    block.getY() * GameActivity.PIXEL_SIZE, new Paint());
+            bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.getPixelSize(),
+                    GameActivity.getPixelSize(),false);
+            fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * (float) GameActivity.getPixelSize(),
+                    block.getY() * (float) GameActivity.getPixelSize(), new Paint());
         }
     }
 
-    private static void paintFast(Resources res){
+    private void paintFast(Resources res){
         if (Board.getFastShape() != null) {
             for (Block block : Board.getFastShape().getBlocks()) {
                 Bitmap bitmapBlock = Colors.blockTextureSelector(res, block.getColorNow());
-                bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.PIXEL_SIZE,
-                        GameActivity.PIXEL_SIZE, false);
-                fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * GameActivity.PIXEL_SIZE,
-                        block.getY() * GameActivity.PIXEL_SIZE, new Paint());
+                bitmapBlock = Bitmap.createScaledBitmap(bitmapBlock, GameActivity.getPixelSize(),
+                        GameActivity.getPixelSize(), false);
+                fallingShapeCanvas.drawBitmap(bitmapBlock, block.getX() * (float) GameActivity.getPixelSize(),
+                        block.getY() * (float) GameActivity.getPixelSize(), new Paint());
             }
         }
     }

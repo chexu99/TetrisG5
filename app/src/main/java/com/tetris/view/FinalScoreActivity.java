@@ -20,7 +20,7 @@ import com.tetris.utils.UserSettings;
 public class FinalScoreActivity extends AppCompatActivity {
 
     ImageButton button;
-    TextView score_gameover_text;
+    TextView scoreGameoverText;
     ImageButton button2;
     SQLiteDatabase db;
     ConexionSQLiteHelper conn;
@@ -47,14 +47,14 @@ public class FinalScoreActivity extends AppCompatActivity {
             }
         });
 
-        score_gameover_text = (TextView) findViewById(R.id.score_gameover);
-        score_gameover_text.setText(String.valueOf(Board.getInstance().getScore()));
+        scoreGameoverText = findViewById(R.id.score_gameover);
+        scoreGameoverText.setText(String.valueOf(Board.getInstance().getScore()));
     }
 
     private void updateScore() {
-        String username = UserSettings.username;
-        UserSettings.score = Board.getInstance().getScore();
-        score = UserSettings.score;
+        String username = UserSettings.getUsername();
+        UserSettings.setScore(Board.getInstance().getScore());
+        score = UserSettings.getScore();
         db = conn.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT score FROM ranking WHERE nombre='" + username + "'", null);
         cursor.moveToFirst();
@@ -64,7 +64,7 @@ public class FinalScoreActivity extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put("score", score);
             db.update("ranking", values, "nombre='" + username + "'", null);
-            UserSettings.score = score;
+            UserSettings.setScore(score);
             Toast.makeText(getApplicationContext(), "New highscore", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), "Más suerte la proxima, paquete", Toast.LENGTH_LONG).show();

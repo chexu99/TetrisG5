@@ -9,6 +9,7 @@ import com.tetris.model.events.NextShapeEvents;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -36,7 +37,7 @@ public class Board {
         GAME_OVER,
     }
 
-    public static List<Actions> ActionList = new CopyOnWriteArrayList<>();
+    private static List<Actions> actionList = new CopyOnWriteArrayList<>();
 
     public enum Actions {
         DEAD_BLOCK,
@@ -48,7 +49,7 @@ public class Board {
 
     private int squareGameOver = 0;
 
-    public int deadBlockY = -2;
+    private int deadBlockY = -2;
 
 
     private static HashMap colorMap = new HashMap<Integer, Integer>();
@@ -147,6 +148,10 @@ public class Board {
         ColorChangesEvents.numberOfLinesSelector(numberOfDeletedLines); //Change colors according to the number of deleted lines
         if (numberOfDeletedLines == 4)
             BlockedLinesEvents.deleteBlockedLines();
+        moveLinesDown(deletedLines);
+    }
+
+    private void moveLinesDown(List<Integer> deletedLines){
         for (Block block : blocks) {
             int count = 0;
             for (int y : deletedLines) {
@@ -179,34 +184,38 @@ public class Board {
 
     public void clear() {
         blocks.clear();
-        fallingShape = null;
-        nextShape = null;
-        fastShape = null;
+        resetShapes();
         score = 0;
         spawnY = -4;
         deadBlockY = -2;
         squareGameOver = 0;
-        ActionList.clear();
+        actionList.clear();
         initializeMap();
         BlockedLinesEvents.resetTimer();
         FastShapeEvents.resetTimer();
         gameStatus = GameStatus.INITIATING;
     }
 
+    private static void resetShapes(){
+        fallingShape = null;
+        nextShape = null;
+        fastShape = null;
+    }
+
     public List<Block> getBlocks() {
         return blocks;
     }
 
-    public List<Actions> getActionList() {
-        return ActionList;
+    public static List<Actions> getActionList() {
+        return actionList;
     }
 
-    public void setFallingShape(Shape shape) {
-        this.fallingShape = shape;
+    public static void setFallingShape(Shape shape) {
+        fallingShape = shape;
     }
 
-    public void setNextShape(Shape shape) {
-        this.nextShape = shape;
+    public static void setNextShape(Shape shape) {
+        nextShape = shape;
     }
 
     public int getSpawnY() {
@@ -217,8 +226,8 @@ public class Board {
         this.spawnY = y;
     }
 
-    public void setFastShape(Shape shape) {
-        this.fastShape = shape;
+    public static void setFastShape(Shape shape) {
+        fastShape = shape;
     }
 
     public GameStatus getGameStatus() {
@@ -253,7 +262,7 @@ public class Board {
         this.squareGameOver = squareGameOver;
     }
 
-    public static HashMap getColorMap() {
+    public static Map getColorMap() {
         return colorMap;
     }
 }

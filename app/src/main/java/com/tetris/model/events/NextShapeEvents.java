@@ -6,12 +6,15 @@ import com.tetris.model.Shape;
 import java.util.Random;
 
 public class NextShapeEvents {
+
+    private NextShapeEvents(){}
+
     private static Random r = new Random();
 
     public static void createNextShape(){
         int index = r.nextInt(7);
 
-        Board.getInstance().setNextShape(
+        Board.setNextShape(
                 Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
     }
 }

@@ -6,13 +6,14 @@ import com.tetris.model.Shape;
 public class ShapeL extends Shape {
     public ShapeL(int spawnY, int color) {
         super(2, 3,spawnY+1);
-        rotation_block = blocks[1];
-        rotation_cycle = 4;
+        rotationBlock = blocks[1];
+        rotationCycle = 4;
         for (Block block : blocks) {
             block.setColorNow(color);
         }
     }
 
+    @Override
     public Block[] getBlocks() {
         blocks[0].setX(x);
         blocks[0].setY(y);

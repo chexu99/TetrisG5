@@ -14,15 +14,17 @@ import static android.graphics.Color.parseColor;
 
 public class Colors {
 
+    private Colors(){}
+
     public static Bitmap blockTextureSelector(Resources res, int color) { //Selector of block texture based on selected palette
-        switch (UserSettings.gamma) {
-            case 0:
-            default:
-                return originalPalette(res, color);
+        switch (UserSettings.getGamma()) {
             case 1:
                 return marvelPalette(res, color);
             case 2:
                 return planetsPalette(res, color);
+            case 0:
+            default:
+                return originalPalette(res, color);
         }
     }
 
@@ -41,9 +43,9 @@ public class Colors {
             case 5:
                 return BitmapFactory.decodeResource(res, R.drawable.original_block_lime);
             case 6:
-            default:
                 return BitmapFactory.decodeResource(res, R.drawable.original_block_yellow);
             case 7: //For short shape
+            default:
                 return BitmapFactory.decodeResource(res, R.drawable.original_block_magenta);
         }
     }
@@ -63,9 +65,9 @@ public class Colors {
             case 5:
                 return BitmapFactory.decodeResource(res, R.drawable.marvel_thor);
             case 6:
-            default:
                 return BitmapFactory.decodeResource(res, R.drawable.marvel_thanos);
             case 7: //For short shape
+            default:
                 return BitmapFactory.decodeResource(res, R.drawable.marvel_wakanda);
         }
     }
@@ -85,34 +87,32 @@ public class Colors {
             case 5:
                 return BitmapFactory.decodeResource(res, R.drawable.planets_venus);
             case 6:
-            default:
                 return BitmapFactory.decodeResource(res, R.drawable.planets_sun);
             case 7: //For short shape
+            default:
                 return BitmapFactory.decodeResource(res, R.drawable.planets_mercury);
         }
     }
 
-
     public static Bitmap blockedTexture(Resources res) { //Blocked blocks textures
-        switch (UserSettings.gamma) {
-            case 0:
-            default:
-                return BitmapFactory.decodeResource(res, R.drawable.original_blocked);
-            case 1: 
+        switch (UserSettings.getGamma()) {
+            case 1:
                 return BitmapFactory.decodeResource(res, R.drawable.marvel_blocked);
             case 2:
                 return BitmapFactory.decodeResource(res, R.drawable.planets_blocked);
+            case 0:
+            default:
+                return BitmapFactory.decodeResource(res, R.drawable.original_blocked);
 
         }
     }
 
-
     public static BitmapDrawable nextShapeTextureSelector(Resources res, int shape) { //Next shape texture creator
         Bitmap shapeBitmap = shapeSelector(res, shape); //Select base bitmap according to the shape
 
-        shapeBitmap = Bitmap.createScaledBitmap(shapeBitmap, GameActivity.PIXEL_SIZE, GameActivity.PIXEL_SIZE, false); //Scale down image
+        shapeBitmap = Bitmap.createScaledBitmap(shapeBitmap, GameActivity.getPixelSize(), GameActivity.getPixelSize(), false); //Scale down image
 
-        BitmapDrawable drawableShape = new BitmapDrawable(shapeBitmap); //Create BitmapDrawable to be able to edit its color
+        BitmapDrawable drawableShape = new BitmapDrawable(res, shapeBitmap); //Create BitmapDrawable to be able to edit its color
 
         int color = colorSelector((int) Board.getColorMap().get(shape)); //Get color according to the map in the board and get real color
 
@@ -122,14 +122,14 @@ public class Colors {
     }
 
     private static int colorSelector(int color) { //Color selector based on palette
-        switch (UserSettings.gamma) {
-            case 0:
-            default:
-                return colorOriginalPalette(color);
+        switch (UserSettings.getGamma()) {
             case 1:
                 return colorMarvelPalette(color);
             case 2:
                 return colorPlanetsPalette(color);
+            case 0:
+            default:
+                return colorOriginalPalette(color);
         }
     }
 
@@ -148,9 +148,9 @@ public class Colors {
             case 5:
                 return parseColor("#19ff00"); //Lime green
             case 6:
-            default:
                 return parseColor("#ffcd00"); //Yellow
             case 7:
+            default:
                 return parseColor("#ae1f77"); //Magenta
         }
     }
@@ -170,9 +170,9 @@ public class Colors {
             case 5:
                 return parseColor("#ffeab7"); //Venus
             case 6:
-            default:
                 return parseColor("#ebdf1a"); //Sun
             case 7:
+            default:
                 return parseColor("#da7802"); //Mercury
         }
     }
@@ -192,9 +192,9 @@ public class Colors {
             case 5:
                 return parseColor("#d2d2d2"); //Thor
             case 6:
-            default:
                 return parseColor("#aaa1c9"); //Thanos
             case 7:
+            default:
                 return parseColor("#0d3b4a"); //Wakanda
         }
     }

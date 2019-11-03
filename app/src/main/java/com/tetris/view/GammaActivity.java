@@ -13,27 +13,21 @@ import com.tetris.utils.UserSettings;
 
 public class GammaActivity extends Activity {
 
-    private ImageButton original;
-    private ImageButton marvel;
-    private ImageButton planets;
-
-    private ImageButton btn_return;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamma);
 
-        original = findViewById(R.id.original);
+        ImageButton original = findViewById(R.id.original);
         original.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserSettings.gamma = 0;
+                UserSettings.setGamma(0);
                 Toast.makeText(getApplicationContext(), "Paleta original", Toast.LENGTH_LONG).show();
             }
         });
 
-        marvel = findViewById(R.id.marvel);
-        if (UserSettings.score<500){
+        ImageButton marvel = findViewById(R.id.marvel);
+        if (UserSettings.getScore() < 500){
             ((ImageButton) marvel).setImageResource(R.drawable.marvelblocked);
             marvel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -47,14 +41,14 @@ public class GammaActivity extends Activity {
             marvel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UserSettings.gamma = 1;
+                    UserSettings.setGamma(1);
                     Toast.makeText(getApplicationContext(), "Paleta de marvel", Toast.LENGTH_LONG).show();
                 }
             });
         }
 
-        planets = findViewById(R.id.planets);
-        if (UserSettings.score<1000){
+        ImageButton planets = findViewById(R.id.planets);
+        if (UserSettings.getScore() < 1000){
             ((ImageButton) planets).setImageResource(R.drawable.planetsblocked);
             planets.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,14 +62,14 @@ public class GammaActivity extends Activity {
             planets.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UserSettings.gamma = 2;
+                    UserSettings.setGamma(2);
                     Toast.makeText(getApplicationContext(), "Paleta de planetas", Toast.LENGTH_LONG).show();
                 }
             });
         }
 
 
-        btn_return = findViewById(R.id.return_back);
+        ImageButton btn_return = findViewById(R.id.return_back);
         btn_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

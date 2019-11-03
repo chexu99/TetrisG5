@@ -4,10 +4,12 @@ import com.tetris.model.Board;
 
 public class FallingShapeEvents {
 
+    private FallingShapeEvents(){}
+
     public static void makeNextShapeFalling() {
         if(Board.getNextShape() == null)
             NextShapeEvents.createNextShape();
-        Board.getInstance().setFallingShape(Board.getNextShape());
+        Board.setFallingShape(Board.getNextShape());
         NextShapeEvents.createNextShape();
     }
 
@@ -20,16 +22,16 @@ public class FallingShapeEvents {
 
             giveControlToFastShape();
 
-            Board.ActionList.add(Board.Actions.COLLISION);
+            Board.getActionList().add(Board.Actions.COLLISION);
         }
     }
 
 
     private static void giveControlToFastShape() {
         if (Board.getFastShape() != null) {  //Give movement controls to the fast shape
-            Board.getInstance().setFallingShape(Board.getFastShape());
+            Board.setFallingShape(Board.getFastShape());
             //Reset fast shape
-            Board.getInstance().setFastShape(null);
+            Board.setFastShape(null);
             FastShapeEvents.resetTimer();
         } else {
             FallingShapeEvents.makeNextShapeFalling();
