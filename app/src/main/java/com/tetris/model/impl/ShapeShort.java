@@ -6,7 +6,7 @@ import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
 public class ShapeShort extends Shape {
-    
+
     public ShapeShort(int spawnY, int color) {
         super(1, 2,spawnY+2);
 
