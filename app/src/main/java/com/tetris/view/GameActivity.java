@@ -133,7 +133,7 @@ public class GameActivity extends Activity {
     }
 
     private void gameInit() {
-        if (Board.getInstance().getBlocks().isEmpty())
+        if (!Board.getInstance().getBlocks().isEmpty())
             Board.getInstance().clear();
 
         scoreText.setText(String.valueOf(Board.getInstance().getScore()));
