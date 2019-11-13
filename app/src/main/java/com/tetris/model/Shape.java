@@ -10,9 +10,12 @@ import com.tetris.model.impl.ShapeT;
 import com.tetris.model.impl.ShapeZ;
 import com.tetris.model.impl.ShapeZInverted;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Shape extends Pixel {
 
-    protected Block[] blocks;
+    protected List<Block> blocks;
 
     protected boolean falling; //True if the shape is falling
 
@@ -29,16 +32,16 @@ public class Shape extends Pixel {
     protected Shape(int width, int height,int spawnY) {
         super(4, spawnY, width, height);
 
-        blocks = new Block[4];
-        blocks[0] = new Block();
-        blocks[1] = new Block();
-        blocks[2] = new Block();
-        blocks[3] = new Block();
+        blocks = new ArrayList<>();
+
+        for(int i = 0; i < 4; i++){
+            blocks.add(new Block());
+        }
 
         falling = true;
 
         //Rotation initiation
-        rotationBlock = blocks[1];
+        rotationBlock = blocks.get(1);
         rotationCycle = 1;
         rotation = 0;
 
@@ -161,7 +164,7 @@ public class Shape extends Pixel {
         rotation -= 1;
     }
 
-    public Block[] getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 

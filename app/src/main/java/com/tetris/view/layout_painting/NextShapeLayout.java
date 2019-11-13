@@ -30,7 +30,7 @@ public class NextShapeLayout {
     public void paintNextShape(Resources res) {
         nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-        int color = Board.getNextShape().getBlocks()[0].getColor(); //Color of first block
+        int color = Board.getNextShape().getBlocks().get(0).getColor(); //Color of first block
         BitmapDrawable bitmapShape = Colors.nextShapeTextureSelector(res, color);
 
         GameActivity.getNextShapeLayout().setBackgroundDrawable(bitmapShape);

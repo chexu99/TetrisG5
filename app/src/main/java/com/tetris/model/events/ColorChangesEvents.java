@@ -42,7 +42,7 @@ public class ColorChangesEvents {
 
     private static void colorForAll(){
         //Get original color of the last falling shape
-        int shapeColor = Board.getFallingShape().getBlocks()[0].getColor();
+        int shapeColor = Board.getFallingShape().getBlocks().get(0).getColor();
         //Put original shapeColor to all
         for(int color = 0; color <= 7; color++){
             Board.getColorMap().put(color, shapeColor);

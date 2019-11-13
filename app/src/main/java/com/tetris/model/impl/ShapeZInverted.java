@@ -3,10 +3,12 @@ package com.tetris.model.impl;
 import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
+import java.util.List;
+
 public class ShapeZInverted extends Shape {
     public ShapeZInverted(int spawnY, int color) {
         super(3, 2,spawnY+2);
-        rotationBlock = blocks[1];
+        rotationBlock = blocks.get(1);
         rotationCycle = 2;
         for (Block block : blocks) {
             block.setColorNow(color);
@@ -14,15 +16,15 @@ public class ShapeZInverted extends Shape {
     }
 
     @Override
-    public Block[] getBlocks() {
-        blocks[0].setX(x + 2);
-        blocks[0].setY(y);
-        blocks[1].setX(x + 1);
-        blocks[1].setY(y);
-        blocks[2].setX(x + 1);
-        blocks[2].setY(y + 1);
-        blocks[3].setX(x);
-        blocks[3].setY(y + 1);
+    public List<Block> getBlocks() {
+        blocks.get(0).setX(x + 2);
+        blocks.get(0).setY(y);
+        blocks.get(1).setX(x + 1);
+        blocks.get(1).setY(y);
+        blocks.get(2).setX(x + 1);
+        blocks.get(2).setY(y + 1);
+        blocks.get(3).setX(x);
+        blocks.get(3).setY(y + 1);
 
         doRotation();
         for (Block block : blocks) {

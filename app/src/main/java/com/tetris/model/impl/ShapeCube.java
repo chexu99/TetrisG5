@@ -3,6 +3,8 @@ package com.tetris.model.impl;
 import com.tetris.model.Block;
 import com.tetris.model.Shape;
 
+import java.util.List;
+
 public class ShapeCube extends Shape {
 
     public ShapeCube(int spawnY, int color) {
@@ -13,15 +15,15 @@ public class ShapeCube extends Shape {
     }
 
     @Override
-    public Block[] getBlocks() {
-        blocks[0].setX(x);
-        blocks[1].setX(x);
-        blocks[2].setX(x + 1);
-        blocks[3].setX(x + 1);
-        blocks[0].setY(y);
-        blocks[1].setY(blocks[0].getY() + 1);
-        blocks[2].setY(blocks[0].getY());
-        blocks[3].setY(blocks[2].getY() + 1);
+    public List<Block> getBlocks() {
+        blocks.get(0).setX(x);
+        blocks.get(1).setX(x);
+        blocks.get(2).setX(x + 1);
+        blocks.get(3).setX(x + 1);
+        blocks.get(0).setY(y);
+        blocks.get(1).setY(blocks.get(0).getY() + 1);
+        blocks.get(2).setY(blocks.get(0).getY());
+        blocks.get(3).setY(blocks.get(2).getY() + 1);
 
         for (Block block : blocks) {
             block.setFalling(true);
