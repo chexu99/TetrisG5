@@ -3,6 +3,7 @@ package com.tetris.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public class MenuActivity extends AppCompatActivity {
     private ImageButton btn_graphic;
     private ImageButton btn_ranking;
     private ImageButton btn_gamma;
+    private Button prueba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,19 @@ public class MenuActivity extends AppCompatActivity {
                 openGammas();
             }
         });
+
+        prueba = findViewById(R.id.prueba);
+        prueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMinecrafActivity();
+            }
+        });
+    }
+
+    public void openMinecrafActivity() {
+        Intent intent = new Intent(this, MinecraftActivity.class);
+        startActivity(intent);
     }
 
     public void openGameActivity() {
