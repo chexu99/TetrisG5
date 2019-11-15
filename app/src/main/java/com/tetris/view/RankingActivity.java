@@ -35,7 +35,7 @@ public class RankingActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMenuActivity();
+                openPreviousActivity();
             }
         });
 
@@ -72,8 +72,7 @@ public class RankingActivity extends AppCompatActivity {
         }
     }
 
-    private void openMenuActivity() {
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+    private void openPreviousActivity() {
+        finish();
     }
 }

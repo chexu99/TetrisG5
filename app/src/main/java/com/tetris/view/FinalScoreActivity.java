@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,20 +27,38 @@ public class FinalScoreActivity extends AppCompatActivity {
     ConexionSQLiteHelper conn;
     Integer score;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_score);
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         updateScore();
-        button = findViewById(R.id.restart_button);
+        button = findViewById(R.id.restart_exit_button);
+        if (score>250){
+            ((ImageButton) button).setImageResource(R.drawable.btn_volver);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openMenuActivity();
+                }
+            });
+        } else{
+            ((ImageButton) button).setImageResource(R.drawable.btn_exit);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                }
+            });
+        }
+
         button2 = findViewById(R.id.btnranking);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMenuActivity();
-            }
-        });
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
