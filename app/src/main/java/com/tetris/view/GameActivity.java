@@ -3,6 +3,7 @@ package com.tetris.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.tetris.view.layout_painting.NextShapeLayout;
 public class GameActivity extends Activity {
 
     boolean stopped = false;
+
+    protected MediaPlayer mp;
 
     private static int boardHeight = 800; //Max quality = 6400 -> Laser-mode = 20
     private static int boardWidth = 400; //Max quality = 3200 -> Laser-mode = 10
@@ -69,6 +72,8 @@ public class GameActivity extends Activity {
         setUpLayouts();
 
         setUpButtons();
+
+        setUpMusic();
 
         gameInit();
     }
@@ -132,6 +137,12 @@ public class GameActivity extends Activity {
         });
     }
 
+    private void setUpMusic(){
+        mp = MediaPlayer.create(this,R.raw.musica);
+        mp.setLooping(true);
+        mp.start();
+    }
+
     private void gameInit() {
         if (!Board.getInstance().getBlocks().isEmpty())
             Board.getInstance().clear();
@@ -188,6 +199,7 @@ public class GameActivity extends Activity {
 
         if (!stopped) {
             stopped = true;
+            mp.pause();
             Intent intent = new Intent(this, FinalScoreActivity.class);
             startActivity(intent);
         }
