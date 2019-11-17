@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.tetris.R;
 import com.tetris.utils.Colors;
@@ -17,6 +18,7 @@ public class MinecraftActivity extends AppCompatActivity {
 
 
     private int numColor = 2;
+    private int maxCeldas = 6;
     private ImageButton bCelda1;
     private ImageButton bCelda2;
     private ImageButton bCelda3;
@@ -46,8 +48,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda1);
-                vibe.vibrate(40);
+                celdaEvent(bCelda1);
             }
         });
         celdas.add(bCelda1);
@@ -57,8 +58,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda2);
-                vibe.vibrate(40);
+                celdaEvent(bCelda2);
             }
         });
         celdas.add(bCelda2);
@@ -68,8 +68,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda3);
-                vibe.vibrate(40);
+                celdaEvent(bCelda3);
             }
         });
         celdas.add(bCelda3);
@@ -79,8 +78,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda4);
-                vibe.vibrate(40);
+                celdaEvent(bCelda4);
             }
         });
         celdas.add(bCelda4);
@@ -90,8 +88,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda5);
-                vibe.vibrate(40);
+                celdaEvent(bCelda5);
             }
         });
         celdas.add(bCelda5);
@@ -101,8 +98,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda6);
-                vibe.vibrate(40);
+                celdaEvent(bCelda6);
             }
         });
         celdas.add(bCelda6);
@@ -112,8 +108,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda7);
-                vibe.vibrate(40);
+                celdaEvent(bCelda7);
             }
         });
         celdas.add(bCelda7);
@@ -123,8 +118,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda8);
-                vibe.vibrate(40);
+                celdaEvent(bCelda8);
             }
         });
         celdas.add(bCelda8);
@@ -134,8 +128,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCelda9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                chooseColor(bCelda9);
-                vibe.vibrate(40);
+                celdaEvent(bCelda9);
             }
         });
         celdas.add(bCelda9);
@@ -143,102 +136,104 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void setUpButtonsColors() {
         ImageButton bColor1 = findViewById(R.id.color1);
-        ((ImageButton) bColor1).setImageResource(Colors.colorSelectorID(2));
+        bColor1.setImageResource(Colors.colorSelectorID(2));
         bColor1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(2);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(2);
             }
         });
 
         ImageButton bColor2 = findViewById(R.id.color2);
-        ((ImageButton) bColor2).setImageResource(Colors.colorSelectorID(5));
+        bColor2.setImageResource(Colors.colorSelectorID(5));
         bColor2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(5);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(5);
             }
         });
 
         ImageButton bColor3 = findViewById(R.id.color3);
-        ((ImageButton) bColor3).setImageResource(Colors.colorSelectorID(6));
+        bColor3.setImageResource(Colors.colorSelectorID(6));
         bColor3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(6);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(6);
             }
         });
 
         ImageButton bColor4 = findViewById(R.id.color4);
-        ((ImageButton) bColor4).setImageResource(Colors.colorSelectorID(0));
+        bColor4.setImageResource(Colors.colorSelectorID(0));
         bColor4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(0);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(0);
             }
         });
 
         ImageButton bColor5 = findViewById(R.id.color5);
-        ((ImageButton) bColor5).setImageResource(Colors.colorSelectorID(3));
+        bColor5.setImageResource(Colors.colorSelectorID(3));
         bColor5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(3);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(3);
             }
         });
 
         ImageButton bColor6 = findViewById(R.id.color6);
-        ((ImageButton) bColor6).setImageResource(Colors.colorSelectorID(4));
+        bColor6.setImageResource(Colors.colorSelectorID(4));
         bColor6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(4);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(4);
             }
         });
 
         ImageButton bColor7 = findViewById(R.id.color7);
-        ((ImageButton) bColor7).setImageResource(Colors.colorSelectorID(1));
+        bColor7.setImageResource(Colors.colorSelectorID(1));
         bColor7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(1);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(1);
             }
         });
 
         ImageButton bColor8 = findViewById(R.id.color8);
-        ((ImageButton) bColor8).setImageResource(Colors.colorSelectorID(7));
+        bColor8.setImageResource(Colors.colorSelectorID(7));
         bColor8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
-                setNumColor(7);
-                updateColor();
-                vibe.vibrate(40);
+                colorEvent(7);
             }
         });
+    }
+
+    private void celdaEvent(ImageButton celda){
+        int drawable = (Integer) celda.getTag();
+        if ((getMaxCeldas()==0) && (drawable==R.drawable.celda_crafting)){
+            Toast.makeText(getApplicationContext(), "Debe coger un máximo de 6 bloques", Toast.LENGTH_LONG).show();
+        } else {
+            chooseColor(celda);
+        }
+        vibe.vibrate(40);
+    }
+
+    private void colorEvent(int num){
+        setNumColor(num);
+        updateColor();
+        vibe.vibrate(40);
     }
 
     private void chooseColor(ImageButton celda){
         int drawable = (Integer) celda.getTag();
         if (drawable==R.drawable.celda_crafting){
+            setMaxCeldas(getMaxCeldas()-1);
             celda.setTag(Colors.colorSelectorID(getNumColor()));
-            ((ImageButton) celda).setImageResource(Colors.colorSelectorID(getNumColor()));
+            celda.setImageResource(Colors.colorSelectorID(getNumColor()));
         }else{
+            setMaxCeldas(getMaxCeldas()+1);
             celda.setTag(R.drawable.celda_crafting);
-            ((ImageButton) celda).setImageResource(R.drawable.celda_crafting);
+            celda.setImageResource(R.drawable.celda_crafting);
         }
     }
 
@@ -247,9 +242,17 @@ public class MinecraftActivity extends AppCompatActivity {
             int drawable = (Integer) c.getTag();
             if (drawable!=R.drawable.celda_crafting){
                 c.setTag(Colors.colorSelectorID(getNumColor()));
-                ((ImageButton) c).setImageResource(Colors.colorSelectorID(getNumColor()));
+                c.setImageResource(Colors.colorSelectorID(getNumColor()));
             }
         }
+    }
+
+    public int getMaxCeldas() {
+        return maxCeldas;
+    }
+
+    public void setMaxCeldas(int maxCeldas) {
+        this.maxCeldas = maxCeldas;
     }
 
     public int getNumColor() {
