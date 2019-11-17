@@ -242,7 +242,7 @@ public class MinecraftActivity extends AppCompatActivity {
         }else{
             setMaxCeldas(getMaxCeldas()+1);
             celda.setTag(R.drawable.celda_crafting);
-            celda.setImageResource(R.drawable.celda_crafting);
+            celda.setImageResource(android.R.color.transparent);
         }
     }
 

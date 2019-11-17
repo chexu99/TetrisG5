@@ -9,141 +9,129 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="308dp"
-        android:layout_height="348dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067">
+        app:layout_constraintVertical_bias="0.018">
 
         <ImageView
             android:id="@+id/mesa_crafting"
-            android:layout_width="296dp"
-            android:layout_height="336dp"
+            android:layout_width="390dp"
+            android:layout_height="390dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/minecraf" />
+            app:srcCompat="@drawable/minecraft" />
 
         <ImageButton
             android:id="@+id/celda1"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/celda4"
             app:layout_constraintEnd_toStartOf="@+id/celda2"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintHorizontal_bias="0.881"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.711"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.89" />
 
         <ImageButton
             android:id="@+id/celda2"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="@+id/mesa_crafting"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.265"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.289" />
 
         <ImageButton
             android:id="@+id/celda3"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/celda6"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.42"
+            app:layout_constraintHorizontal_bias="0.118"
             app:layout_constraintStart_toEndOf="@+id/celda2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.701"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.89" />
 
         <ImageButton
             android:id="@+id/celda4"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/celda7"
             app:layout_constraintEnd_toStartOf="@+id/celda5"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintHorizontal_bias="0.881"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.84"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.934" />
 
         <ImageButton
             android:id="@+id/celda5"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/celda8"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/mesa_crafting"
-            app:layout_constraintVertical_bias="0.84"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.932" />
 
         <ImageButton
             android:id="@+id/celda6"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toTopOf="@+id/celda9"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.42"
+            app:layout_constraintHorizontal_bias="0.118"
             app:layout_constraintStart_toEndOf="@+id/celda5"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.84"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.934" />
 
         <ImageButton
             android:id="@+id/celda7"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/celda8"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintHorizontal_bias="0.881"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.92"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.711" />
 
         <ImageButton
             android:id="@+id/celda8"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/celda2"
-            app:layout_constraintVertical_bias="0.844"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.464" />
 
         <ImageButton
             android:id="@+id/celda9"
-            android:layout_width="69dp"
-            android:layout_height="63dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.42"
+            app:layout_constraintHorizontal_bias="0.118"
             app:layout_constraintStart_toEndOf="@+id/celda8"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.92"
-            app:srcCompat="@drawable/celda_crafting" />
+            app:layout_constraintVertical_bias="0.711" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -167,8 +155,7 @@
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.342"
-            app:srcCompat="@drawable/original_block_purple" />
+            app:layout_constraintVertical_bias="0.342" />
 
 
         <ImageButton
@@ -181,8 +168,7 @@
             app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.855"
-            app:srcCompat="@drawable/original_block_white" />
+            app:layout_constraintVertical_bias="0.855" />
 
         <ImageButton
             android:id="@+id/color2"
@@ -194,8 +180,7 @@
             app:layout_constraintHorizontal_bias="0.865"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108"
-            app:srcCompat="@drawable/original_block_lime" />
+            app:layout_constraintVertical_bias="0.108" />
 
         <ImageButton
             android:id="@+id/color6"
@@ -207,8 +192,7 @@
             app:layout_constraintHorizontal_bias="0.866"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.855"
-            app:srcCompat="@drawable/original_block_cyan" />
+            app:layout_constraintVertical_bias="0.855" />
 
         <ImageButton
             android:id="@+id/color3"
@@ -220,8 +204,7 @@
             app:layout_constraintHorizontal_bias="0.921"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108"
-            app:srcCompat="@drawable/original_block_yellow" />
+            app:layout_constraintVertical_bias="0.108" />
 
         <ImageButton
             android:id="@+id/color7"
@@ -233,8 +216,7 @@
             app:layout_constraintHorizontal_bias="0.916"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.855"
-            app:srcCompat="@drawable/original_block_red" />
+            app:layout_constraintVertical_bias="0.855" />
 
         <ImageButton
             android:id="@+id/color4"
@@ -246,8 +228,7 @@
             app:layout_constraintHorizontal_bias="0.967"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.108"
-            app:srcCompat="@drawable/original_block_blue" />
+            app:layout_constraintVertical_bias="0.108" />
 
         <ImageButton
             android:id="@+id/color8"
@@ -259,8 +240,7 @@
             app:layout_constraintHorizontal_bias="0.967"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.855"
-            app:srcCompat="@drawable/original_block_magenta" />
+            app:layout_constraintVertical_bias="0.855" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
