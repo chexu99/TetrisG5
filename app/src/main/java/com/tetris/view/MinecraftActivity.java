@@ -258,6 +258,11 @@ public class MinecraftActivity extends AppCompatActivity {
         }
     }
 
+    private void createCustomShape(){
+        //TODO: hay que mergear con master o importarlo de algun modo
+    }
+
+
     public int getMaxCeldas() {
         return maxCeldas;
     }
