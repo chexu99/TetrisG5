@@ -2,6 +2,7 @@ package com.tetris.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -136,16 +137,17 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void setUpButtonsColors() {
         ImageButton bColor1 = findViewById(R.id.color1);
-        bColor1.setImageResource(Colors.colorSelectorID(2));
+        bColor1.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 2), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View b) {
-                colorEvent(2);
+            public void onClick(View b) { colorEvent(2);
             }
         });
 
         ImageButton bColor2 = findViewById(R.id.color2);
-        bColor2.setImageResource(Colors.colorSelectorID(5));
+        bColor2.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 5), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -154,7 +156,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor3 = findViewById(R.id.color3);
-        bColor3.setImageResource(Colors.colorSelectorID(6));
+        bColor3.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 6), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -163,7 +166,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor4 = findViewById(R.id.color4);
-        bColor4.setImageResource(Colors.colorSelectorID(0));
+        bColor4.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 0), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -172,7 +176,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor5 = findViewById(R.id.color5);
-        bColor5.setImageResource(Colors.colorSelectorID(3));
+        bColor5.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 3), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -181,7 +186,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor6 = findViewById(R.id.color6);
-        bColor6.setImageResource(Colors.colorSelectorID(4));
+        bColor6.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 4), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -190,7 +196,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor7 = findViewById(R.id.color7);
-        bColor7.setImageResource(Colors.colorSelectorID(1));
+        bColor7.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 1), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -199,7 +206,8 @@ public class MinecraftActivity extends AppCompatActivity {
         });
 
         ImageButton bColor8 = findViewById(R.id.color8);
-        bColor8.setImageResource(Colors.colorSelectorID(7));
+        bColor8.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), 7), (int) (3.5 * GameActivity.getPixelSize()),
+                (int) (3.5 * GameActivity.getPixelSize()), false));
         bColor8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View b) {
@@ -210,7 +218,7 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void celdaEvent(ImageButton celda){
         int drawable = (Integer) celda.getTag();
-        if ((getMaxCeldas()==0) && (drawable==R.drawable.celda_crafting)){
+        if ((maxCeldas == 0) && (drawable == R.drawable.celda_crafting)){
             Toast.makeText(getApplicationContext(), "Debe coger un máximo de 6 bloques", Toast.LENGTH_LONG).show();
         } else {
             chooseColor(celda);
@@ -219,17 +227,18 @@ public class MinecraftActivity extends AppCompatActivity {
     }
 
     private void colorEvent(int num){
-        setNumColor(num);
+        numColor = num;
         updateColor();
         vibe.vibrate(40);
     }
 
     private void chooseColor(ImageButton celda){
         int drawable = (Integer) celda.getTag();
-        if (drawable==R.drawable.celda_crafting){
+        if (drawable == R.drawable.celda_crafting){
             setMaxCeldas(getMaxCeldas()-1);
-            celda.setTag(Colors.colorSelectorID(getNumColor()));
-            celda.setImageResource(Colors.colorSelectorID(getNumColor()));
+            celda.setTag(Colors.colorSelectorID(numColor));
+            celda.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), numColor), (int) (4.5 * GameActivity.getPixelSize()),
+                    (int) (4.5 * GameActivity.getPixelSize()), false));
         }else{
             setMaxCeldas(getMaxCeldas()+1);
             celda.setTag(R.drawable.celda_crafting);
@@ -240,9 +249,11 @@ public class MinecraftActivity extends AppCompatActivity {
     private void updateColor(){
         for (ImageButton c :celdas) {
             int drawable = (Integer) c.getTag();
-            if (drawable!=R.drawable.celda_crafting){
+            if (drawable != R.drawable.celda_crafting){
                 c.setTag(Colors.colorSelectorID(getNumColor()));
-                c.setImageResource(Colors.colorSelectorID(getNumColor()));
+                c.setImageBitmap(Bitmap.createScaledBitmap(Colors.blockTextureSelector(this.getResources(), numColor), (int) (4.5 * GameActivity.getPixelSize()),
+                        (int) (4.5 * GameActivity.getPixelSize()), false));
+                //c.setImageResource(Colors.colorSelectorID(getNumColor()));
             }
         }
     }
