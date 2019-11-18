@@ -3,11 +3,14 @@ package com.tetris.view;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
@@ -21,6 +24,8 @@ public class InitDBActivity extends AppCompatActivity {
     String username;
     EditText campo_nombre;
     Cursor cursor;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    //ImageView foto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +38,11 @@ public class InitDBActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         usernameComparator();
-        Intent intent = new Intent(InitDBActivity.this, MenuActivity.class);
-        startActivity(intent);
+        photo();
+
+
+        /*Intent intent = new Intent(InitDBActivity.this, MenuActivity.class);
+        startActivity(intent);*/
     }
 
     private void usernameComparator() {
@@ -80,5 +88,20 @@ public class InitDBActivity extends AppCompatActivity {
         db.execSQL(insert);
         cursor2.close();
         db.close();
+    }
+
+    private void photo(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager())!=null){
+            startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //foto.setImageBitmap(imageBitmap);
+        }
     }
 }
