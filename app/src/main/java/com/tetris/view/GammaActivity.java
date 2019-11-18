@@ -28,7 +28,7 @@ public class GammaActivity extends Activity {
 
         ImageButton marvel = findViewById(R.id.marvel);
         if (UserSettings.getScore() < 500){
-            ((ImageButton) marvel).setImageResource(R.drawable.marvelblocked);
+            marvel.setImageResource(R.drawable.marvelblocked);
             marvel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -37,7 +37,7 @@ public class GammaActivity extends Activity {
             });
 
         } else {
-            ((ImageButton) marvel).setImageResource(R.drawable.marvel_gamma);
+            marvel.setImageResource(R.drawable.marvel_gamma);
             marvel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -49,7 +49,7 @@ public class GammaActivity extends Activity {
 
         ImageButton planets = findViewById(R.id.planets);
         if (UserSettings.getScore() < 1000){
-            ((ImageButton) planets).setImageResource(R.drawable.planetsblocked);
+            planets.setImageResource(R.drawable.planetsblocked);
             planets.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -58,7 +58,7 @@ public class GammaActivity extends Activity {
             });
 
         } else {
-            ((ImageButton) planets).setImageResource(R.drawable.planets_gamma);
+            planets.setImageResource(R.drawable.planets_gamma);
             planets.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

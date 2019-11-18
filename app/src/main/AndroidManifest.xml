@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tetris">
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -9,6 +9,7 @@
         android:xlargeScreens="true" />
 
     <application
+
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.RankingActivity"></activity>
+        <activity android:name=".view.MinecraftActivity"></activity>
+        <activity android:name=".view.RankingActivity" />
         <activity android:name=".view.InitDBActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +38,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.MenuActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
