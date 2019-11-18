@@ -16,7 +16,8 @@ public class MenuActivity extends AppCompatActivity {
     private ImageButton btn_graphic;
     private ImageButton btn_ranking;
     private ImageButton btn_gamma;
-    private Button prueba;
+    private ImageButton btn_minecraft;
+    private ImageButton btn_salir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +56,22 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        prueba = findViewById(R.id.prueba);
-        prueba.setOnClickListener(new View.OnClickListener() {
+        btn_minecraft= findViewById(R.id.minecraft);
+        btn_minecraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMinecrafActivity();
+            }
+        });
+
+        btn_salir = findViewById(R.id.salir);
+        btn_salir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
