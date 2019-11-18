@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,17 +22,20 @@ public class InitDBActivity extends AppCompatActivity {
     String username;
     EditText campo_nombre;
     Cursor cursor;
+    Vibrator vibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        vibe = (Vibrator) InitDBActivity.this.getSystemService(InitDBActivity.VIBRATOR_SERVICE);
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         campo_nombre = (EditText) findViewById(R.id.formulario);
 
     }
 
     public void onClick(View view) {
+        vibe.vibrate(40);
         usernameComparator();
         Intent intent = new Intent(InitDBActivity.this, MenuActivity.class);
         startActivity(intent);

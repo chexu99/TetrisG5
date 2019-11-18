@@ -52,6 +52,7 @@ public class MinecraftActivity extends AppCompatActivity {
         bCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibe.vibrate(40);
                 finish();
             }
         });
@@ -271,6 +272,8 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void createCustomShape(){
         //TODO: hay que mergear con master o importarlo de algun modo
+
+
     }
 
 

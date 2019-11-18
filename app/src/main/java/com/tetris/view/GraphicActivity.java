@@ -2,6 +2,7 @@ package com.tetris.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -20,11 +21,13 @@ public class GraphicActivity extends AppCompatActivity {
     private RadioButton highButton;
     private RadioButton mediumButton;
     private RadioButton lowButton;
+    private Vibrator vibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphic);
+        vibe = (Vibrator) GraphicActivity.this.getSystemService(GraphicActivity.VIBRATOR_SERVICE);
 
         highButton = (RadioButton) findViewById(R.id.high_radioButton);
         mediumButton = (RadioButton) findViewById(R.id.medium_radioButton);
@@ -77,6 +80,7 @@ public class GraphicActivity extends AppCompatActivity {
     }
 
     public void openMenuActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

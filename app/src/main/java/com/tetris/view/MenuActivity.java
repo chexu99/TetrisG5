@@ -2,6 +2,7 @@ package com.tetris.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,11 +19,13 @@ public class MenuActivity extends AppCompatActivity {
     private ImageButton btn_gamma;
     private ImageButton btn_minecraft;
     private ImageButton btn_salir;
+    private Vibrator vibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        vibe = (Vibrator) MenuActivity.this.getSystemService(MenuActivity.VIBRATOR_SERVICE);
 
         btn_new_game = findViewById(R.id.new_game_button);
         btn_new_game.setOnClickListener(new View.OnClickListener() {
@@ -68,35 +71,44 @@ public class MenuActivity extends AppCompatActivity {
         btn_salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                exitActivity();
             }
         });
     }
 
-    public void openMinecrafActivity() {
+    private void exitActivity(){
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void openMinecrafActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, MinecraftActivity.class);
         startActivity(intent);
     }
 
-    public void openGameActivity() {
+    private void openGameActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
     private void openGraphicActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, GraphicActivity.class);
         startActivity(intent);
     }
 
     private void openRanking(){
+        vibe.vibrate(40);
         Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
     }
 
     private void openGammas(){
+        vibe.vibrate(40);
         Intent intent = new Intent(this, GammaActivity.class);
         startActivity(intent);
     }

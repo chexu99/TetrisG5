@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -26,12 +27,15 @@ public class FinalScoreActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ConexionSQLiteHelper conn;
     Integer score;
+    private Vibrator vibe;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_score);
+        vibe = (Vibrator) FinalScoreActivity.this.getSystemService(FinalScoreActivity.VIBRATOR_SERVICE);
+
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         updateScore();
         button = findViewById(R.id.restart_exit_button);
@@ -92,11 +96,13 @@ public class FinalScoreActivity extends AppCompatActivity {
     }
 
     public void openMenuActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 
     public void openRanking() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
     }

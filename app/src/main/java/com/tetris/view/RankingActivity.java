@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -23,13 +24,15 @@ public class RankingActivity extends AppCompatActivity {
     ArrayList<String> listaInfo;
     ArrayList<Player> listaPlayers;
     ConexionSQLiteHelper conn;
+    private Vibrator vibe;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
-
+        vibe = (Vibrator) RankingActivity.this.getSystemService(RankingActivity.VIBRATOR_SERVICE);
         //boton de volver
         button = findViewById(R.id.reStar);
         button.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     private void openPreviousActivity() {
+        vibe.vibrate(40);
         finish();
     }
 }
