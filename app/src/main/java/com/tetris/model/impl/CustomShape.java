@@ -26,7 +26,9 @@ public class CustomShape extends Shape {
 
         this.blocks = new ArrayList<>(shape.blocks);
 
-        //TODO: actualizar bloques acorde a spawnY
+        for (Block block : blocks) {
+            block.setY(block.getY() + spawnY);
+        }
 
         rotationBlock = blocks.get(1);
         rotationCycle = 4;

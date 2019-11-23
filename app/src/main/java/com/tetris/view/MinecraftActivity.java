@@ -283,7 +283,7 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
 
     private void isClicked(int drawable, int i){
         int x = 4;
-        int y = -3;
+        int y = 1;
         if (i==1 && drawable!=0){
             Block block = new Block();
             block.setX(x);
