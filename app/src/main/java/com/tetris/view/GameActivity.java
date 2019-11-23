@@ -159,6 +159,7 @@ public class GameActivity extends Activity {
     private void paintGame() {
         for (Board.Actions a : Board.getActionList()) {
             if (a.equals(Board.Actions.COLLISION)) {
+                System.out.println("update");
                 //Update board layout
                 boardLay.paintBlockArray(this.getResources());
                 //Update score

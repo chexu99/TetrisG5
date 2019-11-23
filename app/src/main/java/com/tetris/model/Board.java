@@ -5,6 +5,7 @@ import com.tetris.model.events.ColorChangesEvents;
 import com.tetris.model.events.FallingShapeEvents;
 import com.tetris.model.events.FastShapeEvents;
 import com.tetris.model.events.NextShapeEvents;
+import com.tetris.model.impl.CustomShape;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class Board {
 
     private static Board instance = null;
 
-    private List<Block> blocksCustom = new ArrayList<>();
+    private CustomShape minecraftShape;
 
     private List<Block> blocks = new CopyOnWriteArrayList<>();
 
@@ -39,6 +40,13 @@ public class Board {
         GAME_OVER,
     }
 
+    private GameMode gameMode;
+
+    public enum GameMode {
+        MODE_ORIGINAL,
+        MODE_MINECRAFT,
+    }
+
     private static List<Actions> actionList = new CopyOnWriteArrayList<>();
 
     public enum Actions {
@@ -54,7 +62,7 @@ public class Board {
     private int deadBlockY = -2;
 
 
-    private static HashMap colorMap = new HashMap<Integer, Integer>();
+    private static HashMap<Integer, Integer> colorMap = new HashMap<>();
 
     //Board instance for use by other classes
     public static Board getInstance() {
@@ -267,12 +275,20 @@ public class Board {
     public static Map getColorMap() {
         return colorMap;
     }
-    
-    public void setBlocksCustom(List<Block> blocksCustom) {
-        this.blocksCustom = blocksCustom;
+
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
-    public List<Block> getBlocksCustom() {
-        return blocksCustom;
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public CustomShape getMinecraftShape() {
+        return minecraftShape;
+    }
+
+    public void setMinecraftShape(CustomShape minecraftShape) {
+        this.minecraftShape = minecraftShape;
     }
 }

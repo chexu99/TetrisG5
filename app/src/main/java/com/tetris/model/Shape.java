@@ -69,11 +69,15 @@ public class Shape extends Pixel {
                 return new ShapeZ(spawnY, color);
             case 5:
                 return new ShapeZInverted(spawnY, color);
-            case 7:
-                return new CustomShape(spawnY, color,Board.getInstance().getBlocksCustom());
             case 6:
-            default:
                 return new ShapeT(spawnY, color);
+            case 7:
+            default:
+                return new CustomShape(
+                        Board.getInstance().getMinecraftShape(),
+                        spawnY,
+                        color
+                );
         }
     }
 

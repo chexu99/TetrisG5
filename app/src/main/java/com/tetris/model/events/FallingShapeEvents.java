@@ -23,6 +23,7 @@ public class FallingShapeEvents {
             giveControlToFastShape();
 
             Board.getActionList().add(Board.Actions.COLLISION);
+            //System.out.println("hey");
         }
     }
 

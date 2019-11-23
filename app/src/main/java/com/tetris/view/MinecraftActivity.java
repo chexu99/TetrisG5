@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.tetris.R;
 import com.tetris.model.Block;
 import com.tetris.model.Board;
+import com.tetris.model.impl.CustomShape;
 import com.tetris.utils.Colors;
 
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
         });
     }
     private void openGameActivity() {
+        Board.getInstance().setGameMode(Board.GameMode.MODE_MINECRAFT);
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
@@ -279,72 +281,76 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
         }
     }
 
-    private void isClicked(int drawable,int i){
+    private void isClicked(int drawable, int i){
+        int x = 4;
+        int y = -3;
         if (i==1 && drawable!=0){
             Block block = new Block();
-            block.setX(0);
-            block.setY(0);
+            block.setX(x);
+            block.setY(y);
             blocksCustomShape.add(block);
         }
         if (i==2 && drawable!=0){
             Block block = new Block();
-            block.setX(1);
-            block.setY(0);
+            block.setX(x + 1);
+            block.setY(y);
             blocksCustomShape.add(block);
         }
         if (i==3 && drawable!=0){
             Block block = new Block();
-            block.setX(2);
-            block.setY(0);
+            block.setX(x + 2);
+            block.setY(y);
             blocksCustomShape.add(block);
         }
         if (i==4 && drawable!=0){
             Block block = new Block();
-            block.setX(0);
-            block.setY(1);
+            block.setX(x);
+            block.setY(y + 1);
             blocksCustomShape.add(block);
         }
         if (i==5 && drawable!=0){
             Block block = new Block();
-            block.setX(1);
-            block.setY(1);
+            block.setX(x + 1);
+            block.setY(y + 1);
             blocksCustomShape.add(block);
         }
         if (i==6 && drawable!=0){
             Block block = new Block();
-            block.setX(2);
-            block.setY(1);
+            block.setX(x + 2);
+            block.setY(y + 1);
             blocksCustomShape.add(block);
         }
         if (i==7 && drawable!=0){
             Block block = new Block();
-            block.setX(0);
-            block.setY(2);
+            block.setX(x);
+            block.setY(y + 2);
             blocksCustomShape.add(block);
         }
         if (i==8 && drawable!=0){
             Block block = new Block();
-            block.setX(1);
-            block.setY(2);
+            block.setX(x + 1);
+            block.setY(y + 2);
             blocksCustomShape.add(block);
         }
         if (i==9 && drawable!=0){
             Block block = new Block();
-            block.setX(2);
-            block.setY(2);
+            block.setX(x + 2);
+            block.setY(y + 2);
             blocksCustomShape.add(block);
         }
     }
 
     private void createCustomShape(){
-        //TODO: hay que mergear con master o importarlo de algun modo
-
-        for(int i=0;i<9;i++){
+        for (int i = 0; i < 9; i++) {
             int drawable = (Integer) celdas.get(i).getTag();
-            isClicked(drawable,i+1);
+            isClicked(drawable,i + 1);
         }
-        Board.getInstance().setBlocksCustom(blocksCustomShape);
 
+        Board.getInstance().setMinecraftShape(new CustomShape(
+                Board.getInstance().getSpawnY(),
+                3, //TODO: change
+                blocksCustomShape
+        ));
     }
 
 

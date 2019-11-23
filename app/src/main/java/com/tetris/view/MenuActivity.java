@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
+import com.tetris.model.Board;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         btn_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Board.getInstance().setGameMode(Board.GameMode.MODE_ORIGINAL);
                 openGameActivity();
             }
         });
