@@ -20,6 +20,8 @@ public class Board {
 
     private static Board instance = null;
 
+    private List<Block> blocksCustom = new ArrayList<>();
+
     private List<Block> blocks = new CopyOnWriteArrayList<>();
 
     private static Shape fallingShape;
@@ -264,5 +266,13 @@ public class Board {
 
     public static Map getColorMap() {
         return colorMap;
+    }
+    
+    public void setBlocksCustom(List<Block> blocksCustom) {
+        this.blocksCustom = blocksCustom;
+    }
+
+    public List<Block> getBlocksCustom() {
+        return blocksCustom;
     }
 }

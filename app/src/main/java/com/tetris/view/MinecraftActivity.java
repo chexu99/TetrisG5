@@ -2,6 +2,7 @@ package com.tetris.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -10,12 +11,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.tetris.R;
+import com.tetris.model.Block;
+import com.tetris.model.Board;
 import com.tetris.utils.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinecraftActivity extends AppCompatActivity {
+public class MinecraftActivity extends AppCompatActivity implements Cloneable {
 
 
     private int numColor = 2;
@@ -31,8 +34,9 @@ public class MinecraftActivity extends AppCompatActivity {
     private ImageButton bCelda9;
     private List<ImageButton> celdas = new ArrayList<>();
     private Vibrator vibe;
-    private ImageButton bCancelar;
-    private ImageButton bCreate;
+
+
+    private List<Block> blocksCustomShape = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class MinecraftActivity extends AppCompatActivity {
     }
 
     private void setUpButtonsFinal(){
-        bCancelar = findViewById(R.id.mine_cancel);
+        ImageButton bCancelar = findViewById(R.id.mine_cancel);
         bCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,14 +60,19 @@ public class MinecraftActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        bCreate = findViewById(R.id.mine_newshape);
+        ImageButton bCreate = findViewById(R.id.mine_newshape);
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: CREATE NEW SHAPE AND SHOW THE SHAPE
+                createCustomShape();
+                openGameActivity();
             }
         });
+    }
+    private void openGameActivity() {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 
     private void setUpButtonsCeldas() {
@@ -233,7 +242,7 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void celdaEvent(ImageButton celda){
         int drawable = (Integer) celda.getTag();
-        if ((maxCeldas == 0) && (drawable == 0)){
+        if ((maxCeldas == 0) && (drawable == 0)){ //drawable == 0 is cell no selected
             Toast.makeText(getApplicationContext(), "Debe coger un máximo de 6 bloques", Toast.LENGTH_LONG).show();
         } else {
             chooseColor(celda);
@@ -270,9 +279,71 @@ public class MinecraftActivity extends AppCompatActivity {
         }
     }
 
+    private void isClicked(int drawable,int i){
+        if (i==1 && drawable!=0){
+            Block block = new Block();
+            block.setX(0);
+            block.setY(0);
+            blocksCustomShape.add(block);
+        }
+        if (i==2 && drawable!=0){
+            Block block = new Block();
+            block.setX(1);
+            block.setY(0);
+            blocksCustomShape.add(block);
+        }
+        if (i==3 && drawable!=0){
+            Block block = new Block();
+            block.setX(2);
+            block.setY(0);
+            blocksCustomShape.add(block);
+        }
+        if (i==4 && drawable!=0){
+            Block block = new Block();
+            block.setX(0);
+            block.setY(1);
+            blocksCustomShape.add(block);
+        }
+        if (i==5 && drawable!=0){
+            Block block = new Block();
+            block.setX(1);
+            block.setY(1);
+            blocksCustomShape.add(block);
+        }
+        if (i==6 && drawable!=0){
+            Block block = new Block();
+            block.setX(2);
+            block.setY(1);
+            blocksCustomShape.add(block);
+        }
+        if (i==7 && drawable!=0){
+            Block block = new Block();
+            block.setX(0);
+            block.setY(2);
+            blocksCustomShape.add(block);
+        }
+        if (i==8 && drawable!=0){
+            Block block = new Block();
+            block.setX(1);
+            block.setY(2);
+            blocksCustomShape.add(block);
+        }
+        if (i==9 && drawable!=0){
+            Block block = new Block();
+            block.setX(2);
+            block.setY(2);
+            blocksCustomShape.add(block);
+        }
+    }
+
     private void createCustomShape(){
         //TODO: hay que mergear con master o importarlo de algun modo
 
+        for(int i=0;i<9;i++){
+            int drawable = (Integer) celdas.get(i).getTag();
+            isClicked(drawable,i+1);
+        }
+        Board.getInstance().setBlocksCustom(blocksCustomShape);
 
     }
 

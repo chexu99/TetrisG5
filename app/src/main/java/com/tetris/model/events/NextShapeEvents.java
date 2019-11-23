@@ -12,8 +12,8 @@ public class NextShapeEvents {
     private static Random r = new Random();
 
     public static void createNextShape(){
-        int index = r.nextInt(7);
-
+       // int index = r.nextInt(7);
+        int index = 7;
         Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
     }
 }
