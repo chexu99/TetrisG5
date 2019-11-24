@@ -24,9 +24,10 @@
 
     <ListView
         android:id="@+id/L_ranking"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="600dp"
         android:textColor="#ffffff"
+        android:background="@drawable/bg_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
