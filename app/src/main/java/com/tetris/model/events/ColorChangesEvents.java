@@ -50,20 +50,21 @@ public class ColorChangesEvents {
     }
 
     private static void assignColor(){
+        int actualColor;
         //Assign color to board blocks
         for(Block block : Board.getInstance().getBlocks()){
-            int actualColor = block.getColor();
+            actualColor = block.getColor();
             block.setColorNow((int) Board.getColorMap().get(actualColor));
         }
         //Assign color to nextShape blocks
         for(Block block : Board.getNextShape().getBlocks()){
-            int actualColor = block.getColor();
+            actualColor = block.getColor();
             block.setColorNow((int) Board.getColorMap().get(actualColor));
         }
-
-        if(Board.getFastShape() != null) { //Assign color to fastShape blocks if exists
+        //Assign color to fastShape blocks if exists
+        if(Board.getFastShape() != null) {
             for (Block block : Board.getFastShape().getBlocks()) {
-                int actualColor = block.getColor();
+                actualColor = block.getColor();
                 block.setColorNow((int) Board.getColorMap().get(actualColor));
             }
         }

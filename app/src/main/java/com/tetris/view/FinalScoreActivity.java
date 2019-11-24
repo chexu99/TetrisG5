@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ public class FinalScoreActivity extends AppCompatActivity {
         updateScore();
         button = findViewById(R.id.restart_exit_button);
         if (score>250){
-            ((ImageButton) button).setImageResource(R.drawable.btn_volver);
+            button.setImageResource(R.drawable.btn_volver);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,7 +47,7 @@ public class FinalScoreActivity extends AppCompatActivity {
                 }
             });
         } else{
-            ((ImageButton) button).setImageResource(R.drawable.btn_exit);
+            button.setImageResource(R.drawable.btn_exit);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -93,6 +92,7 @@ public class FinalScoreActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Más suerte la proxima, paquete", Toast.LENGTH_LONG).show();
         }
         db.close();
+        cursor.close();
     }
 
     public void openMenuActivity() {

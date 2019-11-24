@@ -30,7 +30,7 @@ public class InitDBActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         vibe = (Vibrator) InitDBActivity.this.getSystemService(InitDBActivity.VIBRATOR_SERVICE);
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
-        campo_nombre = (EditText) findViewById(R.id.formulario);
+        campo_nombre = findViewById(R.id.formulario);
 
     }
 

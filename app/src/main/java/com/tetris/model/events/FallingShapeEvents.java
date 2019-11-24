@@ -7,6 +7,7 @@ public class FallingShapeEvents {
     private FallingShapeEvents(){}
 
     public static void makeNextShapeFalling() {
+        Board.setFallingShape(null);
         if(Board.getNextShape() == null)
             NextShapeEvents.createNextShape();
         Board.setFallingShape(Board.getNextShape());

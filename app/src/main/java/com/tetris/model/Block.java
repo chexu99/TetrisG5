@@ -1,7 +1,7 @@
 package com.tetris.model;
 
 
-public class Block extends Pixel {
+public class Block extends Pixel{
 
     private boolean falling;
 

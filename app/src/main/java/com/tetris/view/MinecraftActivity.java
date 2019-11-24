@@ -1,15 +1,18 @@
 package com.tetris.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tetris.R;
+import com.tetris.model.Block;
+import com.tetris.model.Board;
+import com.tetris.model.impl.CustomShape;
 import com.tetris.utils.Colors;
 
 import java.util.ArrayList;
@@ -31,8 +34,9 @@ public class MinecraftActivity extends AppCompatActivity {
     private ImageButton bCelda9;
     private List<ImageButton> celdas = new ArrayList<>();
     private Vibrator vibe;
-    private ImageButton bCancelar;
-    private ImageButton bCreate;
+
+    private boolean[][] positionLocator = new boolean[3][3];
+    private List<Block> blocksCustomShape = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class MinecraftActivity extends AppCompatActivity {
     }
 
     private void setUpButtonsFinal(){
-        bCancelar = findViewById(R.id.mine_cancel);
+        ImageButton bCancelar = findViewById(R.id.mine_cancel);
         bCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,14 +60,25 @@ public class MinecraftActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        bCreate = findViewById(R.id.mine_newshape);
+        ImageButton bCreate = findViewById(R.id.mine_newshape);
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: CREATE NEW SHAPE AND SHOW THE SHAPE
+                if (maxCeldas>3){
+                    vibe.vibrate(40);
+                    Toast.makeText(getApplicationContext(), "Debe coger un mínimo de 3 bloques", Toast.LENGTH_LONG).show();
+                }else{
+                    createCustomShape();
+                    openGameActivity();
+                }
+
             }
         });
+    }
+    private void openGameActivity() {
+        Board.getInstance().setGameMode(Board.GameMode.MODE_MINECRAFT);
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 
     private void setUpButtonsCeldas() {
@@ -233,7 +248,7 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void celdaEvent(ImageButton celda){
         int drawable = (Integer) celda.getTag();
-        if ((maxCeldas == 0) && (drawable == 0)){
+        if ((maxCeldas == 0) && (drawable == 0)){ //drawable == 0 is cell no selected
             Toast.makeText(getApplicationContext(), "Debe coger un máximo de 6 bloques", Toast.LENGTH_LONG).show();
         } else {
             chooseColor(celda);
@@ -270,10 +285,86 @@ public class MinecraftActivity extends AppCompatActivity {
         }
     }
 
+    private void isClicked(int drawable, int i){
+        int x = 4;
+        int y = -4;
+        if ((i == 1) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x);
+            block.setY(y);
+            positionLocator[0][0]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 2) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 1);
+            block.setY(y);
+            positionLocator[1][0]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 3) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 2);
+            block.setY(y);
+            positionLocator[2][0]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 4) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x);
+            block.setY(y + 1);
+            positionLocator[0][1]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 5) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 1);
+            block.setY(y + 1);
+            positionLocator[1][1]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 6) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 2);
+            block.setY(y + 1);
+            positionLocator[2][1]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 7) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x);
+            block.setY(y + 2);
+            positionLocator[0][2]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 8) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 1);
+            block.setY(y + 2);
+            positionLocator[1][2]  = true;
+            blocksCustomShape.add(block);
+        }
+        if ((i == 9) && (drawable != 0)) {
+            Block block = new Block();
+            block.setX(x + 2);
+            block.setY(y + 2);
+            positionLocator[2][2]  = true;
+            blocksCustomShape.add(block);
+        }
+    }
+
     private void createCustomShape(){
-        //TODO: hay que mergear con master o importarlo de algun modo
+        for (int i = 0; i < 9; i++) {
+            int drawable = (Integer) celdas.get(i).getTag();
+            isClicked(drawable,i + 1);
+        }
 
-
+        Board.getInstance().setMinecraftShape(new CustomShape(
+                Board.getInstance().getSpawnY(),
+                numColor,
+                blocksCustomShape,
+                positionLocator
+        ));
     }
 
 
@@ -289,7 +380,4 @@ public class MinecraftActivity extends AppCompatActivity {
         return numColor;
     }
 
-    public void setNumColor(int numColor) {
-        this.numColor = numColor;
-    }
 }

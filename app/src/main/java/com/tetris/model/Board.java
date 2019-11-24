@@ -4,7 +4,7 @@ import com.tetris.model.events.BlockedLinesEvents;
 import com.tetris.model.events.ColorChangesEvents;
 import com.tetris.model.events.FallingShapeEvents;
 import com.tetris.model.events.FastShapeEvents;
-import com.tetris.model.events.NextShapeEvents;
+import com.tetris.model.impl.CustomShape;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +19,8 @@ public class Board {
     public static final int BOARD_ROWS = 20;
 
     private static Board instance = null;
+
+    private CustomShape minecraftShape;
 
     private List<Block> blocks = new CopyOnWriteArrayList<>();
 
@@ -37,12 +39,21 @@ public class Board {
         GAME_OVER,
     }
 
+    private GameMode gameMode;
+
+    public enum GameMode {
+        MODE_ORIGINAL,
+        MODE_MINECRAFT,
+    }
+
     private static List<Actions> actionList = new CopyOnWriteArrayList<>();
 
     public enum Actions {
         DEAD_BLOCK,
         RESET_DEAD,
         COLLISION,
+        CUSTOM_SHAPE,
+        NORMAL_SHAPE
     }
 
     protected int spawnY = -4; //Move to nextShapeEvents ¿?
@@ -52,7 +63,7 @@ public class Board {
     private int deadBlockY = -2;
 
 
-    private static HashMap colorMap = new HashMap<Integer, Integer>();
+    private static HashMap<Integer, Integer> colorMap = new HashMap<>();
 
     //Board instance for use by other classes
     public static Board getInstance() {
@@ -72,17 +83,11 @@ public class Board {
 
     //FallingShape instance for use by other classes
     public static Shape getFallingShape() {
-        if (fallingShape == null) {
-            FallingShapeEvents.makeNextShapeFalling();
-        }
         return fallingShape;
     }
 
     //NextShape instance for use by other classes
     public static Shape getNextShape() {
-        if (nextShape == null) {
-            NextShapeEvents.createNextShape();
-        }
         return nextShape;
     }
 
@@ -99,9 +104,9 @@ public class Board {
 
         if (FastShapeEvents.checkFastShapeUpdate()) {
             if (fastShape == null) {
-                FastShapeEvents.createFastShape();
+                //FastShapeEvents.createFastShape();
             } else {//Update fast shape
-                FastShapeEvents.updateFastShape();
+                //FastShapeEvents.updateFastShape();
             }
         }
 
@@ -264,5 +269,21 @@ public class Board {
 
     public static Map getColorMap() {
         return colorMap;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public CustomShape getMinecraftShape() {
+        return minecraftShape;
+    }
+
+    public void setMinecraftShape(CustomShape minecraftShape) {
+        this.minecraftShape = minecraftShape;
     }
 }

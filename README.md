@@ -38,5 +38,5 @@ _Ejecutarlo la app_
   Seleccionar el modulo > Apply > Run  
 ```
 
-_Si todo ha funcionado deberiamos tener en el movil o emulador la aplicacion abierta_
+_Si nada ha fallado deberiamos tener en el movil o emulador la aplicacion abierta_
 

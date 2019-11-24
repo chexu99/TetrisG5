@@ -121,6 +121,26 @@ public class Colors {
         return drawableShape;
     }
 
+    public static BitmapDrawable customShapeTextureSelector(Resources res, int shape, boolean empty) { //Next shape texture creator
+        Bitmap shapeBitmap;
+
+        if (empty) {
+            shapeBitmap = BitmapFactory.decodeResource(res, R.drawable.block_custom_empty); //Select empty
+        } else {
+            shapeBitmap = BitmapFactory.decodeResource(res, R.drawable.block_custom_shape); //Select 1 block shape
+        }
+
+        shapeBitmap = Bitmap.createScaledBitmap(shapeBitmap, GameActivity.getPixelSize(), GameActivity.getPixelSize(), false); //Scale down image
+
+        BitmapDrawable drawableShape = new BitmapDrawable(res, shapeBitmap); //Create BitmapDrawable to be able to edit its color
+
+        int color = colorSelector((int) Board.getColorMap().get(shape)); //Get color according to the map in the board and get real color
+
+        drawableShape.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
+        return drawableShape;
+    }
+
     private static int colorSelector(int color) { //Color selector based on palette
         switch (UserSettings.getGamma()) {
             case 1:

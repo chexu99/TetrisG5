@@ -2,7 +2,6 @@ package com.tetris.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +20,9 @@ import com.tetris.view.layout_painting.BoardLayout;
 import com.tetris.view.layout_painting.FallingShapeLayout;
 import com.tetris.view.layout_painting.NextShapeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends Activity {
 
     boolean stopped = false;
@@ -38,11 +40,13 @@ public class GameActivity extends Activity {
     private static ImageView boardLayout;
     private static ImageView fallingShapeLayout;
     private static ImageView nextShapeLayout;
+    private static List<ImageView> customShapeLayouts;
     private static ImageView deadBlocksLayout;
 
     private BoardLayout boardLay;
     private FallingShapeLayout fallingLay;
-    private NextShapeLayout nextLay;
+    private NextShapeLayout nextLay; //Normal layout
+    private NextShapeLayout customLay; //CustomShape layout
     private BlockedBlocksLayout blockedLay;
 
     private TextView scoreText;
@@ -95,6 +99,18 @@ public class GameActivity extends Activity {
         nextShapeLayout = findViewById(R.id.next_shape);
         nextLay = new NextShapeLayout();
 
+        //Custom shape
+        customShapeLayouts = new ArrayList<>();
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda1));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda2));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda3));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda4));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda5));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda6));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda7));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda8));
+        customShapeLayouts.add((ImageView) findViewById(R.id.minecraft_celda9));
+        customLay = new NextShapeLayout();
 
         //DeadBlocks
         deadBlocksLayout = findViewById(R.id.dead_blocks);
@@ -163,7 +179,10 @@ public class GameActivity extends Activity {
                 boardLay.paintBlockArray(this.getResources());
                 //Update score
                 scoreText.setText(String.valueOf(Board.getInstance().getScore()));
+
+
             }
+
             if (a.equals(Board.Actions.DEAD_BLOCK)) {
                 blockedLay.paintBlockedBlocks(this.getResources());
                 Board.getInstance().setSquareGameOver(Board.getInstance().getSquareGameOver() + 2);
@@ -171,12 +190,17 @@ public class GameActivity extends Activity {
             if (a.equals(Board.Actions.RESET_DEAD)) {
                 blockedLay.deleteDeadBlocks();
             }
-            Board.getActionList().clear(); //Clear actions list
+            if (a.equals(Board.Actions.CUSTOM_SHAPE)) {
+                customLay.paintCustomShape(this.getResources());
+            }
+            if (a.equals(Board.Actions.NORMAL_SHAPE)) {
+                nextLay.paintNextShape(this.getResources());
+            }
+
         }
+        Board.getActionList().clear(); //Clear actions list
         //Paint fallingShape Layout
         fallingLay.paintFallingShape(this.getResources());
-        //Paint next shape on left side
-        nextLay.paintNextShape(this.getResources());
     }
 
 
@@ -239,6 +263,10 @@ public class GameActivity extends Activity {
 
     public static ImageView getNextShapeLayout() {
         return nextShapeLayout;
+    }
+
+    public static List<ImageView> getCustomShapeLayouts() {
+        return customShapeLayouts;
     }
 
     public static ImageView getDeadBlocksLayout() {
