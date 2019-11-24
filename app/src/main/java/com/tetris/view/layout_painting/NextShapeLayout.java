@@ -13,7 +13,7 @@ public class NextShapeLayout {
         /**
          * No need to do anything. But we require a constructor method in order to use this funcstions
          * without them being static. Also, it used to iniciate a canvas which was removed as it was
-         * no longer necessary
+         * no longer necessary.
          */
     }
 

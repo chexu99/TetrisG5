@@ -68,7 +68,7 @@ public class RankingActivity extends AppCompatActivity {
         cursor.close();
     }
 
-    private void getPlayerList() { //TODO: se necesita para algo?
+    private void getPlayerList() {
         listaInfo = new ArrayList<>();
         for (int i = 0; i < listaPlayers.size(); i++) {
             listaInfo.add(listaPlayers.get(i).getNombre() + " - " + listaPlayers.get(i).getScore());
