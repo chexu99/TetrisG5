@@ -64,8 +64,14 @@ public class MinecraftActivity extends AppCompatActivity {
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createCustomShape();
-                openGameActivity();
+                if (maxCeldas>3){
+                    vibe.vibrate(40);
+                    Toast.makeText(getApplicationContext(), "Debe coger un mínimo de 3 bloques", Toast.LENGTH_LONG).show();
+                }else{
+                    createCustomShape();
+                    openGameActivity();
+                }
+
             }
         });
     }
