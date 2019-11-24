@@ -18,11 +18,12 @@ public class NextShapeEvents {
                 index = r.nextInt(8);
                 if (index >= 7) { //Tell view next shape is going to be a custom one
                     Board.getActionList().add(Board.Actions.CUSTOM_SHAPE);
+                    Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(Board.getInstance().getMinecraftShape().getBlocks().get(0).getColor())));
                 } else {
                     Board.getActionList().add(Board.Actions.NORMAL_SHAPE);
+                    Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
                 }
 
-                Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
                 break;
 
             case MODE_ORIGINAL:

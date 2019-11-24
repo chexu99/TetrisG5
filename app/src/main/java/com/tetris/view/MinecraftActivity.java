@@ -355,7 +355,7 @@ public class MinecraftActivity extends AppCompatActivity {
 
         Board.getInstance().setMinecraftShape(new CustomShape(
                 Board.getInstance().getSpawnY(),
-                3, //TODO: change
+                numColor,
                 blocksCustomShape,
                 positionLocator
         ));
@@ -374,7 +374,4 @@ public class MinecraftActivity extends AppCompatActivity {
         return numColor;
     }
 
-    public void setNumColor(int numColor) {
-        this.numColor = numColor;
-    }
 }
