@@ -16,16 +16,19 @@ public class NextShapeEvents {
         switch (Board.getInstance().getGameMode()){
             case MODE_MINECRAFT:
                 index = r.nextInt(8);
-                //index = 7; //TODO: testing custom shape
-                if(index == 7){
-                    System.out.println("aki");
+                if (index >= 7) { //Tell view next shape is going to be a custom one
+                    Board.getActionList().add(Board.Actions.CUSTOM_SHAPE);
+                } else {
+                    Board.getActionList().add(Board.Actions.NORMAL_SHAPE);
                 }
+
                 Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
                 break;
 
             case MODE_ORIGINAL:
             default:
                 index = r.nextInt(7);
+                Board.getActionList().add(Board.Actions.NORMAL_SHAPE);
                 Board.setNextShape(Shape.randomShape(index, Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(index)));
                 break;
 

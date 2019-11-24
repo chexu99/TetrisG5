@@ -4,7 +4,6 @@ import com.tetris.model.events.BlockedLinesEvents;
 import com.tetris.model.events.ColorChangesEvents;
 import com.tetris.model.events.FallingShapeEvents;
 import com.tetris.model.events.FastShapeEvents;
-import com.tetris.model.events.NextShapeEvents;
 import com.tetris.model.impl.CustomShape;
 
 import java.util.ArrayList;
@@ -53,6 +52,8 @@ public class Board {
         DEAD_BLOCK,
         RESET_DEAD,
         COLLISION,
+        CUSTOM_SHAPE,
+        NORMAL_SHAPE
     }
 
     protected int spawnY = -4; //Move to nextShapeEvents ¿?
@@ -82,17 +83,11 @@ public class Board {
 
     //FallingShape instance for use by other classes
     public static Shape getFallingShape() {
-        if (fallingShape == null) {
-            FallingShapeEvents.makeNextShapeFalling();
-        }
         return fallingShape;
     }
 
     //NextShape instance for use by other classes
     public static Shape getNextShape() {
-        if (nextShape == null) {
-            NextShapeEvents.createNextShape();
-        }
         return nextShape;
     }
 

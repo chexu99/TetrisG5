@@ -29,12 +29,12 @@ public class GraphicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graphic);
         vibe = (Vibrator) GraphicActivity.this.getSystemService(GraphicActivity.VIBRATOR_SERVICE);
 
-        highButton = (RadioButton) findViewById(R.id.high_radioButton);
-        mediumButton = (RadioButton) findViewById(R.id.medium_radioButton);
-        lowButton = (RadioButton) findViewById(R.id.low_radioButton);
+        highButton = findViewById(R.id.high_radioButton);
+        mediumButton = findViewById(R.id.medium_radioButton);
+        lowButton = findViewById(R.id.low_radioButton);
         settingDefault();
 
-        myRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        myRadioGroup = findViewById(R.id.radioGroup);
         myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

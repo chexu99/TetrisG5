@@ -1,14 +1,13 @@
 package com.tetris.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
 import com.tetris.model.Block;
@@ -19,7 +18,7 @@ import com.tetris.utils.Colors;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinecraftActivity extends AppCompatActivity implements Cloneable {
+public class MinecraftActivity extends AppCompatActivity {
 
 
     private int numColor = 2;
@@ -36,7 +35,7 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
     private List<ImageButton> celdas = new ArrayList<>();
     private Vibrator vibe;
 
-
+    private boolean[][] positionLocator = new boolean[3][3];
     private List<Block> blocksCustomShape = new ArrayList<>();
 
     @Override
@@ -65,7 +64,6 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: CREATE NEW SHAPE AND SHOW THE SHAPE
                 createCustomShape();
                 openGameActivity();
             }
@@ -283,59 +281,68 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
 
     private void isClicked(int drawable, int i){
         int x = 4;
-        int y = 1;
-        if (i==1 && drawable!=0){
+        int y = -4;
+        if ((i == 1) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x);
             block.setY(y);
+            positionLocator[0][0]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==2 && drawable!=0){
+        if ((i == 2) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 1);
             block.setY(y);
+            positionLocator[1][0]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==3 && drawable!=0){
+        if ((i == 3) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 2);
             block.setY(y);
+            positionLocator[2][0]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==4 && drawable!=0){
+        if ((i == 4) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x);
             block.setY(y + 1);
+            positionLocator[0][1]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==5 && drawable!=0){
+        if ((i == 5) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 1);
             block.setY(y + 1);
+            positionLocator[1][1]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==6 && drawable!=0){
+        if ((i == 6) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 2);
             block.setY(y + 1);
+            positionLocator[2][1]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==7 && drawable!=0){
+        if ((i == 7) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x);
             block.setY(y + 2);
+            positionLocator[0][2]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==8 && drawable!=0){
+        if ((i == 8) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 1);
             block.setY(y + 2);
+            positionLocator[1][2]  = true;
             blocksCustomShape.add(block);
         }
-        if (i==9 && drawable!=0){
+        if ((i == 9) && (drawable != 0)) {
             Block block = new Block();
             block.setX(x + 2);
             block.setY(y + 2);
+            positionLocator[2][2]  = true;
             blocksCustomShape.add(block);
         }
     }
@@ -349,7 +356,8 @@ public class MinecraftActivity extends AppCompatActivity implements Cloneable {
         Board.getInstance().setMinecraftShape(new CustomShape(
                 Board.getInstance().getSpawnY(),
                 3, //TODO: change
-                blocksCustomShape
+                blocksCustomShape,
+                positionLocator
         ));
     }
 

@@ -8,10 +8,14 @@ import java.util.List;
 
 public class CustomShape extends Shape {
 
-    public CustomShape(int spawnY, int color, List<Block> blocksList){
+    private boolean[][] positionsLocator = new boolean[3][3];
+
+    public CustomShape(int spawnY, int color, List<Block> blocksList, boolean[][] positions){
         super(3, 3, spawnY+1);
 
         blocks = new ArrayList<>(blocksList);
+
+        positionsLocator = positions;
 
         rotationBlock = blocks.get(1);
         rotationCycle = 4;
@@ -24,23 +28,28 @@ public class CustomShape extends Shape {
     public CustomShape(CustomShape shape, int spawnY, int color){
         super(3, 3, spawnY+1);
 
-        this.blocks = new ArrayList<>(shape.blocks);
+        blocks.clear();
 
-        for (Block block : blocks) {
-            block.setY(block.getY() + spawnY);
+        for (Block block : shape.blocks) {
+            Block newBlock = new Block();
+            newBlock.setX(block.getX());
+            newBlock.setY(block.getY());
+            newBlock.setColor(block.getColor());
+            newBlock.setColorNow(block.getColorNow());
+            blocks.add(newBlock);
         }
 
         rotationBlock = blocks.get(1);
         rotationCycle = 4;
 
         for (Block block : blocks) {
+            block.setFalling(true);
             block.setColorNow(color);
         }
     }
 
     @Override
     public List<Block> getBlocks() {
-        //doRotation();
         for (Block block : blocks) {
             block.setFalling(true);
             block.setColor(block.getColorNow());
@@ -60,4 +69,11 @@ public class CustomShape extends Shape {
         doRotation();
     }
 
+    public boolean[][] getPositionsLocator() {
+        return positionsLocator;
+    }
+
+    public void setPositionsLocator(boolean[][] positionsLocator) {
+        this.positionsLocator = positionsLocator;
+    }
 }

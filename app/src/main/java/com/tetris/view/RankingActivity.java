@@ -1,6 +1,5 @@
 package com.tetris.view;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class RankingActivity extends AppCompatActivity {
             }
         });
 
-        LRanking = (ListView) findViewById(R.id.L_ranking);
+        LRanking = findViewById(R.id.L_ranking);
 
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         checkPlayerList();
@@ -66,6 +65,7 @@ public class RankingActivity extends AppCompatActivity {
             listaPlayers.add(player);
         }
         getPlayerList();
+        cursor.close();
     }
 
     private void getPlayerList() { //TODO: se necesita para algo?
