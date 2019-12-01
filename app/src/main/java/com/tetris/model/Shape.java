@@ -2,6 +2,7 @@ package com.tetris.model;
 
 import android.os.SystemClock;
 
+import com.tetris.model.impl.CustomShape;
 import com.tetris.model.impl.ShapeCube;
 import com.tetris.model.impl.ShapeI;
 import com.tetris.model.impl.ShapeL;
@@ -69,8 +70,14 @@ public class Shape extends Pixel {
             case 5:
                 return new ShapeZInverted(spawnY, color);
             case 6:
-            default:
                 return new ShapeT(spawnY, color);
+            case 7:
+            default:
+                return new CustomShape(
+                        Board.getInstance().getMinecraftShape(),
+                        spawnY,
+                        color
+                );
         }
     }
 

@@ -6,8 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import android.os.Vibrator;
+
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,22 +39,24 @@ public class InitDBActivity extends AppCompatActivity   {
     String username;
     EditText campo_nombre;
     Cursor cursor;
-    static final int REQUEST_IMAGE_CAPTURE = 20;
-    private final String carpeta_raiz="document/";
-    private final String ruta_imagen=carpeta_raiz+"primary:Pictures/.thumbnails/";
+    static final int REQUEST_IMAGE_CAPTURE = 20;  
     String absolutePath="";
+    Vibrator vibe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MultiDex.install(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        vibe = (Vibrator) InitDBActivity.this.getSystemService(InitDBActivity.VIBRATOR_SERVICE);
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
-        campo_nombre = (EditText) findViewById(R.id.formulario);
+        campo_nombre = findViewById(R.id.formulario);
 
     }
 
     public void onClick(View view) {
+        vibe.vibrate(40);
         usernameComparator();
     }
 

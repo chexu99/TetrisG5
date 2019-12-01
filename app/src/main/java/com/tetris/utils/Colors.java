@@ -121,6 +121,26 @@ public class Colors {
         return drawableShape;
     }
 
+    public static BitmapDrawable customShapeTextureSelector(Resources res, int shape, boolean empty) { //Next shape texture creator
+        Bitmap shapeBitmap;
+
+        if (empty) {
+            shapeBitmap = BitmapFactory.decodeResource(res, R.drawable.block_custom_empty); //Select empty
+        } else {
+            shapeBitmap = BitmapFactory.decodeResource(res, R.drawable.block_custom_shape); //Select 1 block shape
+        }
+
+        shapeBitmap = Bitmap.createScaledBitmap(shapeBitmap, GameActivity.getPixelSize(), GameActivity.getPixelSize(), false); //Scale down image
+
+        BitmapDrawable drawableShape = new BitmapDrawable(res, shapeBitmap); //Create BitmapDrawable to be able to edit its color
+
+        int color = colorSelector((int) Board.getColorMap().get(shape)); //Get color according to the map in the board and get real color
+
+        drawableShape.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
+        return drawableShape;
+    }
+
     private static int colorSelector(int color) { //Color selector based on palette
         switch (UserSettings.getGamma()) {
             case 1:
@@ -216,6 +236,84 @@ public class Colors {
             case 6:
             default:
                 return BitmapFactory.decodeResource(res, R.drawable.block_t_shape);
+        }
+    }
+
+    public static int colorSelectorID(int color) { //Color selector based on palette
+        switch (UserSettings.getGamma()) {
+            case 1:
+                return marvelPaletteID(color);
+            case 2:
+                return planetsPaletteID(color);
+            case 0:
+            default:
+                return originalPaletteID(color);
+        }
+    }
+
+    private static int originalPaletteID(int color) { //Original palette IDs
+        switch (color) {
+            case 0:
+                return R.drawable.original_block_blue;
+            case 1:
+                return R.drawable.original_block_red;
+            case 2:
+                return R.drawable.original_block_purple;
+            case 3:
+                return R.drawable.original_block_white;
+            case 4:
+                return R.drawable.original_block_cyan;
+            case 5:
+                return R.drawable.original_block_lime;
+            case 6:
+                return R.drawable.original_block_yellow;
+            case 7: //For short shape
+            default:
+                return R.drawable.original_block_magenta;
+        }
+    }
+
+    private static int marvelPaletteID(int color) { //Marvel palette IDs
+        switch (color) {
+            case 0:
+                return R.drawable.marvel_america;
+            case 1:
+                return R.drawable.marvel_ironman;
+            case 2:
+                return R.drawable.marvel_spiderman;
+            case 3:
+                return R.drawable.marvel_hulk;
+            case 4:
+                return R.drawable.marvel_loki;
+            case 5:
+                return R.drawable.marvel_thor;
+            case 6:
+                return R.drawable.marvel_thanos;
+            case 7: //For short shape
+            default:
+                return R.drawable.marvel_wakanda;
+        }
+    }
+
+    private static int planetsPaletteID(int color) { //Planets palette IDs
+        switch (color) {
+            case 0:
+                return R.drawable.planets_neptune;
+            case 1:
+                return R.drawable.planets_mars;
+            case 2:
+                return R.drawable.planets_jupiter;
+            case 3:
+                return R.drawable.planets_uranus;
+            case 4:
+                return R.drawable.planets_earth;
+            case 5:
+                return R.drawable.planets_venus;
+            case 6:
+                return R.drawable.planets_sun;
+            case 7: //For short shape
+            default:
+                return R.drawable.planets_mercury;
         }
     }
 

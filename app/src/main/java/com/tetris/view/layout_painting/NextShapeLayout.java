@@ -1,10 +1,6 @@
 package com.tetris.view.layout_painting;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.tetris.model.Board;
@@ -14,25 +10,36 @@ import com.tetris.view.GameActivity;
 public class NextShapeLayout {
 
     public NextShapeLayout(){
-        nextShapeLayoutInit();
+        /**
+         * No need to do anything. But we require a constructor method in order to use this funcstions
+         * without them being static. Also, it used to iniciate a canvas which was removed as it was
+         * no longer necessary.
+         */
     }
 
-    private Bitmap nextShapeBitmap;
-    private Canvas nextShapeCanvas;
-
-    public void nextShapeLayoutInit(){
-        nextShapeBitmap = Bitmap.createBitmap((int) (3 * GameActivity.getPixelSize() * 0.5),
-                (int) (4 * GameActivity.getPixelSize() * 0.5), Bitmap.Config.ARGB_8888);
-        nextShapeCanvas = new Canvas(nextShapeBitmap);
-        nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-    }
 
     public void paintNextShape(Resources res) {
-        nextShapeCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        for (int i = 0; i < 9; i++) {
+            GameActivity.getCustomShapeLayouts().get(i).setBackgroundDrawable(Colors.customShapeTextureSelector(res, 0, true));
+        }
 
         int color = Board.getNextShape().getBlocks().get(0).getColor(); //Color of first block
         BitmapDrawable bitmapShape = Colors.nextShapeTextureSelector(res, color);
 
         GameActivity.getNextShapeLayout().setBackgroundDrawable(bitmapShape);
+    }
+
+    public void paintCustomShape(Resources res) {
+        GameActivity.getNextShapeLayout().setBackgroundDrawable(Colors.customShapeTextureSelector(res, 0, true));
+
+        int color = Board.getNextShape().getBlocks().get(0).getColor(); //Color of first block
+
+        for (int i = 0; i < 9; i++) {
+            boolean empty = Board.getInstance().getMinecraftShape().getPositionsLocator()[i % 3][i / 3];
+
+            BitmapDrawable bitmapShape = Colors.customShapeTextureSelector(res, color, !empty);
+
+            GameActivity.getCustomShapeLayouts().get(i).setBackgroundDrawable(bitmapShape);
+        }
     }
 }

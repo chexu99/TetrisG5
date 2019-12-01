@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,17 +26,20 @@ public class FinalScoreActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ConexionSQLiteHelper conn;
     Integer score;
+    private Vibrator vibe;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_score);
+        vibe = (Vibrator) FinalScoreActivity.this.getSystemService(FinalScoreActivity.VIBRATOR_SERVICE);
+
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         updateScore();
         button = findViewById(R.id.restart_exit_button);
         if (score>250){
-            ((ImageButton) button).setImageResource(R.drawable.btn_volver);
+            button.setImageResource(R.drawable.btn_volver);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -44,7 +47,7 @@ public class FinalScoreActivity extends AppCompatActivity {
                 }
             });
         } else{
-            ((ImageButton) button).setImageResource(R.drawable.btn_exit);
+            button.setImageResource(R.drawable.btn_exit);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,14 +92,17 @@ public class FinalScoreActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Más suerte la proxima, paquete", Toast.LENGTH_LONG).show();
         }
         db.close();
+        cursor.close();
     }
 
     public void openMenuActivity() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 
     public void openRanking() {
+        vibe.vibrate(40);
         Intent intent = new Intent(this, RankingActivity.class);
         startActivity(intent);
     }
