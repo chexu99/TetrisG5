@@ -104,9 +104,9 @@ public class Board {
 
         if (FastShapeEvents.checkFastShapeUpdate()) {
             if (fastShape == null) {
-                //FastShapeEvents.createFastShape();
+                FastShapeEvents.createFastShape();
             } else {//Update fast shape
-                //FastShapeEvents.updateFastShape();
+                FastShapeEvents.updateFastShape();
             }
         }
 
