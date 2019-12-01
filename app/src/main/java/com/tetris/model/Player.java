@@ -4,11 +4,14 @@ public class Player {
     Integer id;
     String nombre;
     Integer score;
+    byte[] img;
 
-    public Player(Integer id, String nombre, Integer score) {
+
+    public Player(Integer id, String nombre, Integer score, byte[] img) {
         this.id = id;
         this.nombre = nombre;
         this.score = score;
+        this.img=img;
     }
 
     public Player() {
@@ -37,4 +40,13 @@ public class Player {
     public void setScore(Integer score) {
         this.score = score;
     }
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+
+
 }
