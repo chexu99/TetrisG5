@@ -30,6 +30,8 @@ public class Board {
 
     private int score = 0;
 
+
+
     private GameStatus gameStatus;
 
     public enum GameStatus {
@@ -246,6 +248,7 @@ public class Board {
     public int getScore() {
         return score;
     }
+
 
     public int getDeadBlockY() {
         return deadBlockY;

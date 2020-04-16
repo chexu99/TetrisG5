@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.tetris.R;
 import com.tetris.model.Board;
+import com.tetris.model.events.FastShapeEvents;
 import com.tetris.model.events.MovementEvents;
 import com.tetris.view.layout_painting.BlockedBlocksLayout;
 import com.tetris.view.layout_painting.BoardLayout;
@@ -50,6 +52,9 @@ public class GameActivity extends Activity {
     private BlockedBlocksLayout blockedLay;
 
     private TextView scoreText;
+    private TextView crono;
+    private ImageButton pausa;
+    private boolean paused;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -61,10 +66,10 @@ public class GameActivity extends Activity {
                 paintGame(); //Paints game board
                 handler.removeCallbacks(this);
                 handler.postDelayed(this, speed);
-            } else {
-                onStop();
-            }
+                setCountdown();
+                pausa = findViewById(R.id.pauseButton);
 
+            }
         }
     };
 
@@ -94,6 +99,10 @@ public class GameActivity extends Activity {
         //Score
         ConstraintLayout scoreLayout = findViewById(R.id.top_board);
         scoreText =  findViewById(R.id.score_text_view);
+
+        //Countdown
+        crono= findViewById(R.id.countdown);
+
 
         //Next shape
         nextShapeLayout = findViewById(R.id.next_shape);
@@ -171,6 +180,21 @@ public class GameActivity extends Activity {
         handler.postDelayed(runnable, speed);
     }
 
+
+    public void setCountdown(){
+         int limitTime;
+         int cTime;
+         int time, auxTime;
+         limitTime= (int) FastShapeEvents.getFastShapeTimer()/1000;//20
+         auxTime= (int) FastShapeEvents.getLastFastShapeUpdate()/1000;
+         cTime=(int) SystemClock.uptimeMillis() /1000;
+         time= cTime-auxTime;
+         if (time>20){
+             time=20;
+         }
+         crono.setText(String.valueOf(limitTime-time));
+
+    }
     //Painting methods
     private void paintGame() {
         for (Board.Actions a : Board.getActionList()) {
@@ -202,6 +226,8 @@ public class GameActivity extends Activity {
         //Paint fallingShape Layout
         fallingLay.paintFallingShape(this.getResources());
     }
+
+
 
 
     @Override

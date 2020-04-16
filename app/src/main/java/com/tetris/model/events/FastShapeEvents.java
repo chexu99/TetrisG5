@@ -12,6 +12,15 @@ public class FastShapeEvents {
     private static long lastFastShapeUpdate = SystemClock.uptimeMillis();
     private static long fastShapeTimer = 20000;
 
+
+    public static long getFastShapeTimer() {
+        return fastShapeTimer;
+    }
+
+    public static long getLastFastShapeUpdate(){
+        return lastFastShapeUpdate;
+    }
+
     public static void createFastShape(){
         Board.setFastShape(new ShapeShort(
                 Board.getInstance().getSpawnY(), (int) Board.getColorMap().get(7)
