@@ -53,8 +53,7 @@ public class GameActivity extends Activity {
 
     private TextView scoreText;
     private TextView crono;
-    private ImageButton pausa;
-    private boolean paused;
+
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -67,8 +66,10 @@ public class GameActivity extends Activity {
                 handler.removeCallbacks(this);
                 handler.postDelayed(this, speed);
                 setCountdown();
-                pausa = findViewById(R.id.pauseButton);
 
+
+            }else{
+                onStop();
             }
         }
     };
@@ -101,7 +102,7 @@ public class GameActivity extends Activity {
         scoreText =  findViewById(R.id.score_text_view);
 
         //Countdown
-        crono= findViewById(R.id.countdown);
+        crono= findViewById(R.id.crono);
 
 
         //Next shape
