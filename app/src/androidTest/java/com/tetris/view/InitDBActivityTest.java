@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 // TDD for hard mode
 public class InitDBActivityTest {
 
-
     @Rule
     public IntentsTestRule<InitDBActivity> intentsRule =
             new IntentsTestRule<>(InitDBActivity.class);
@@ -32,6 +31,5 @@ public class InitDBActivityTest {
         onView(withId(R.id.hardmode_switch)).perform(click());
         assertEquals(100, Shape.updateInterval);
     }
-
 
 }

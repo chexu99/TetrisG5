@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
+import com.tetris.model.Shape;
 import com.tetris.utils.UserSettings;
 
 public class GraphicActivity extends AppCompatActivity {
@@ -22,6 +25,8 @@ public class GraphicActivity extends AppCompatActivity {
     private RadioButton mediumButton;
     private RadioButton lowButton;
     private Vibrator vibe;
+    private Switch hardMode;
+    private static boolean isOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class GraphicActivity extends AppCompatActivity {
         highButton = findViewById(R.id.high_radioButton);
         mediumButton = findViewById(R.id.medium_radioButton);
         lowButton = findViewById(R.id.low_radioButton);
+        hardMode = findViewById(R.id.hardmode_switch);
         settingDefault();
 
         myRadioGroup = findViewById(R.id.radioGroup);
@@ -50,6 +56,19 @@ public class GraphicActivity extends AppCompatActivity {
                         UserSettings.setGraphicsResolution(3);
                         break;
                 }
+            }
+        });
+
+        hardMode.setChecked(isOn);
+        hardMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+            boolean isChecked) {
+                isOn = isChecked;
+                if(isChecked)
+                    Shape.updateInterval = 100;
+                else
+                    Shape.updateInterval = 300;
             }
         });
 
@@ -77,6 +96,10 @@ public class GraphicActivity extends AppCompatActivity {
                 lowButton.setChecked(true);
                 break;
         }
+    }
+
+    private void changeDifficulty(){
+
     }
 
     public void openMenuActivity() {
