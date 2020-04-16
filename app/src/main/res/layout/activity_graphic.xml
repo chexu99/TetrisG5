@@ -13,40 +13,40 @@
         android:layout_height="174dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.265">
+        app:layout_constraintVertical_bias="0.328">
 
         <RadioButton
             android:id="@+id/high_radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:scaleType="fitXY"
             android:buttonTint="#9e12bf"
-            android:textColor="#ffffff"
-            android:text="HIGH"/>
+            android:scaleType="fitXY"
+            android:text="HIGH"
+            android:textColor="#ffffff" />
 
         <RadioButton
             android:id="@+id/medium_radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:scaleType="fitXY"
             android:buttonTint="#9e12bf"
-            android:textColor="#ffffff"
-            android:text="MEDIUM"/>
+            android:scaleType="fitXY"
+            android:text="MEDIUM"
+            android:textColor="#ffffff" />
 
         <RadioButton
             android:id="@+id/low_radioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:scaleType="fitXY"
             android:buttonTint="#9e12bf"
-            android:textColor="#ffffff"
-            android:text="LOW"/>
+            android:scaleType="fitXY"
+            android:text="LOW"
+            android:textColor="#ffffff" />
 
     </RadioGroup>
 
@@ -54,12 +54,33 @@
         android:id="@+id/ok_button"
         android:layout_width="192dp"
         android:layout_height="48dp"
-        android:src="@drawable/btn_volver"
-        android:scaleType="fitXY"
         android:background="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.564" />
+
+    <Switch
+        android:id="@+id/hardmode_switch"
+        android:layout_width="153dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginLeft="129dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="129dp"
+        android:layout_marginRight="129dp"
+        android:layout_marginBottom="16dp"
+        android:text="Modo Dificil"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/ok_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@ public class Shape extends Pixel {
     protected int rotationCycle; //Number of cycles the shape has
     protected int rotation; //Rotation cycle we are in
 
-    protected long updateInterval = 300; //Time a normal shape needs to fall one block
+    public static long updateInterval = 300; //Time a normal shape needs to fall one block
 
     //Constructors
     //Shapeless shape
