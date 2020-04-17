@@ -55,6 +55,10 @@ public class GameActivity extends Activity {
     private TextView crono;
 
 
+
+
+    private ImageButton home;
+
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -161,6 +165,15 @@ public class GameActivity extends Activity {
                 MovementEvents.checkAndMoveDown();
             }
         });
+        //Home button
+        home = findViewById(R.id.homeButton);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onStop();
+                openMenu();
+            }
+        });
     }
 
     private void setUpMusic(){
@@ -181,6 +194,10 @@ public class GameActivity extends Activity {
         handler.postDelayed(runnable, speed);
     }
 
+    public void openMenu() {
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+    }
 
     public void setCountdown(){
          int limitTime;

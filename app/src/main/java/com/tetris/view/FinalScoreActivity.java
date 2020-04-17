@@ -38,7 +38,7 @@ public class FinalScoreActivity extends AppCompatActivity {
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         updateScore();
         button = findViewById(R.id.restart_exit_button);
-        if (score>250){
+
             button.setImageResource(R.drawable.btn_volver);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -46,19 +46,7 @@ public class FinalScoreActivity extends AppCompatActivity {
                     openMenuActivity();
                 }
             });
-        } else{
-            button.setImageResource(R.drawable.btn_exit);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
 
-                }
-            });
-        }
 
         button2 = findViewById(R.id.btnranking);
 
