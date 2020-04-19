@@ -21,6 +21,14 @@ public class BlockedLinesEvents {
         return false;
     }
 
+    public static long getLastDeadLineUpdate() {
+        return lastDeadLineUpdate;
+    }
+
+    public static long getBlockLinesTimer() {
+        return blockLinesTimer;
+    }
+
     public static void resetTimer() {
         lastDeadLineUpdate = SystemClock.uptimeMillis();
     }

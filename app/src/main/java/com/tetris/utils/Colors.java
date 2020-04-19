@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.SystemClock;
 
 import com.tetris.R;
 import com.tetris.model.Board;
+import com.tetris.model.events.BlockedLinesEvents;
 import com.tetris.view.GameActivity;
 
 import static android.graphics.Color.parseColor;
@@ -95,7 +97,17 @@ public class Colors {
     }
 
     public static Bitmap blockedTexture(Resources res) { //Blocked blocks textures
-        switch (UserSettings.getGamma()) {
+        Bitmap TexturasBloqueos[];
+        TexturasBloqueos= new Bitmap[3];
+        TexturasBloqueos[0]= BitmapFactory.decodeResource(res, R.drawable.original_blocked);
+        TexturasBloqueos[1]= BitmapFactory.decodeResource(res, R.drawable.marvel_blocked);
+        TexturasBloqueos[2]= BitmapFactory.decodeResource(res, R.drawable.planets_blocked);
+        int number = (int) Math.floor(Math.random()*3);//numero aleatoria entre 0 y 2
+        //en funcion del tiempo cambio number
+        if (SystemClock.uptimeMillis() - BlockedLinesEvents.getLastDeadLineUpdate() > BlockedLinesEvents.getBlockLinesTimer()){
+            number= (int) Math.floor(Math.random()*3);
+        }
+        switch (number) {
             case 1:
                 return BitmapFactory.decodeResource(res, R.drawable.marvel_blocked);
             case 2:
@@ -105,7 +117,9 @@ public class Colors {
                 return BitmapFactory.decodeResource(res, R.drawable.original_blocked);
 
         }
+        
     }
+
 
     public static BitmapDrawable nextShapeTextureSelector(Resources res, int shape) { //Next shape texture creator
         Bitmap shapeBitmap = shapeSelector(res, shape); //Select base bitmap according to the shape
