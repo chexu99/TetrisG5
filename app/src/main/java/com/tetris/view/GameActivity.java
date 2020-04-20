@@ -54,6 +54,9 @@ public class GameActivity extends Activity {
     private TextView scoreText;
     private TextView crono;
 
+    private boolean playing;
+    private boolean homeClicked;
+
 
 
 
@@ -78,6 +81,9 @@ public class GameActivity extends Activity {
         }
     };
 
+    public GameActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +96,8 @@ public class GameActivity extends Activity {
         setUpMusic();
 
         gameInit();
+
+
     }
 
     private void setUpLayouts() {
@@ -132,6 +140,8 @@ public class GameActivity extends Activity {
 
     }
 
+
+
     private void setUpButtons() {
         //MoveRight button
         ImageButton despDer = findViewById(R.id.mvRight);
@@ -166,16 +176,26 @@ public class GameActivity extends Activity {
             }
         });
         //Home button
+        homeClicked=false;
         home = findViewById(R.id.homeButton);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onStop();
+                sethomeClicked(true);
                 openMenu();
+
             }
         });
+
+    }
+    public void sethomeClicked(boolean b){
+        this.homeClicked=b;
     }
 
+    public boolean gethomeClicked(){
+        return homeClicked;
+    }
     private void setUpMusic(){
         mp = MediaPlayer.create(this,R.raw.musica);
         mp.setLooping(true);
@@ -198,6 +218,10 @@ public class GameActivity extends Activity {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
+
+
+
+
 
     public void setCountdown(){
          int limitTime;
@@ -273,6 +297,7 @@ public class GameActivity extends Activity {
         }
     }
 
+    public boolean getPlaying(){return playing= true;}
     public static int getBoardHeight() {
         return boardHeight;
     }
