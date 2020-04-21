@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameActivity extends Activity {
-
+    boolean music= true;
     boolean stopped = false;
 
     protected MediaPlayer mp;
@@ -57,7 +57,7 @@ public class GameActivity extends Activity {
 
 
 
-    private ImageButton home;
+    private ImageButton home,pausebutton;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -172,6 +172,20 @@ public class GameActivity extends Activity {
             public void onClick(View v) {
                 onStop();
                 openMenu();
+            }
+        });
+        //pause music button
+        pausebutton = findViewById(R.id.pauseButton);
+        pausebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (music){
+                    mp.pause();
+                    music=false;
+                }else{
+                    mp.start();
+                    music=true;
+                }
             }
         });
     }
