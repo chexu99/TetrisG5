@@ -8,13 +8,14 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
+import com.tetris.view.MenuActivity;
 import com.tetris.R;
 import com.tetris.utils.UserSettings;
 
 public class GammaActivity extends Activity {
 
     private Vibrator vibe;
+    public  boolean idiom=MenuActivity.idiom ;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,11 @@ public class GammaActivity extends Activity {
             public void onClick(View v) {
                 UserSettings.setGamma(0);
                 vibe.vibrate(40);
-                Toast.makeText(getApplicationContext(), "Paleta original", Toast.LENGTH_LONG).show();
+                if(idiom) {
+                    Toast.makeText(getApplicationContext(), "Paleta original", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Original palette", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -38,7 +43,11 @@ public class GammaActivity extends Activity {
             marvel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Son necesarios 500 puntos", Toast.LENGTH_LONG).show();
+                    if(idiom) {
+                        Toast.makeText(getApplicationContext(), "Son necesarios 500 puntos", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "You need 500 points", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -49,7 +58,11 @@ public class GammaActivity extends Activity {
                 public void onClick(View v) {
                     UserSettings.setGamma(1);
                     vibe.vibrate(40);
-                    Toast.makeText(getApplicationContext(), "Paleta de marvel", Toast.LENGTH_LONG).show();
+                    if(idiom) {
+                        Toast.makeText(getApplicationContext(), "Paleta de marvel", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Marvel palette", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
@@ -60,7 +73,11 @@ public class GammaActivity extends Activity {
             planets.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Son necesarios 1000 puntos", Toast.LENGTH_LONG).show();
+                    if(idiom) {
+                        Toast.makeText(getApplicationContext(), "Son necesarios 1000 puntos", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "You need 1000 points", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -71,13 +88,21 @@ public class GammaActivity extends Activity {
                 public void onClick(View v) {
                     UserSettings.setGamma(2);
                     vibe.vibrate(40);
-                    Toast.makeText(getApplicationContext(), "Paleta de planetas", Toast.LENGTH_LONG).show();
+                    if(idiom) {
+                        Toast.makeText(getApplicationContext(), "Paleta de planetas", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Planets palette", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
 
 
         ImageButton btn_return = findViewById(R.id.return_back);
+        if(!idiom){
+            btn_return.setImageResource(R.drawable.btn_return);
+        }
+
         btn_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

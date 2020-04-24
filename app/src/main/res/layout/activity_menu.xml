@@ -10,12 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="299dp"
-        android:layout_height="419dp"
+        android:layout_height="480dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83">
+        app:layout_constraintVertical_bias="0.95">
 
         <ImageButton
             android:id="@+id/new_game_button"
@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.045" />
+            app:layout_constraintVertical_bias="0.065" />
 
         <ImageButton
             android:id="@+id/ranking_button"
@@ -42,7 +42,7 @@
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/minecraft"
-            app:layout_constraintVertical_bias="0.068" />
+            app:layout_constraintVertical_bias="0.058" />
 
         <ImageButton
             android:id="@+id/graphic_button"
@@ -53,10 +53,10 @@
             android:src="@drawable/btn_graficos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gamma_button"
-            app:layout_constraintVertical_bias="0.141" />
+            app:layout_constraintVertical_bias="0.119" />
 
         <ImageButton
             android:id="@+id/gamma_button"
@@ -70,7 +70,7 @@
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ranking_button"
-            app:layout_constraintVertical_bias="0.085" />
+            app:layout_constraintVertical_bias="0.052" />
 
         <ImageButton
             android:id="@+id/minecraft"
@@ -84,7 +84,7 @@
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_game_button"
-            app:layout_constraintVertical_bias="0.061" />
+            app:layout_constraintVertical_bias="0.041" />
 
         <ImageButton
             android:id="@+id/salir"
@@ -95,10 +95,27 @@
             android:src="@drawable/btn_salir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/graphic_button"
-            app:layout_constraintVertical_bias="0.391" />
+            app:layout_constraintVertical_bias="0.08"
+            />
+
+        <ImageButton
+            android:id="@+id/idioma"
+            android:layout_width="180dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/idioma"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/salir"
+            app:layout_constraintHorizontal_bias="0.504"
+
+            app:layout_constraintVertical_bias="0.3"
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

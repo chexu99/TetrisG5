@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.tetris.view.MenuActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tetris.R;
@@ -27,6 +27,8 @@ public class FinalScoreActivity extends AppCompatActivity {
     ConexionSQLiteHelper conn;
     Integer score;
     private Vibrator vibe;
+    public  boolean idiom= MenuActivity.idiom;
+
 
 
     @Override
@@ -38,15 +40,35 @@ public class FinalScoreActivity extends AppCompatActivity {
         conn = new ConexionSQLiteHelper(getApplicationContext(), "db_ranking", null, 1);
         updateScore();
         button = findViewById(R.id.restart_exit_button);
-
-            button.setImageResource(R.drawable.btn_volver);
+        if (score>250){
+            if(MenuActivity.idiom) {
+                button.setImageResource(R.drawable.btn_volver);
+            } else{
+                button.setImageResource(R.drawable.btn_return);
+            }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openMenuActivity();
                 }
             });
+        } else{
+            if(idiom) {
+                button.setImageResource(R.drawable.btn_salir);
+            }else{
+                button.setImageResource(R.drawable.btn_exit);
+            }
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
 
+                }
+            });
+        }
 
         button2 = findViewById(R.id.btnranking);
 
@@ -69,16 +91,28 @@ public class FinalScoreActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("SELECT score FROM ranking WHERE nombre='" + username + "'", null);
         cursor.moveToFirst();
         Integer lastHighScore = cursor.getInt(0);
+
         if (score > lastHighScore) {
             db = conn.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put("score", score);
-            db.update("ranking", values, "nombre='" + username + "'", null);
-            UserSettings.setScore(score);
-            Toast.makeText(getApplicationContext(), "New highscore", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Más suerte la proxima, paquete", Toast.LENGTH_LONG).show();
-        }
+                values.put("score", score);
+                db.update("ranking", values, "nombre='" + username + "'", null);
+                UserSettings.setScore(score);
+                if(idiom) {
+                    Toast.makeText(getApplicationContext(), "New highscore", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Nueva mayor puntuancion", Toast.LENGTH_LONG).show();
+
+                }
+            } else {
+            if(idiom) {
+                Toast.makeText(getApplicationContext(), "Good luck the next time, numskull", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "Buena suerte la proxima vez , paquete", Toast.LENGTH_LONG).show();
+
+            }
+            }
+
         db.close();
         cursor.close();
     }
