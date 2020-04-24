@@ -6,6 +6,6 @@ Feature: change idiom
   So that
 
   Scenario: change idiom
-    Given i´m in the settings page
+    Given i´m in the menu page
     When i Click on the changeIdiom button
-    Then change idiom
+    Then change idiom of all button and messages 
