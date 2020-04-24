@@ -10,6 +10,7 @@ import com.tetris.R;
 import com.tetris.model.Shape;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.action.ViewActions.*;
 import static org.junit.Assert.*;

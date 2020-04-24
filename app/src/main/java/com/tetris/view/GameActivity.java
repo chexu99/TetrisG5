@@ -54,12 +54,6 @@ public class GameActivity extends Activity {
     private TextView scoreText;
     private TextView crono;
 
-    private boolean playing;
-    private boolean homeClicked;
-
-
-
-
     private ImageButton home,pausebutton;
 
     private Runnable runnable = new Runnable() {
@@ -176,13 +170,11 @@ public class GameActivity extends Activity {
             }
         });
         //Home button
-        homeClicked=false;
         home = findViewById(R.id.homeButton);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onStop();
-                sethomeClicked(true);
+                onStop2();
                 openMenu();
 
             }
@@ -203,13 +195,8 @@ public class GameActivity extends Activity {
         });
 
     }
-    public void sethomeClicked(boolean b){
-        this.homeClicked=b;
-    }
 
-    public boolean gethomeClicked(){
-        return homeClicked;
-    }
+
     private void setUpMusic(){
         mp = MediaPlayer.create(this,R.raw.musica);
         mp.setLooping(true);
@@ -310,8 +297,20 @@ public class GameActivity extends Activity {
             startActivity(intent);
         }
     }
+    protected void onStop2(){
+        super.onStop();
+        Board.getInstance().setGameStatus(Board.GameStatus.PAUSED);
 
-    public boolean getPlaying(){return playing= true;}
+        if (!stopped) {
+            stopped = true;
+            mp.pause();
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+
     public static int getBoardHeight() {
         return boardHeight;
     }
