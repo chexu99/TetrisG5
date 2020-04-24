@@ -18,6 +18,8 @@ import com.tetris.utils.Colors;
 import java.util.ArrayList;
 import java.util.List;
 
+import  com.tetris.view.MenuActivity;
+
 public class MinecraftActivity extends AppCompatActivity {
 
 
@@ -34,6 +36,7 @@ public class MinecraftActivity extends AppCompatActivity {
     private ImageButton bCelda9;
     private List<ImageButton> celdas = new ArrayList<>();
     private Vibrator vibe;
+    public  boolean idiom= MenuActivity.idiom;
 
     private boolean[][] positionLocator = new boolean[3][3];
     private List<Block> blocksCustomShape = new ArrayList<>();
@@ -53,6 +56,15 @@ public class MinecraftActivity extends AppCompatActivity {
 
     private void setUpButtonsFinal(){
         ImageButton bCancelar = findViewById(R.id.mine_cancel);
+        if(idiom){
+
+            bCancelar.setImageResource(R.drawable.btn_cancelar);
+            bCancelar.findViewById(R.id.mine_cancel);
+
+        }else{
+            bCancelar.setImageResource(R.drawable.btn_cancel);
+            bCancelar.findViewById(R.id.mine_cancel);
+        }
         bCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,20 +73,33 @@ public class MinecraftActivity extends AppCompatActivity {
             }
         });
         ImageButton bCreate = findViewById(R.id.mine_newshape);
+        if(idiom){
+            bCreate.setImageResource(R.drawable.btn_crear_prieza);
+
+        }else{
+            bCreate.setImageResource(R.drawable.btn_create_piece);
+        }
+
         bCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (maxCeldas>3){
+                if (maxCeldas > 3) {
                     vibe.vibrate(40);
-                    Toast.makeText(getApplicationContext(), "Debe coger un mínimo de 3 bloques", Toast.LENGTH_LONG).show();
-                }else{
+                    if (idiom) {
+                        Toast.makeText(getApplicationContext(), "Tienes que elegir un minimo de 3 bloques", Toast.LENGTH_LONG).show();
+
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "You need to choose at least 3 blocks", Toast.LENGTH_LONG).show();
+                    }
+                } else {
                     createCustomShape();
                     openGameActivity();
                 }
-
             }
-        });
-    }
+            });
+        }
+
     private void openGameActivity() {
         Board.getInstance().setGameMode(Board.GameMode.MODE_MINECRAFT);
         Intent intent = new Intent(this, GameActivity.class);
@@ -249,7 +274,12 @@ public class MinecraftActivity extends AppCompatActivity {
     private void celdaEvent(ImageButton celda){
         int drawable = (Integer) celda.getTag();
         if ((maxCeldas == 0) && (drawable == 0)){ //drawable == 0 is cell no selected
-            Toast.makeText(getApplicationContext(), "Debe coger un máximo de 6 bloques", Toast.LENGTH_LONG).show();
+            if(idiom) {
+                Toast.makeText(getApplicationContext(), "Debe coger un maximo de 6 bloques", Toast.LENGTH_LONG).show();
+            }else{
+
+                Toast.makeText(getApplicationContext(), "You need to choose less than 6 blocks", Toast.LENGTH_LONG).show();
+            }
         } else {
             chooseColor(celda);
         }

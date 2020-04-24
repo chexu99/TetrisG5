@@ -30,6 +30,7 @@ public class RankingActivity extends AppCompatActivity {
     private RecyclerView recyclerViewUser;
     private RecyclerViewAdaptador userAdapter;
     private Vibrator vibe;
+    public  boolean idioma = MenuActivity.idiom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,13 @@ public class RankingActivity extends AppCompatActivity {
 
         //boton de volver
         button = findViewById(R.id.reStar);
+        if(MenuActivity.idiom) {
+            button.setImageResource(R.drawable.btn_volver);
+        }else{
+            button.setImageResource(R.drawable.btn_return);
+        }
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

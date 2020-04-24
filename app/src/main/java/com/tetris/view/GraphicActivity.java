@@ -27,6 +27,7 @@ public class GraphicActivity extends AppCompatActivity {
     private Vibrator vibe;
     private Switch hardMode;
     private static boolean isOn = false;
+    public  boolean idiom = MenuActivity.idiom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,33 @@ public class GraphicActivity extends AppCompatActivity {
         vibe = (Vibrator) GraphicActivity.this.getSystemService(GraphicActivity.VIBRATOR_SERVICE);
 
         highButton = findViewById(R.id.high_radioButton);
+        if(idiom){
+            highButton.setText("AlTO");
+        }else {
+            highButton.setText("HIGH");
+        }
+
         mediumButton = findViewById(R.id.medium_radioButton);
+        if(idiom){
+            mediumButton.setText("MEDIO");
+        } else{
+            mediumButton.setText("MEDIUM");
+        }
         lowButton = findViewById(R.id.low_radioButton);
+        if(idiom){
+            lowButton.setText("BAJO");
+        }
+        else{
+            lowButton.setText("LOW");
+
+        }
         hardMode = findViewById(R.id.hardmode_switch);
+        if(idiom){
+            hardMode.setText("Modo dificil");
+        }
+        else{
+            hardMode.setText("Difficult Mode");
+        }
         settingDefault();
 
         myRadioGroup = findViewById(R.id.radioGroup);
@@ -73,6 +98,11 @@ public class GraphicActivity extends AppCompatActivity {
         });
 
         confirm = findViewById(R.id.ok_button);
+        if(idiom){
+            confirm.setImageResource(R.drawable.btn_volver);
+        }else{
+            confirm.setImageResource(R.drawable.btn_return);
+        }
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

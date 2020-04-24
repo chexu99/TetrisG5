@@ -20,8 +20,11 @@ public class MenuActivity extends AppCompatActivity {
     private ImageButton btn_ranking;
     private ImageButton btn_gamma;
     private ImageButton btn_minecraft;
+    private ImageButton btn_idioma;
     private ImageButton btn_salir;
     private Button toast;
+    public static boolean idiom=true;
+
     private Vibrator vibe;
 
     @Override
@@ -80,6 +83,15 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        btn_idioma= findViewById(R.id.idioma);
+        btn_idioma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                idiomaActivity();
+            }
+        });
+
         btn_salir = findViewById(R.id.salir);
         btn_salir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +99,27 @@ public class MenuActivity extends AppCompatActivity {
                 exitActivity();
             }
         });
+    }
+
+    private void idiomaActivity() {vibe.vibrate(40);
+    boolean aux= !idiom;
+    idiom= aux;
+    if (idiom) {
+        btn_graphic.setImageResource(R.drawable.btn_graficos);
+        btn_new_game.setImageResource(R.drawable.btn_empezar_partida);
+        btn_gamma.setImageResource(R.drawable.btn_gamas);
+        btn_salir.setImageResource(R.drawable.btn_salir);
+
+
+    } else{
+        btn_graphic.setImageResource(R.drawable.btn_graphs);
+        btn_new_game.setImageResource(R.drawable.btn_start);
+        btn_gamma.setImageResource(R.drawable.btn_gamma);
+        btn_salir.setImageResource(R.drawable.btn_exit);
+
+
+    }
+
     }
 
     private void exitActivity(){
