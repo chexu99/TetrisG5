@@ -16,11 +16,8 @@ import cucumber.api.java.en.When;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import  static androidx.test.espresso.matcher.ViewMatchers.*;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-
-import static androidx.test.espresso.action.ViewActions.*;
 
 
 @LargeTest
@@ -39,7 +36,7 @@ public class musicPause {
         onView(withId(R.id.btnlogin)).perform(click());
         onView(withId(R.id.new_game_button)).perform(click());
         I_press_pause_button();
-        goHome();
+        pause_music();
 
 
     }
@@ -53,8 +50,8 @@ public class musicPause {
 
 
 
-    @Then("^go Home$")
-    public void goHome(){
+    @Then("^pause music$")
+    public void pause_music(){
         onView(withId(R.id.toas_button_game)).perform(click());
         onView(withId(R.id.mvDown)).check(matches(isDisplayed()));
         onView(withId(R.id.mvLeft)).check(matches(isDisplayed()));
