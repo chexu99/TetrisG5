@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -55,6 +57,7 @@ public class GameActivity extends Activity {
     private TextView crono;
 
     private ImageButton home,pausebutton;
+    private Button toast;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -191,6 +194,19 @@ public class GameActivity extends Activity {
                     mp.start();
                     music=true;
                 }
+            }
+        });
+        toast = findViewById(R.id.toas_button_game);
+        toast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(music){
+                    Toast.makeText(getApplicationContext(), "Musica activada", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Musica desactivada", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
