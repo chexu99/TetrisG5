@@ -26,9 +26,10 @@
             android:src="@drawable/btn_empezar_partida"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.065" />
+            app:layout_constraintVertical_bias="0.037" />
 
         <ImageButton
             android:id="@+id/ranking_button"
@@ -56,7 +57,7 @@
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gamma_button"
-            app:layout_constraintVertical_bias="0.119" />
+            app:layout_constraintVertical_bias="0.177" />
 
         <ImageButton
             android:id="@+id/gamma_button"
@@ -67,10 +68,10 @@
             android:src="@drawable/btn_gamas"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ranking_button"
-            app:layout_constraintVertical_bias="0.052" />
+            app:layout_constraintVertical_bias="0.14" />
 
         <ImageButton
             android:id="@+id/minecraft"
@@ -95,10 +96,10 @@
             android:src="@drawable/btn_salir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/graphic_button"
-            app:layout_constraintVertical_bias="0.391" />
+            app:layout_constraintVertical_bias="0.175" />
 
         <Button
             android:id="@+id/toas_button"
