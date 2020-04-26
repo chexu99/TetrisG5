@@ -97,11 +97,6 @@ public class Colors {
     }
 
     public static Bitmap blockedTexture(Resources res) { //Blocked blocks textures
-        Bitmap TexturasBloqueos[];
-        TexturasBloqueos= new Bitmap[3];
-        TexturasBloqueos[0]= BitmapFactory.decodeResource(res, R.drawable.original_blocked);
-        TexturasBloqueos[1]= BitmapFactory.decodeResource(res, R.drawable.marvel_blocked);
-        TexturasBloqueos[2]= BitmapFactory.decodeResource(res, R.drawable.planets_blocked);
         int number = (int) Math.floor(Math.random()*3);//numero aleatoria entre 0 y 2
         //en funcion del tiempo cambio number
         if (SystemClock.uptimeMillis() - BlockedLinesEvents.getLastDeadLineUpdate() > BlockedLinesEvents.getBlockLinesTimer()){

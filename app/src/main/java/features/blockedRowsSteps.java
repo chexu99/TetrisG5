@@ -18,31 +18,35 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-
-
 @LargeTest
-public class idiomSteps {
+public class blockedRowsSteps {
     @Rule
     public IntentsTestRule<InitDBActivity> intentsRule =
             new IntentsTestRule<>(InitDBActivity.class);
 
+
     @Test
-    @Given("^Im in the menu page$")
-    public void estoy_Menu(){
+
+    @Given("^Game started$")
+    public void game_started() throws InterruptedException {
         onView(withId(R.id.btnlogin)).perform(click());
-        clickChangeIdiom();
-        changedIdiom();
+        onView(withId(R.id.new_game_button)).perform(click());
+        spendTime();
+        texture_changed();
+
+
+
     }
 
-    @When("^i Click on the changeIdiom button$")
-    public void clickChangeIdiom(){
-        onView(withId(R.id.idioma)).perform(click());
+    @When("^i Click on pauseButton$")
+    public void spendTime() throws InterruptedException {
+        Thread.sleep(1000);
+
     }
 
-    @Then("^change idiom$")
-    public void changedIdiom(){
-        System.out.println("idiom changed with exit");
 
+    @Then("^rows have diferent textures$")
+    public void texture_changed(){
+        onView(withId(R.id.blocked_rows_button)).perform(click());
     }
 }
-

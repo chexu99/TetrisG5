@@ -57,7 +57,7 @@ public class GameActivity extends Activity {
     private TextView crono;
 
     private ImageButton home,pausebutton;
-    private Button toast;
+    private Button toast, toast2;
 
     private Runnable runnable = new Runnable() {
         @Override
@@ -207,6 +207,14 @@ public class GameActivity extends Activity {
                 }
 
 
+            }
+        });
+
+        toast2= findViewById(R.id.blocked_rows_button);
+        toast2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Diferents textures achieved", Toast.LENGTH_LONG).show();
             }
         });
 
