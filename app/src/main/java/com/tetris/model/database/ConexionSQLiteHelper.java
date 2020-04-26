@@ -23,6 +23,7 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CREAR_TABLA_PLAYERS);
+        db.execSQL("INSERT INTO ranking VALUES('1','','500','')");
     }
 
     @Override
